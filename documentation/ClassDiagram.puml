@@ -11,22 +11,29 @@ class User
 class UserMapper
 class UserFacade
 
-class OfferRequest
-class OfferRequestMapper
-class OfferRequestFacade
+class Orders
+class OrdersMapper
+class OrdersFacade
 
 class ItemList
 class ItemListMapper
 class ItemListFacade
 
+class Calculations
+class CalculationsMapper
+class CalculationsFacade
+
 UserFacade --> UserMapper
 UserMapper --> User
 
-OfferRequestFacade --> OfferRequestMapper
-OfferRequestMapper --> OfferRequest
+OrdersFacade --> OrdersMapper
+OrdersMapper --> Orders
 
 ItemListFacade --> ItemListMapper
 ItemListMapper --> ItemList
+
+CalculationsFacade --> CalculationsMapper
+CalculationsMapper --> Calculations
 
 @enduml
 
