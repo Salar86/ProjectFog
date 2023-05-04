@@ -8,18 +8,62 @@ ApplicationStart *--> ConnectionPool
 Login *--> ConnectionPool
 
 class User
+{
+    -int id
+    -String fullName
+    -String email
+    -String password
+    -String phoneNumber
+    -String role
+}
 class UserMapper
+{
+    static createUser()
+    static showUsers()
+    static modifyUser()
+    static login()
+}
 class UserFacade
 
 class Orders
+{
+    -int orderId
+    -double length
+    -double width
+    -double price
+    -String material
+    -String status
+}
 class OrdersMapper
+{
+    createOrder()
+    modifyOrder()
+    deleteOrder()
+    showOrders()
+}
 class OrdersFacade
 
 class ItemList
+{
+    -String itemDescription
+    -String assemblyDescription
+    -int price
+    -int quantity
+
+}
 class ItemListMapper
+{
+    getItemList()
+    modifyItemList()
+    deleteItemList()
+    showItemLists()
+}
 class ItemListFacade
 
 class Calculations
+{
+
+}
 class CalculationsMapper
 class CalculationsFacade
 
