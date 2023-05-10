@@ -25,7 +25,7 @@ class UserMapper
 }
 class UserFacade
 
-class Orders
+class Order
 {
     -int orderId
     -double length
@@ -34,14 +34,14 @@ class Orders
     -String material
     -String status
 }
-class OrdersMapper
+class OrderMapper
 {
     createOrder()
     modifyOrder()
     deleteOrder()
     showOrders()
 }
-class OrdersFacade
+class OrderFacade
 
 class ItemList
 {
@@ -70,8 +70,8 @@ class CalculationsFacade
 UserFacade --> UserMapper
 UserMapper --> User
 
-OrdersFacade --> OrdersMapper
-OrdersMapper --> Orders
+OrderFacade --> OrderMapper
+OrderMapper --> Order
 
 ItemListFacade --> ItemListMapper
 ItemListMapper --> ItemList
