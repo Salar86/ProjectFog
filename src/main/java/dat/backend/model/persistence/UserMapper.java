@@ -4,6 +4,7 @@ import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 
 import java.sql.*;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -68,6 +69,55 @@ class UserMapper
         }
         return user;
     }
+
+    static ArrayList<User> showUsers(ConnectionPool connectionPool) {
+        User user = null;
+        ArrayList<User> allUsers = new ArrayList<>();
+        String sql = "SELECT userId, username FROM userdata";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int userId = rs.getInt("userId");
+                    String username = rs.getString("username");
+                    user = new User(userId, username);
+                    allUsers.add(user);
+
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return allUsers;
+    }
+    static ArrayList<User> showUserHistory(ConnectionPool connectionPool) {
+        User user = null;
+        ArrayList<User> allUsers = new ArrayList<>();
+        String sql = "SELECT * FROM userhistory";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ResultSet rs = ps.executeQuery();
+                while (rs.next()) {
+                    int userId = rs.getInt("userId");
+                    String username = rs.getString("username");
+                    int orderId = rs.getInt("orderId");
+                    user = new User(userId, username, orderId);
+                    allUsers.add(user);
+
+                }
+
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+        }
+        return allUsers;
+    }
+
 
 
 }
