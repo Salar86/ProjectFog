@@ -28,7 +28,7 @@ public class OrderMapper {
                 preparedStatement.setInt(7, userId);
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected == 1) {
-                    order = new Order(orderId, length, width, price, material, status);
+                    order = new Order(orderId, length, width, price, material, status, userId);
                 } else {
                     throw new DatabaseException("Order " + orderId + " can not be inserted into the database");
                 }
