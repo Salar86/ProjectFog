@@ -42,7 +42,7 @@ public class OrderMapper {
 
     static boolean modifyLength(int orderId, double length, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
-        boolean result;
+        boolean isModified;
         String sql = "update order set length = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -50,7 +50,7 @@ public class OrderMapper {
                 preparedStatement.setInt(2, orderId);
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected == 1) {
-                    result = true;
+                    isModified = true;
                 } else {
                     throw new DatabaseException("Length could not be modified in the database");
                 }
@@ -60,12 +60,12 @@ public class OrderMapper {
         catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Length could not be modified in the database");
         }
-        return result;
+        return isModified;
     }
 
     static boolean modifyWidth(int orderId, double width, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
-        boolean result;
+        boolean isModified;
         String sql = "update order set width = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -73,7 +73,7 @@ public class OrderMapper {
                 preparedStatement.setInt(2, orderId);
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected == 1) {
-                    result = true;
+                    isModified = true;
                 } else {
                     throw new DatabaseException("Width could not be modified in the database");
                 }
@@ -83,11 +83,11 @@ public class OrderMapper {
         catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Width could not be modified in the database");
         }
-        return result;
+        return isModified;
     }
     static boolean modifyPrice(int orderId, double price, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
-        boolean result;
+        boolean isModified;
         String sql = "update order set price = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -95,7 +95,7 @@ public class OrderMapper {
                 preparedStatement.setInt(2, orderId);
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected == 1) {
-                    result = true;
+                    isModified = true;
                 } else {
                     throw new DatabaseException("Price could not be modified in the database");
                 }
@@ -105,12 +105,12 @@ public class OrderMapper {
         catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Price could not be modified in the database");
         }
-        return result;
+        return isModified;
     }
 
     static boolean modifyMaterial(int orderId, String material, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
-        boolean result;
+        boolean isModified;
         String sql = "update order set material = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -118,7 +118,7 @@ public class OrderMapper {
                 preparedStatement.setInt(2, orderId);
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected == 1) {
-                    result = true;
+                    isModified = true;
                 } else {
                     throw new DatabaseException("Material could not be modified in the database");
                 }
@@ -128,12 +128,12 @@ public class OrderMapper {
         catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Material could not be modified in the database");
         }
-        return result;
+        return isModified;
     }
 
     static boolean modifyStatus(int orderId, String status, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
-        boolean result;
+        boolean isModified;
         String sql = "update order set status = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -141,7 +141,7 @@ public class OrderMapper {
                 preparedStatement.setInt(2, orderId);
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected == 1) {
-                    result = true;
+                    isModified = true;
                 } else {
                     throw new DatabaseException("Status could not be modified in the database");
                 }
@@ -151,11 +151,11 @@ public class OrderMapper {
         catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Status could not be modified in the database");
         }
-        return result;
+        return isModified;
     }
 
     static boolean deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException {
-        boolean result = false;
+        boolean isDeleted = false;
         String sql = ("delete from order where order_id = ?");
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -163,7 +163,7 @@ public class OrderMapper {
                 int rowsAffected = preparedStatement.executeUpdate(); //makes sure only one row is affected
                 if (rowsAffected == 1)
                 {
-                    result = true;
+                    isDeleted = true;
                 } else {
                     throw new DatabaseException("Order could not be deleted from database");
                 }
@@ -173,7 +173,7 @@ public class OrderMapper {
         catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Order could not be deleted from database");
         }
-        return result;
+        return isDeleted;
     }
 
     static ArrayList<Order> showOrders(ConnectionPool connectionPool) throws DatabaseException {
