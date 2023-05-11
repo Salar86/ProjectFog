@@ -84,4 +84,76 @@ public class ItemListMapper {
         }
         return itemLists;
     }
+
+    static boolean modifyDescription(String description, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
+        Logger.getLogger("web").log(Level.INFO, "");
+        boolean isModified;
+        String sql = "update itemlist set description = ? where itemlist_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setString(1, description);
+                preparedStatement.setInt(2, itemListId);
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected == 1) {
+                    isModified = true;
+                } else {
+                    throw new DatabaseException("Description could not be modified in the database");
+                }
+            }
+
+        }
+        catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "Description could not be modified in the database");
+        }
+        return isModified;
+    }
+
+    static boolean modifyPrice(int price, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
+        Logger.getLogger("web").log(Level.INFO, "");
+        boolean isModified;
+        String sql = "update itemlist set price = ? where itemlist_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setDouble(1, price);
+                preparedStatement.setInt(2, itemListId);
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected == 1) {
+                    isModified = true;
+                } else {
+                    throw new DatabaseException("Price could not be modified in the database");
+                }
+            }
+
+        }
+        catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "Price could not be modified in the database");
+        }
+        return isModified;
+    }
+
+    static boolean modifyQuantity(int quantity, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
+        Logger.getLogger("web").log(Level.INFO, "");
+        boolean isModified;
+        String sql = "update itemlist set quantity = ? where itemlist_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setDouble(1, quantity);
+                preparedStatement.setInt(2, itemListId);
+                int rowsAffected = preparedStatement.executeUpdate();
+                if (rowsAffected == 1) {
+                    isModified = true;
+                } else {
+                    throw new DatabaseException("Price could not be modified in the database");
+                }
+            }
+
+        }
+        catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "Price could not be modified in the database");
+        }
+        return isModified;
+    }
+
+
+
 }
