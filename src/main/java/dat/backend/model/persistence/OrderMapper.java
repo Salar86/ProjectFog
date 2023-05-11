@@ -160,7 +160,7 @@ public class OrderMapper {
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, orderId);
-                int rowsAffected = preparedStatement.executeUpdate();
+                int rowsAffected = preparedStatement.executeUpdate(); //makes sure only one row is affected
                 if (rowsAffected == 1)
                 {
                     result = true;
