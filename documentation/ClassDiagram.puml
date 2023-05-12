@@ -50,16 +50,19 @@ class OrderFacade
 
 class ItemList
 {
-    -String itemDescription
-    -String assemblyDescription
+    -int itemListId
+    -String description
     -int price
+    -int orderId
     -int quantity
 
 }
 class ItemListMapper
 {
     getItemList()
-    modifyItemList()
+    modifyDescription()
+    modifyPrice()
+    modifyQuantity()
     deleteItemList()
     showItemLists()
 }
