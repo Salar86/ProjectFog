@@ -124,6 +124,7 @@ class OrderMapperTest {
     void testDeleteOrder() throws DatabaseException {
         boolean isDeleted = OrderFacade.deleteOrder(3, connectionPool);
         assertTrue(isDeleted);
+        assertThrows(DatabaseException.class, () ->  OrderFacade.deleteOrder(4, connectionPool));
 
     }
 
@@ -131,6 +132,7 @@ class OrderMapperTest {
     void testShowOrders() throws DatabaseException {
         ArrayList<Order> allOrders = OrderFacade.showOrders(connectionPool);
         assertEquals(3, allOrders.size());
+
 
     }
 }
