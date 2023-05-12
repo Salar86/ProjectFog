@@ -25,7 +25,8 @@ class UserMapper
 }
 class UserFacade
 
-class Orders
+
+class Order
 {
     -int orderId
     -double length
@@ -33,28 +34,36 @@ class Orders
     -double price
     -String material
     -String status
+    -int userId
 }
-class OrdersMapper
+class OrderMapper
 {
     createOrder()
-    modifyOrder()
+    modifyLength()
+    modifyWidth()
+    modifyPrice()
+    modifyMaterial()
+    modifyStatus()
     deleteOrder()
     showOrders()
 }
-class OrdersFacade
+class OrderFacade
 
 class ItemList
 {
-    -String itemDescription
-    -String assemblyDescription
+    -int itemListId
+    -String description
     -int price
+    -int orderId
     -int quantity
 
 }
 class ItemListMapper
 {
     getItemList()
-    modifyItemList()
+    modifyDescription()
+    modifyPrice()
+    modifyQuantity()
     deleteItemList()
     showItemLists()
 }
@@ -73,8 +82,8 @@ class CalculationsFacade
 UserFacade --> UserMapper
 UserMapper --> User
 
-OrdersFacade --> OrdersMapper
-OrdersMapper --> Orders
+OrderFacade --> OrderMapper
+OrderMapper --> Order
 
 ItemListFacade --> ItemListMapper
 ItemListMapper --> ItemList
