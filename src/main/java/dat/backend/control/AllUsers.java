@@ -19,10 +19,7 @@ import java.util.ArrayList;
 public class AllUsers extends HttpServlet {
 
     private ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
-    private ArrayList<User> allUsers = UserFacade.showUsers(connectionPool);
-
-    public AllUsers() throws DatabaseException {
-    }
+    private ArrayList<User> allUsers;
 
 
     @Override
@@ -32,9 +29,12 @@ public class AllUsers extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
-        session.setAttribute("users", allUsers);
-        request.getRequestDispatcher("WEB-INF/adminallusers.jsp").forward(request, response);
-
+        try {
+            this.allUsers = UserFacade.showUsers(connectionPool);HttpSession session = request.getSession();
+            session.setAttribute("users", allUsers);
+            request.getRequestDispatcher("WEB-INF/adminallusers.jsp").forward(request, response);
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
     }
 }

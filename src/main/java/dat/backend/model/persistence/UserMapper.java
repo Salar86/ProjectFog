@@ -72,7 +72,7 @@ class UserMapper {
                     String email = rs.getString("email");
                     String phonenumber = rs.getString("phonenumber");
                     int rowsAffected = ps.executeUpdate();
-                    if (rowsAffected == 1) {
+                    if (rowsAffected >= 1) {
                         user = new User(userId, role, fullname, email, "", phonenumber);
                         allUsers.add(user);
 
@@ -81,8 +81,9 @@ class UserMapper {
                     }
                 }
             }
-        } catch (SQLException ex) {
-            ex.printStackTrace();
+        }
+    catch (SQLException ex) {
+        throw new DatabaseException(ex, "Could not show users");
         }
         return allUsers;
     }
@@ -101,7 +102,7 @@ class UserMapper {
                     String fullname = rs.getString("fullname");
                     int orderId = rs.getInt("order_id");
                     int rowsAffected = ps.executeUpdate();
-                    if (rowsAffected == 1) {
+                    if (rowsAffected >= 1) {
                         user = new User(userId, "", fullname, email, "", "", orderId);
                         allUsers.add(user);
                     } else {
@@ -110,7 +111,7 @@ class UserMapper {
                 }
             }
         } catch (SQLException ex) {
-            ex.printStackTrace();
+            throw new DatabaseException(ex, "Could not show users");
         }
         return allUsers;
     }
