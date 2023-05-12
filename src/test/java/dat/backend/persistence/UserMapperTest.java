@@ -34,10 +34,10 @@ class UserMapperTest
             try (Statement stmt = testConnection.createStatement())
             {
                 // Create test database - if not exist
-                stmt.execute("CREATE DATABASE  IF NOT EXISTS startcode_test;");
+                stmt.execute("CREATE DATABASE  IF NOT EXISTS project_fog_test;");
 
                 // TODO: Create user table. Add your own tables here
-                stmt.execute("CREATE TABLE IF NOT EXISTS startcode_test.user LIKE startcode.user;");
+                stmt.execute("CREATE TABLE IF NOT EXISTS project_fog_test.user LIKE project_fog.user;");
             }
         }
         catch (SQLException throwables)
@@ -54,12 +54,14 @@ class UserMapperTest
         {
             try (Statement stmt = testConnection.createStatement())
             {
-                // TODO: Remove all rows from all tables - add your own tables here
+                stmt.execute("DELETE from project_fog_test.order");
                 stmt.execute("delete from user");
+                stmt.execute("ALTER TABLE `user` DISABLE KEYS");
+                stmt.execute("ALTER TABLE `user` AUTO_INCREMENT = 1");
 
-                // TODO: Insert a few users - insert rows into your own tables here
-                stmt.execute("insert into user (username, password, role) " +
-                        "values ('user','1234','user'),('admin','1234','admin'), ('ben','1234','user')");
+                stmt.execute("insert into user (role, fullname, email, password, phonenumber) " +
+                        "values ('user','test','user@user.dk', '1234', '1234'),('admin','test','admin@admin.dk', '1234', '1234'), ('user','test','user@test.dk', '1234', '1234')");
+                stmt.execute("ALTER TABLE `user` ENABLE KEYS");
             }
         }
         catch (SQLException throwables)

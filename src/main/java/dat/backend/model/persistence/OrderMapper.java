@@ -16,7 +16,7 @@ public class OrderMapper {
     static Order createOrder(int orderId, double length, double width, double price, String material, String status, int userId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         Order order;
-        String sql = "insert into order (order_id, length, width, price, material, status, user_id) values (?,?,?,?,?,?,?)";
+        String sql = "insert into project_fog_test.order (order_id, length, width, price, material, status, user_id) values (?,?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, orderId);
@@ -43,7 +43,7 @@ public class OrderMapper {
     static boolean modifyLength(int orderId, double length, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
-        String sql = "update order set length = ? where order_id = ?";
+        String sql = "update project_fog_test.order set length = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setDouble(1, length);
@@ -66,7 +66,7 @@ public class OrderMapper {
     static boolean modifyWidth(int orderId, double width, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
-        String sql = "update order set width = ? where order_id = ?";
+        String sql = "update project_fog_test.order set width = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setDouble(1, width);
@@ -88,7 +88,7 @@ public class OrderMapper {
     static boolean modifyPrice(int orderId, double price, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
-        String sql = "update order set price = ? where order_id = ?";
+        String sql = "update project_fog_test.order set price = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setDouble(1, price);
@@ -111,7 +111,7 @@ public class OrderMapper {
     static boolean modifyMaterial(int orderId, String material, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
-        String sql = "update order set material = ? where order_id = ?";
+        String sql = "update project_fog_test.order set material = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, material);
@@ -134,7 +134,7 @@ public class OrderMapper {
     static boolean modifyStatus(int orderId, String status, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
-        String sql = "update order set status = ? where order_id = ?";
+        String sql = "update project_fog_test.order set status = ? where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, status);
@@ -156,7 +156,7 @@ public class OrderMapper {
 
     static boolean deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         boolean isDeleted = false;
-        String sql = ("delete from order where order_id = ?");
+        String sql = ("delete from project_fog_test.order where order_id = ?");
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, orderId);
@@ -180,7 +180,7 @@ public class OrderMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         Order order;
         ArrayList<Order> allOrders = new ArrayList<>();
-        String sql = "select * from orders";
+        String sql = "select * from project_fog_test.order";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
