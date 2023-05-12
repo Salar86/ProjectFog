@@ -3,49 +3,45 @@ package dat.backend.model.entities;
 import java.util.Objects;
 
 public class User {
-    private String username;
+    private String email;
     private String password;
     private String role;
+    private String fullname;
+    private String phonenumber;
     private int userId;
     private int orderId;
 
-    public User(int userId, String username) {
-    this.userId = userId;
-    this.username = username;
-    }
-    public User(int userId, String username, int orderId) {
+
+    public User(int userId, String role, String fullname, String email, String password, String phonenumber) {
         this.userId = userId;
-        this.username = username;
+        this.role = role;
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.phonenumber = phonenumber;
+    }
+
+    public User(String email, String password, String role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+    public User(int userId, String role, String fullname, String email, String password, String phonenumber, int orderId) {
+        this.userId = userId;
+        this.role = role;
+        this.fullname = fullname;
+        this.email = email;
+        this.password = password;
+        this.phonenumber = phonenumber;
         this.orderId = orderId;
     }
 
-    public User(String username, String password, String role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
+    public String getEmail() {
+        return email;
     }
 
-    public User(int userId, String username, String password, String role, int orderId) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.userId = userId;
-        this.orderId = orderId;
-    }
-
-    public User(int userId, String username, String password, String role) {
-        this.username = username;
-        this.password = password;
-        this.role = role;
-        this.userId = userId;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     public String getPassword() {
@@ -69,19 +65,19 @@ public class User {
         if (this == o) return true;
         if (!(o instanceof User)) return false;
         User user = (User) o;
-        return getUsername().equals(user.getUsername()) && getPassword().equals(user.getPassword()) &&
+        return getEmail().equals(user.getEmail()) && getPassword().equals(user.getPassword()) &&
                 getRole().equals(user.getRole());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getUsername(), getPassword(), getRole());
+        return Objects.hash(getEmail(), getPassword(), getRole());
     }
 
     @Override
     public String toString() {
         return "User{" +
-                "brugerNavn='" + username + '\'' +
+                "brugerNavn='" + email + '\'' +
                 ", kodeord='" + password + '\'' +
                 ", rolle='" + role + '\'' +
                 '}';

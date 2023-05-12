@@ -7,19 +7,19 @@ import java.util.ArrayList;
 
 public class UserFacade
 {
-    public static User login(String username, String password, ConnectionPool connectionPool) throws DatabaseException
+    public static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException
     {
-        return UserMapper.login(username, password, connectionPool);
+        return UserMapper.login(email, password, connectionPool);
     }
 
-    public static User createUser(String username, String password, String role, ConnectionPool connectionPool) throws DatabaseException
+    public static User createUser(String role, String fullname, String email, String password, String phonenumber, ConnectionPool connectionPool) throws DatabaseException
     {
-        return UserMapper.createUser(username, password, role, connectionPool);
+        return UserMapper.createUser(role, fullname, email, password, phonenumber, connectionPool);
     }
-    public static ArrayList<User> showUsers(ConnectionPool connectionPool) {
+    public static ArrayList<User> showUsers(ConnectionPool connectionPool) throws DatabaseException {
         return UserMapper.showUsers(connectionPool);
     }
-    public static ArrayList<User> showUserHistory(ConnectionPool connectionPool) {
+    public static ArrayList<User> showUserHistory(ConnectionPool connectionPool) throws DatabaseException {
         return UserMapper.showUserHistory(connectionPool);
     }
 

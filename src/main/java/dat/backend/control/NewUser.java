@@ -33,9 +33,11 @@ public class NewUser extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
-        String username = request.getParameter("username");
-        String name = request.getParameter("name");
+        String role = request.getParameter("role");
+        String fullname = request.getParameter("fullname");
+        String email = request.getParameter("email");
         String password = request.getParameter("password");
+        String phonenumber = request.getParameter("phonenumber");
         String confirmPassword = request.getParameter("confirmpassword");
         HttpSession session;
         if(!password.equals(confirmPassword)) {
@@ -44,7 +46,7 @@ public class NewUser extends HttpServlet {
 
         } else {
             try {
-                User user = UserFacade.createUser(username, name, password, connectionPool);
+                User user = UserFacade.createUser(role, fullname, email, password, phonenumber, connectionPool);
                 session = request.getSession();
                 session.setAttribute("user", user); // adding user object to session scope
                 request.getRequestDispatcher("login.jsp").forward(request, response);

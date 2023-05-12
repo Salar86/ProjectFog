@@ -2,6 +2,7 @@ package dat.backend.control;
 
 import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.User;
+import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.UserFacade;
 
@@ -18,6 +19,11 @@ import java.util.ArrayList;
 public class ShowUsers extends HttpServlet {
     private ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
     private ArrayList<User> allUsers = UserFacade.showUserHistory(connectionPool);
+
+    public ShowUsers() throws DatabaseException {
+    }
+
+
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
