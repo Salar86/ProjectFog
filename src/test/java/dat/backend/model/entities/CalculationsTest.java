@@ -61,8 +61,8 @@ class CalculationsTest {
     @Test
     void calculateFrontAndBackSternBoards(){
 
-        double carportWidthInCm = 390; // Parameters
-        double carportLengthInCm = 390; // Parameters
+        double carportWidthInCm = 360; // Parameters
+        double carportLengthInCm = 540; // Parameters
 
         //double woodShort = 360;
         //double woodLong = 540;
@@ -81,25 +81,22 @@ class CalculationsTest {
         double remainder;
         double closeToOneWidth = 0;
         double closeToOneLength = 0;
-        boolean yes = false;
 
         for(Map.Entry<String, Double> set: woodList.entrySet()) { // Gets the piece of wood thats is cloesest to coerving the length
-            if(carportWidthInCm / set.getValue() >= closeToOneWidth){
-                System.out.println(set.getValue());
-                System.out.println("closetoWidth " + (carportWidthInCm) / set.getValue());
-                System.out.println(set.getValue());
-                closeToOneWidth = carportWidthInCm / set.getValue();
-                System.out.println(carportWidthInCm);
+            if(carportWidthInCm*2 / set.getValue() >= closeToOneWidth){
+                System.out.println("Iteration WIDTH with value : " + set.getValue());
+                System.out.println("closeToWidth " + carportWidthInCm*2 / set.getValue());
+                closeToOneWidth = carportWidthInCm / set.getValue()*2;
+                System.out.println("Carport WIDTH: " + carportWidthInCm);
             }
         }
 
         for(Map.Entry<String, Double> set: woodList.entrySet()) { // Gets the piece of wood thats is cloesest to coerving the length
             if(carportLengthInCm / set.getValue() >= closeToOneLength){
-                System.out.println(set.getValue());
-                System.out.println("closetoLength " + (carportLengthInCm) / set.getValue());
-                System.out.println(set.getValue());
+                System.out.println("Iteration LENGTH with value : " + set.getValue());
+                System.out.println("closeToLength " + (carportLengthInCm) / set.getValue());
                 closeToOneLength = carportLengthInCm / set.getValue();
-                System.out.println(carportLengthInCm);
+                System.out.println("Carport LENGTH " + carportLengthInCm);
             }
         }
 
@@ -108,19 +105,24 @@ class CalculationsTest {
         for(Map.Entry<String, Double> set: woodList.entrySet()) { // Everything woodtype in Map is run through
 
             if (carportWidthInCm <= 540) {
-                System.out.println("START SHORT" + closeToOneWidth);
-                if ((carportWidthInCm / set.getValue()) % 1 == 0) {
+                System.out.println("START - WIDTH " + closeToOneWidth);
+                if ((carportWidthInCm*2 / set.getValue()) % 1 == 0) {
                     System.out.println("SEND XX");
                     if(set.getValue() == carportWidthInCm){ // set.getValue is length of wood.
                         System.out.println("SHIP 2x WOOD EQUAL TO get.value " + set.getValue());
+                    } else if (set.getValue() == carportWidthInCm*2){
+                        System.out.println("SHIP 1x WOOD EQUAL TO GET VALUE " +  set.getValue()); // ONE WHOLE PIECE OF WOOD
                     }
-                } else if (set.getValue() == carportWidthInCm*2){
-                    System.out.println("SHIP 1x WOOD EQUAL TO GET VALUE " +  set.getValue()); // ONE WHOLE PIECE OF WOOD
-                } else if ((carportWidthInCm*2 / set.getValue()) >= closeToOneWidth && (carportWidthInCm / set.getValue()) < 1) { // Calculates the
-                    System.out.println("SENDT " + set.getKey()); // Mangler at få en lille med
+                }  else if ( 2.5 >= closeToOneWidth && (carportWidthInCm / set.getValue()) < 1) { // Calculates the
+                    System.out.println("SENDT One long and one short" + closeToOneWidth); // Mangler at få en lille med
+                    System.out.println( closeToOneWidth+ " " + (carportWidthInCm*2 / set.getValue())+" "+ set.getValue());
+                    System.out.println(carportWidthInCm / set.getValue() + set.getKey());
+                } else if ( 2.6 <= closeToOneWidth && (carportWidthInCm / set.getValue()) > 1) { // Calculates the
+                    System.out.println("SENDT Two long"); // Mangler at få en lille med
+                    System.out.println( closeToOneWidth+ " " + (carportWidthInCm*2 / set.getValue())+" "+ set.getValue());
                     System.out.println(carportWidthInCm / set.getValue() + set.getKey());
                 }
-            } else if (carportWidthInCm >= 541 && (carportWidthInCm*2 / set.getValue()) < 2.5) { // last part makes sure only set.getValue is used.
+            } else if (carportWidthInCm >= 541 && (carportWidthInCm*2 / set.getValue()) < 3) { // last part makes sure only set.getValue is used.
                 System.out.println("2 x long " + "1 x short"); // Combined width is 1200 - so 2 x long 1 short
                 /*woodNeeded = (carportWidthInCm / set.getValue());
                 woodRatio = woodNeeded - (int) woodNeeded;
@@ -137,7 +139,7 @@ class CalculationsTest {
 
         for(Map.Entry<String, Double> set: woodList.entrySet()) {
             if (carportLengthInCm <= 540) {
-                System.out.println("START - Length " + closeToOneLength);
+                System.out.println("START - LENGTH " + closeToOneLength);
                 if ((carportLengthInCm / set.getValue()) % 1 == 0) {
                     System.out.println("LENGTH SEND XX - Length");
                     if (set.getValue() == carportLengthInCm) { // set.getValue is length of wood.
@@ -163,17 +165,6 @@ class CalculationsTest {
                 // Can Add More Functionality for more wood or wider carport.
             }
         }
-
-        /*if(carportLengthInCm <= 541){
-            if((carportLengthInCm/woodShort) % 1 == 0){
-                System.out.println("less 540 - 2 x Short");
-            }
-            else if((carportLengthInCm/woodLong) % 1 == 0){
-                System.out.println("540 - 2 x Long");
-            } else if((carportLengthInCm <= 720)){
-                System.out.println("less 720 - 4 x Short");
-            }
-        }*/
     }
 
     @Test
