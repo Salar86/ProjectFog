@@ -37,7 +37,7 @@ class UserMapper {
     static User createUser(String role, String fullname, String email, String password, String phonenumber, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         User user;
-        String sql = "insert into user (role, fullname, email, password, phonenumber) values (?,?,?,?,?)";
+        String sql = "INSERT INTO user (role, fullname, email, password, phonenumber)" + "values (?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, role);
@@ -53,7 +53,7 @@ class UserMapper {
                 }
             }
         } catch (SQLException ex) {
-            throw new DatabaseException(ex, "Could not insert username into database");
+            throw new DatabaseException(ex, "Could not create user");
         }
         return user;
     }

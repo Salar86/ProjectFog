@@ -85,3 +85,6 @@ LOCK
 TABLES `product` WRITE;
 /*!40000 ALTER TABLE `product` DISABLE KEYS */;
 /*!40000 ALTER TABLE `product` ENABLE KEYS */;
+CREATE DATABASE  IF NOT EXISTS `project_fog_test` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */ /*!80016 DEFAULT ENCRYPTION='N' */;
+USE `project_fog`;
+CREATE TABLE project_fog_test.user LIKE project_fog.user;
