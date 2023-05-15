@@ -18,12 +18,18 @@ class User
 }
 class UserMapper
 {
-    static createUser()
-    static showUsers()
-    static modifyUser()
-    static login()
+    createUser()
+    showUsers()
+    modifyUser()
+    login()
 }
 class UserFacade
+{
+    createUser()
+    showUsers()
+    modifyUser()
+    login()
+}
 
 
 class Order
@@ -48,6 +54,16 @@ class OrderMapper
     showOrders()
 }
 class OrderFacade
+{
+  createOrder()
+    modifyLength()
+    modifyWidth()
+    modifyPrice()
+    modifyMaterial()
+    modifyStatus()
+    deleteOrder()
+    showOrders()
+}
 
 class ItemList
 {
@@ -68,6 +84,14 @@ class ItemListMapper
     showItemLists()
 }
 class ItemListFacade
+{
+    getItemList()
+    modifyDescription()
+    modifyPrice()
+    modifyQuantity()
+    deleteItemList()
+    showItemLists()
+}
 
 class Calculations
 {
@@ -78,6 +102,25 @@ class Calculations
 }
 class CalculationsMapper
 class CalculationsFacade
+
+class Product
+{
+   -int productId;
+   -String productDescription;
+   -double unit;
+   -double pricePerUnit;
+}
+class ProductMapper
+{
+modifyPricePerUnit()
+modifyDescription()
+}
+
+class ProductFacade
+{
+modifyPricePerUnit()
+modifyDescription()
+}
 
 UserFacade --> UserMapper
 UserMapper --> User
@@ -90,6 +133,10 @@ ItemListMapper --> ItemList
 
 CalculationsFacade --> CalculationsMapper
 CalculationsMapper --> Calculations
+
+ProductFacade --> ProductMapper
+ProductMapper --> Product
+
 
 @enduml
 
