@@ -86,7 +86,9 @@ class CalculationsTest {
             if(carportWidthInCm*2 / set.getValue() >= closeToOneWidth){
                 System.out.println("Iteration WIDTH with value : " + set.getValue());
                 System.out.println("closeToWidth " + carportWidthInCm*2 / set.getValue());
+                System.out.println("CPWCM "+carportWidthInCm);
                 closeToOneWidth = carportWidthInCm / set.getValue()*2;
+                System.out.println("CTOW "+closeToOneWidth);
                 System.out.println("Carport WIDTH: " + carportWidthInCm);
             }
         }
