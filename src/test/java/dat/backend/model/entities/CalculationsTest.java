@@ -67,8 +67,8 @@ class CalculationsTest {
         woodList1.put("woodShort", 540.00);
         woodList1.put("woodLong", 360.00);
 
-        double carportWidthInCm = 570.00;
-        double carportLengthInCm = 780.00;
+        double carportWidthInCm = 360;
+        double carportLengthInCm = 600;
 
         double totalCarportSize = 0;
         double closeToZeroWidth = cal.sternHelperMethod((carportLengthInCm+carportWidthInCm)*2);
@@ -107,23 +107,27 @@ class CalculationsTest {
 
         totalCarportSize = (carportWidthInCm*2) + (carportLengthInCm*2);
 
-        for(Map.Entry<String, Double> set: woodList1.entrySet()) { // Every woodtype in Map is run through
+        System.out.println("TOTAL CARPOTRTRR " + totalCarportSize);
+        int iter = 0;
+        //for (Map.Entry<String, Double> set : woodList1.entrySet()) { // Every woodtype in Map is run through
+        if(totalCarportSize > 0){
             int longWood = 0;
             int shortWood = 0;
 
-
-            if(sidesDone && !frontAndBackDone) {
+            if (sidesDone && !frontAndBackDone) {
+                iter++;
+                System.out.println("ITERRATION \n \n" + iter);
                 System.out.println(totalCarportSize + "SIDES DONE - CALCULATING FRONT AND BACK");
                 totalCarportSize -= subtract;
                 System.out.println(totalCarportSize + "æaww231æ3213o1239210321");
-                System.out.println(set.getValue() + " sdjæakjd39438723911''¨¨s1");
+                //System.out.println(set.getValue() + " sdjæakjd39438723911''¨¨s1");
                 closeToZeroWidth = cal.sternHelperMethod(totalCarportSize);
                 // picks the largest wood that will fit
                 if ((closeToZeroWidth > 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
-                    if (totalCarportSize >= (totalCarportSize/closeToZeroWidth)) {
-                        double woodLength = (totalCarportSize/closeToZeroWidth);
+                    if (totalCarportSize >= (totalCarportSize / closeToZeroWidth)) {
+                        double woodLength = (totalCarportSize / closeToZeroWidth);
                         totalCarportSize -= woodLength;
-                        shortWood += (set.getValue() / set.getValue());
+                        //shortWood += (set.getValue() / set.getValue());
                         subtract = woodLength;
                     }
                     System.out.println("SIZE CAPRPORT " + totalCarportSize);
@@ -138,8 +142,8 @@ class CalculationsTest {
                 System.out.println(closeToZeroWidth + "CLOSE TO ZERO");
                 if ((closeToZeroWidth < 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
                     while (totalCarportSize >= 0) {
-                        totalCarportSize -= (totalCarportSize/closeToZeroWidth);
-                        shortWood += (set.getValue() / set.getValue());
+                        totalCarportSize -= (totalCarportSize / closeToZeroWidth);
+                        //shortWood += (set.getValue() / set.getValue());
                     }
                     System.out.println("SIZE CAPRPORT TWOWOWOWOW " + totalCarportSize);
                     System.out.println("SHIP shortwood = " + shortWood);
@@ -149,23 +153,22 @@ class CalculationsTest {
 
             }
 
-            if(frontAndBackDone && !sidesDone) {
+            if (frontAndBackDone && !sidesDone) {
                 System.out.println(totalCarportSize + "FRONT AND BACK DONE - CALCULATING LENGTH");
                 totalCarportSize -= subtract;
                 System.out.println(totalCarportSize + "REMANING LENGTH");
-                System.out.println(set.getValue() + " VALUE OF WOOD");
+                //System.out.println(set.getValue() + " VALUE OF WOOD");
                 closeToZeroWidth = cal.sternHelperMethod(totalCarportSize);
                 // picks the largest wood that will fit
                 if ((closeToZeroWidth > 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
-                    if (totalCarportSize >= (totalCarportSize/closeToZeroWidth)) {
-                        double woodLength = (totalCarportSize/closeToZeroWidth);
+                    if (totalCarportSize >= (totalCarportSize / closeToZeroWidth)) {
+                        double woodLength = (totalCarportSize / closeToZeroWidth);
                         totalCarportSize -= woodLength;
-                        shortWood += (set.getValue() / set.getValue());
+                        //shortWood += (set.getValue() / set.getValue());
                         subtract = woodLength;
                     }
                     System.out.println("SIZE CAPRPORT OVER 1 " + totalCarportSize);
                     System.out.println("SHIP shortwood = " + shortWood);
-
                     System.out.println("New Size " + cal.sternHelperMethod(totalCarportSize));
                 }
                 System.out.println(subtract + " SUBSUBSUSBUSBUSBUSBUSBUSBSUBUS");
@@ -175,8 +178,8 @@ class CalculationsTest {
                 System.out.println(closeToZeroWidth + "aædkajw NAPWOEÅ");
                 if ((closeToZeroWidth < 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
                     while (totalCarportSize >= 0) {
-                        totalCarportSize -= (totalCarportSize/closeToZeroWidth);
-                        shortWood += (set.getValue() / set.getValue());
+                        totalCarportSize -= (totalCarportSize / closeToZeroWidth);
+                        //shortWood += (set.getValue() / set.getValue());
                     }
                     System.out.println("SIZE CAPRPORT UNDER 1 " + totalCarportSize);
                     System.out.println("SHIP shortwood = " + shortWood);
@@ -187,47 +190,47 @@ class CalculationsTest {
                 System.out.println("FINAL SIZE" + totalCarportSize);
             }
 
-            if(!sidesDone && !frontAndBackDone) {
+            if (!sidesDone && !frontAndBackDone) {
                 System.out.println(totalCarportSize + "CALCULATING WOOOOOOD" + closeToZeroWidth);
                 System.out.println(totalCarportSize + "Size of carport");
-                System.out.println(set.getValue() + " value used");
+                //System.out.println(set.getValue() + " value used");
                 //closeToZeroWidth = cal.sternHelperMethod(totalCarportSize);
                 // picks the largest wood that will fit
-                if ((closeToZeroWidth > 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
-                    System.out.println(" BEFORE WHILE " + totalCarportSize);
-                    System.out.println(closeToZeroWidth);
-                    System.out.println(totalCarportSize);
-                    if (totalCarportSize >= (totalCarportSize/closeToZeroWidth)) {
-                        double woodLength = (totalCarportSize/closeToZeroWidth);
-                        totalCarportSize -= woodLength;
-                        shortWood += (set.getValue() / set.getValue());
-                        subtract = woodLength;
-                    }
-                    System.out.println("SIZE CAPRPORT " + totalCarportSize);
-                    System.out.println("SHIP shortwood = " + shortWood);
+                if (totalCarportSize > 0) {
+                    if ((closeToZeroWidth > 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
+                        System.out.println(" BEFORE WHILE " + totalCarportSize);
+                        System.out.println(closeToZeroWidth);
+                        System.out.println(totalCarportSize);
+                        if (totalCarportSize >= (totalCarportSize / closeToZeroWidth)) {
+                            double woodLength = (totalCarportSize / closeToZeroWidth);
+                            totalCarportSize -= woodLength;
+                            //shortWood += (set.getValue() / set.getValue());
+                            subtract = woodLength;
+                        }
+                        System.out.println("SIZE CAPRPORT " + totalCarportSize);
+                        System.out.println("SHIP shortwood = " + shortWood);
 
-                    System.out.println("New Size " + cal.sternHelperMethod(totalCarportSize));
+                        System.out.println("New Size " + cal.sternHelperMethod(totalCarportSize));
+                    }
                 }
                 System.out.println(subtract + " SUBSUBSUSBUSBUSBUSBUSBUSBSUBUS");
-
                 System.out.println(totalCarportSize + "TETSTSTETSTSTETSTTETETSTSTE");
 
                 System.out.println(closeToZeroWidth + "aædkajw NAPWOEÅ");
 
                 if ((closeToZeroWidth < 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
                     while (totalCarportSize >= 0) {
-                        totalCarportSize -= (totalCarportSize/closeToZeroWidth);
-                        shortWood += (set.getValue() / set.getValue());
+                        totalCarportSize -= (totalCarportSize / closeToZeroWidth);
+                        //shortWood += (set.getValue() / set.getValue());
                     }
                     System.out.println("SIZE CAPRPORT TWOWOWOWOW " + totalCarportSize);
                     System.out.println("SHIP shortwood = " + shortWood);
-
                     System.out.println("New Size " + cal.sternHelperMethod(totalCarportSize));
                 }
                 closeToZeroWidth = cal.sternHelperMethod(totalCarportSize);
             }
 
-            if(frontAndBackDone) {
+            if (frontAndBackDone) {
                 System.out.println("DONE");
             }
 

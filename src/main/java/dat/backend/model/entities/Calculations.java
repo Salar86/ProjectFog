@@ -116,7 +116,8 @@ public class Calculations {
     {
         loadWoodList();
         double closeToZeroWidth = 0;
-        for(Map.Entry<String, Double> set: woodList.entrySet()) { // Gets the piece of wood thats is cloesest to coerving the length
+        for(Map.Entry<String, Double> set: woodList.entrySet()) {
+            // Gets the piece of wood thats is cloesest to coerving the length
             double temp = carportSizeInCm/set.getValue();
             System.out.println("HELPER " + " " + carportSizeInCm + " " + temp);
             System.out.println(closeToZeroWidth);
