@@ -60,7 +60,7 @@ class UserMapperTest
                 stmt.execute("ALTER TABLE `user` AUTO_INCREMENT = 1");
 
                 stmt.execute("insert into user (role, fullname, email, password, phonenumber) " +
-                        "values ('user','test','user@user.dk', '1234', '1234'),('admin','test','admin@admin.dk', '1234', '1234'), ('user','test','user@test.dk', '1234', '1234')");
+                        "values ('user','test','user@user.dk', '1234', '1234'),('admin','test','admin@admin.dk', '12345', '12345'), ('user','test','user@test.dk', '123456', '123456')");
                 stmt.execute("ALTER TABLE `user` ENABLE KEYS");
             }
         }
@@ -85,8 +85,8 @@ class UserMapperTest
     @Test
     void login() throws DatabaseException
     {
-        User expectedUser = new User("user", "1234", "user");
-        User actualUser = UserFacade.login("user", "1234", connectionPool);
+        User expectedUser = new User(1, "user", "test", "user@user.dk", "1234", "1234");
+        User actualUser = UserFacade.login("user@user.dk", "1234", connectionPool);
         assertEquals(expectedUser, actualUser);
     }
 
@@ -105,9 +105,9 @@ class UserMapperTest
     @Test
     void createUser() throws DatabaseException
     {
-        User newUser = UserFacade.createUser("jill", "1234", "user", connectionPool);
-        User logInUser = UserFacade.login("jill", "1234", connectionPool);
-        User expectedUser = new User("jill", "1234", "user");
+        User newUser = UserFacade.createUser("jill", "jill@test.dk", "1234", "123", connectionPool);
+        User logInUser = UserFacade.login("jill@test.dk", "1234", connectionPool);
+        User expectedUser = new User("jill@test.dk", "1234", "User");
         assertEquals(expectedUser, newUser);
         assertEquals(expectedUser, logInUser);
 
