@@ -6,7 +6,8 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-             Login
+        Quick-Tilbud Service
+        <br>
     </jsp:attribute>
 
     <jsp:attribute name="footer">
@@ -15,13 +16,17 @@
 
     <jsp:body>
 
-        <h3>You can log in here</h3>
+        <h3>Log ind her</h3>
 
         <form action="login" method="post">
-            <label for="username">Username: </label>
+            <label for="username">Email: </label>
+            <br>
             <input type="text" id="username" name="username"/>
-            <label for="password">Password: </label>
+            <br>
+            <label for="password">Kodeord: </label>
+            <br>
             <input type="password" id="password" name="password"/>
+            <br>
             <input type="submit"  value="Log in"/>
         </form>
 

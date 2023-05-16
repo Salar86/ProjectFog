@@ -16,7 +16,7 @@
     <jsp:body>
 
         <c:if test="${sessionScope.user != null}">
-            <p>You are logged in with the role of "${sessionScope.user.role}".</p>
+            <p>Velkommen "${sessionScope.user.username}".</p>
         </c:if>
 
         <c:if test="${sessionScope.user == null}">
