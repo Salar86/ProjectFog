@@ -25,6 +25,8 @@
                     href="login.jsp">Log ind</a></p>
             <p>Ellers kan du oprette en <a
                     href="newUser.jsp">her</a></p>
+            <p>Bestil <a
+                    href="orderCarport.jsp">her</a></p>
         </c:if>
 
     </jsp:body>
