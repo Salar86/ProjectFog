@@ -131,6 +131,6 @@ class UserMapperTest
    @Test
    void deleteUser() throws DatabaseException
    {
-     UserFacade.deleteUser(47, connectionPool);
+     UserFacade.deleteUser(46, connectionPool);
    }
 }
