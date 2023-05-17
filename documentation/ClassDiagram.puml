@@ -1,0 +1,83 @@
+@startuml
+'https://plantuml.com/class-diagram
+class ApplicationStart
+class ConnectionPool
+class Login
+
+ApplicationStart *--> ConnectionPool
+Login *--> ConnectionPool
+
+class User
+{
+    -int id
+    -String fullName
+    -String email
+    -String password
+    -String phoneNumber
+    -String role
+}
+class UserMapper
+{
+    static createUser()
+    static showUsers()
+    static modifyUser()
+    static login()
+}
+class UserFacade
+
+class Order
+{
+    -int orderId
+    -double length
+    -double width
+    -double price
+    -String material
+    -String status
+}
+class OrderMapper
+{
+    createOrder()
+    modifyOrder()
+    deleteOrder()
+    showOrders()
+}
+class OrderFacade
+
+class ItemList
+{
+    -String itemDescription
+    -String assemblyDescription
+    -int price
+    -int quantity
+
+}
+class ItemListMapper
+{
+    getItemList()
+    modifyItemList()
+    deleteItemList()
+    showItemLists()
+}
+class ItemListFacade
+
+class Calculations
+{
+
+}
+class CalculationsMapper
+class CalculationsFacade
+
+UserFacade --> UserMapper
+UserMapper --> User
+
+OrderFacade --> OrderMapper
+OrderMapper --> Order
+
+ItemListFacade --> ItemListMapper
+ItemListMapper --> ItemList
+
+CalculationsFacade --> CalculationsMapper
+CalculationsMapper --> Calculations
+
+@enduml
+
