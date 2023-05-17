@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 class UserMapper {
     static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
@@ -58,6 +59,44 @@ class UserMapper {
         return user;
     }
 
+    /*
+        static ArrayList<User> showUsers(ConnectionPool connectionPool) throws DatabaseException {
+            User user = null;
+            ArrayList<User> allUsers = new ArrayList<>();
+            String sql = "SELECT * FROM user";
+            try (Connection connection = connectionPool.getConnection()) {
+                try (PreparedStatement ps = connection.prepareStatement(sql)) {
+
+                    ResultSet rs = ps.executeQuery();
+                    ResultSetMetaData rsmd = rs.getMetaData();
+                    int columnsNumber = rsmd.getColumnCount();
+                    while (rs.next()) {
+                        for (int i = 0; i < columnsNumber; i++) {
+                            int userId = rs.getInt((i) + "user_id");
+                            String role = rs.getString((i+1)+ "role");
+                            String fullname = rs.getString((i+2) + "fullname");
+                            String email = rs.getString((i+3) + "email");
+                            String password = rs.getString((i+4) + "password");
+                            String phonenumber = rs.getString((i+5) + "phonenumber");
+                        }
+                        int rowsAffected = ps.executeUpdate();
+                        if (rowsAffected >= 1) {
+                            user = new User(userId, role, fullname, email, password, phonenumber);
+                            allUsers.add(user);
+
+                        } else {
+                            throw new DatabaseException("Could not show users bla bla");
+                        }
+                    }
+                }
+            }
+        catch (SQLException ex) {
+            throw new DatabaseException(ex, "Could not show users");
+            }
+            return allUsers;
+        }
+
+     */
     static ArrayList<User> showUsers(ConnectionPool connectionPool) throws DatabaseException {
         User user = null;
         ArrayList<User> allUsers = new ArrayList<>();
@@ -70,20 +109,15 @@ class UserMapper {
                     String role = rs.getString("role");
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
+                    String password = rs.getString("password");
                     String phonenumber = rs.getString("phonenumber");
-                    int rowsAffected = ps.executeUpdate();
-                    if (rowsAffected >= 1) {
-                        user = new User(userId, role, fullname, email, "", phonenumber);
-                        allUsers.add(user);
-
-                    } else {
-                        throw new DatabaseException("Could not show users");
-                    }
+                    user = new User(userId, role, fullname, email, "", phonenumber);
+                    allUsers.add(user);
+                    System.out.println(allUsers);
                 }
             }
-        }
-    catch (SQLException ex) {
-        throw new DatabaseException(ex, "Could not show users");
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "Could not show users");
         }
         return allUsers;
     }
@@ -101,13 +135,9 @@ class UserMapper {
                     String email = rs.getString("email");
                     String fullname = rs.getString("fullname");
                     int orderId = rs.getInt("order_id");
-                    int rowsAffected = ps.executeUpdate();
-                    if (rowsAffected >= 1) {
-                        user = new User(userId, "", fullname, email, "", "", orderId);
-                        allUsers.add(user);
-                    } else {
-                        throw new DatabaseException("Could not show users");
-                    }
+                    user = new User(userId, "", fullname, email, "", "", orderId);
+                    allUsers.add(user);
+                    System.out.println(allUsers);
                 }
             }
         } catch (SQLException ex) {
