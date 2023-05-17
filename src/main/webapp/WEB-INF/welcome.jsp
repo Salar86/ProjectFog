@@ -5,24 +5,22 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         Welcome to the logged in area
+         Velkommen til Quick-Byg Tilbudsservice
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-        Logged in area
+        Brugerområde
     </jsp:attribute>
 
     <jsp:body>
 
-        <p>You should be logged in now</p>
-
-        <c:if test="${sessionScope.user != null}">
-            <p>You are logged in with the role of "${sessionScope.user.role}".</p>
+        <c:if test="${sessionScope.user.role != 'User'}">
+            <p>Velkommen til admin siden.</p>
         </c:if>
 
-        <c:if test="${sessionScope.user == null}">
-            <p>You are not logged in yet. You can do it here: <a
-                    href="../login.jsp">Login</a></p>
+        <c:if test="${sessionScope.user.role == 'User'}">
+            <p>Velkommen ${sessionScope.user.email}</p>
+
         </c:if>
 
     </jsp:body>

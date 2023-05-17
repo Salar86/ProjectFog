@@ -29,15 +29,22 @@
             </button>
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 1</a>
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 2</a>
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 3</a>
+                    <c:if test="${sessionScope.user.role == 'admin'}">
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Brugeroversigt</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestillingsoversigt</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Beregning?</a>
+                    </c:if>
+                    <c:if test="${sessionScope.user.role == 'User'}">
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestil carport</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestillingsstatus</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 3</a>
+                    </c:if>
                     <c:if test="${sessionScope.user == null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/login.jsp">Login</a>
                     </c:if>
                     <c:if test="${sessionScope.user != null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/logout">Log out</a>
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/login">${sessionScope.user.username}</a>
+                        <a class="nav-item nav-link" href="WEB-INF/welcome.jsp">${sessionScope.user.username}</a>
                     </c:if>
                 </div>
             </div>
