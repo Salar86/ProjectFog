@@ -3,11 +3,13 @@ package dat.backend.persistence;
 import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.OrderFacade;
 import dat.backend.model.persistence.UserFacade;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -125,5 +127,10 @@ class UserMapperTest
    void showUserHistory() throws DatabaseException
    {
        UserFacade.showUserHistory(connectionPool);
+   }
+   @Test
+   void deleteUser() throws DatabaseException
+   {
+     UserFacade.deleteUser(47, connectionPool);
    }
 }

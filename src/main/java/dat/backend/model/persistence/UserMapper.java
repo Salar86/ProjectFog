@@ -59,44 +59,6 @@ class UserMapper {
         return user;
     }
 
-    /*
-        static ArrayList<User> showUsers(ConnectionPool connectionPool) throws DatabaseException {
-            User user = null;
-            ArrayList<User> allUsers = new ArrayList<>();
-            String sql = "SELECT * FROM user";
-            try (Connection connection = connectionPool.getConnection()) {
-                try (PreparedStatement ps = connection.prepareStatement(sql)) {
-
-                    ResultSet rs = ps.executeQuery();
-                    ResultSetMetaData rsmd = rs.getMetaData();
-                    int columnsNumber = rsmd.getColumnCount();
-                    while (rs.next()) {
-                        for (int i = 0; i < columnsNumber; i++) {
-                            int userId = rs.getInt((i) + "user_id");
-                            String role = rs.getString((i+1)+ "role");
-                            String fullname = rs.getString((i+2) + "fullname");
-                            String email = rs.getString((i+3) + "email");
-                            String password = rs.getString((i+4) + "password");
-                            String phonenumber = rs.getString((i+5) + "phonenumber");
-                        }
-                        int rowsAffected = ps.executeUpdate();
-                        if (rowsAffected >= 1) {
-                            user = new User(userId, role, fullname, email, password, phonenumber);
-                            allUsers.add(user);
-
-                        } else {
-                            throw new DatabaseException("Could not show users bla bla");
-                        }
-                    }
-                }
-            }
-        catch (SQLException ex) {
-            throw new DatabaseException(ex, "Could not show users");
-            }
-            return allUsers;
-        }
-
-     */
     static ArrayList<User> showUsers(ConnectionPool connectionPool) throws DatabaseException {
         User user = null;
         ArrayList<User> allUsers = new ArrayList<>();
@@ -122,7 +84,6 @@ class UserMapper {
         return allUsers;
     }
 
-
     static ArrayList<User> showUserHistory(ConnectionPool connectionPool) throws DatabaseException {
         User user = null;
         ArrayList<User> allUsers = new ArrayList<>();
@@ -144,5 +105,25 @@ class UserMapper {
             throw new DatabaseException(ex, "Could not show users");
         }
         return allUsers;
+    }
+    static boolean deleteUser(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        boolean isDeleted = false;
+        String sql = ("delete from user where user_id = ?");
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                int rowsAffected = ps.executeUpdate(); //makes sure only one row is affected
+                if (rowsAffected == 1)
+                {
+                    isDeleted = true;
+                } else {
+                    throw new DatabaseException("User could not be deleted from database");
+                }
+            }
+        }
+        catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "User could not be deleted from database");
+        }
+        return isDeleted;
     }
 }
