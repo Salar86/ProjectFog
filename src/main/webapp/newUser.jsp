@@ -38,7 +38,9 @@
             <br>
             <label for="password">Bekræft kodeord: </label>
             <br>
-            <input type="password" id="confirmpassword" name="confirmpassword"/><br><br>
+            <input type="password" id="confirmpassword" name="confirmpassword"/>
+            <br>
+            <br>
             <input type="submit"  value="Opret bruger"/>
         </form>
 

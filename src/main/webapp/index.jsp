@@ -5,8 +5,7 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-         <h5>Lad os tegne din carport drøm!</h5>
-        <h6>bestil et Quick-Byg tilbud gennem vores service.</h6>
+        Quick-Byg Tilbud Service
     </jsp:attribute>
 
     <jsp:attribute name="footer">
@@ -17,12 +16,14 @@
 
         <c:if test="${sessionScope.user != null}">
             <p>Velkommen "${sessionScope.user.username}".</p>
+
         </c:if>
 
         <c:if test="${sessionScope.user == null}">
+            <br>
             <p>Har du allerede en bruger? <a
                     href="login.jsp">Login</a></p>
-            <p>Eller du kan oprette en <a
+            <p>Ellers kan du oprette en <a
                     href="newUser.jsp">her</a></p>
         </c:if>
 

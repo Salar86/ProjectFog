@@ -40,7 +40,7 @@ public class NewUser extends HttpServlet {
         String phonenumber = request.getParameter("phonenumber");
         String confirmPassword = request.getParameter("confirmpassword");
         HttpSession session;
-        if(!password.equals(confirmPassword)) {
+        if(!password.equals(confirmPassword) || password.length() < 6) {
             request.setAttribute("errormessage", "your passwords do not match");
             request.getRequestDispatcher("error.jsp").forward(request, response);
 

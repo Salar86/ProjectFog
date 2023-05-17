@@ -27,7 +27,8 @@
             <br>
             <input type="password" id="password" name="password"/>
             <br>
-            <input type="submit"  value="Log in"/>
+            <br>
+            <input type="submit"  value="Log ind"/>
         </form>
 
     </jsp:body>
