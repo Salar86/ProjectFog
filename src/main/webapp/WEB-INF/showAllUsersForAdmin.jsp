@@ -31,7 +31,5 @@
             </tbody>
         </c:forEach>
         </table>
-
     </jsp:body>
-
 </t:pagetemplate>
