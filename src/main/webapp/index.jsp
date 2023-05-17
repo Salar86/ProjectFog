@@ -22,7 +22,7 @@
         <c:if test="${sessionScope.user == null}">
             <br>
             <p>Har du allerede en bruger? <a
-                    href="login.jsp">Login</a></p>
+                    href="login.jsp">Log ind</a></p>
             <p>Ellers kan du oprette en <a
                     href="newUser.jsp">her</a></p>
         </c:if>
