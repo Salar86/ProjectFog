@@ -6,29 +6,42 @@
 
 <t:pagetemplate>
     <jsp:attribute name="header">
-        Quick-Tilbud Service
-        <br>
+
     </jsp:attribute>
 
     <jsp:attribute name="footer">
-            Login
+            Quick-Tilbud brugeroprettelse
     </jsp:attribute>
 
     <jsp:body>
 
-        <h3>Log ind her</h3>
+        <h4>Opret din Quick-Tilbud bruger her.</h4>
+        <br>
+        <br>
 
-        <form action="login" method="post">
+        <form action="NewUser" method="post">
             <label for="username">Email: </label>
             <br>
             <input type="text" id="username" name="username"/>
             <br>
-            <label for="password">Kodeord: </label>
+            <label for="name">Fulde navn: </label>
+            <br>
+            <input type="text" id="name" name="name"/>
+            <br>
+            <label for="phone">Telefon nr: </label>
+            <br>
+            <input type="text" id="phone" name="phone"/>
+            <br>
+            <label for="password">Vælg et kodeord: </label>
             <br>
             <input type="password" id="password" name="password"/>
             <br>
+            <label for="password">Bekræft kodeord: </label>
             <br>
-            <input type="submit"  value="Log ind"/>
+            <input type="password" id="confirmpassword" name="confirmpassword"/>
+            <br>
+            <br>
+            <input type="submit"  value="Opret bruger"/>
         </form>
 
     </jsp:body>

@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "AllUsers", value = "/AllUsers")
+@WebServlet(name = "AllUsers", value = "/allusers")
 public class AllUsers extends HttpServlet {
 
     private ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
@@ -30,7 +30,8 @@ public class AllUsers extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         try {
-            this.allUsers = UserFacade.showUsers(connectionPool);HttpSession session = request.getSession();
+            this.allUsers = UserFacade.showUsers(connectionPool);
+            HttpSession session = request.getSession();
             session.setAttribute("users", allUsers);
             request.getRequestDispatcher("WEB-INF/adminallusers.jsp").forward(request, response);
         } catch (DatabaseException e) {

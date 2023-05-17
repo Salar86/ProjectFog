@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
-@WebServlet(name = "NewUser", value = "/NewUser")
+@WebServlet(name = "NewUser", value = "/newuser")
 public class NewUser extends HttpServlet {
     private ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
 
@@ -40,13 +40,13 @@ public class NewUser extends HttpServlet {
         String phonenumber = request.getParameter("phonenumber");
         String confirmPassword = request.getParameter("confirmpassword");
         HttpSession session;
-        if(!password.equals(confirmPassword)) {
+        if(!password.equals(confirmPassword) || password.length() < 6) {
             request.setAttribute("errormessage", "your passwords do not match");
             request.getRequestDispatcher("error.jsp").forward(request, response);
 
         } else {
             try {
-                User user = UserFacade.createUser(role, fullname, email, password, phonenumber, connectionPool);
+                User user = UserFacade.createUser(fullname, email, password, phonenumber, connectionPool);
                 session = request.getSession();
                 session.setAttribute("user", user); // adding user object to session scope
                 request.getRequestDispatcher("login.jsp").forward(request, response);
