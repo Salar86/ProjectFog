@@ -38,5 +38,8 @@ public class OrderFacade {
     public static boolean modifyStatus(int orderId, String status, ConnectionPool connectionPool) throws DatabaseException {
         return OrderMapper.modifyStatus(orderId, status, connectionPool);
     }
+    public static ArrayList<Order>showOrdersForUser(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        return OrderMapper.showOrdersForUser(userId, connectionPool);
+    }
 
 }

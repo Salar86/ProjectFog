@@ -33,8 +33,7 @@ public class OrderMapper {
                     throw new DatabaseException("Order " + orderId + " can not be inserted into the database");
                 }
             }
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Order could not be inserted into the database");
         }
         return order;
@@ -56,8 +55,7 @@ public class OrderMapper {
                 }
             }
 
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Length could not be modified in the database");
         }
         return isModified;
@@ -79,12 +77,12 @@ public class OrderMapper {
                 }
             }
 
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Width could not be modified in the database");
         }
         return isModified;
     }
+
     static boolean modifyPrice(int orderId, double price, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
@@ -101,8 +99,7 @@ public class OrderMapper {
                 }
             }
 
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Price could not be modified in the database");
         }
         return isModified;
@@ -124,8 +121,7 @@ public class OrderMapper {
                 }
             }
 
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Material could not be modified in the database");
         }
         return isModified;
@@ -147,8 +143,7 @@ public class OrderMapper {
                 }
             }
 
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Status could not be modified in the database");
         }
         return isModified;
@@ -161,16 +156,14 @@ public class OrderMapper {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, orderId);
                 int rowsAffected = preparedStatement.executeUpdate(); //makes sure only one row is affected
-                if (rowsAffected == 1)
-                {
+                if (rowsAffected == 1) {
                     isDeleted = true;
                 } else {
                     throw new DatabaseException("Order could not be deleted from database");
                 }
 
             }
-        }
-        catch (SQLException sqlException) {
+        } catch (SQLException sqlException) {
             throw new DatabaseException(sqlException, "Order could not be deleted from database");
         }
         return isDeleted;
@@ -193,6 +186,28 @@ public class OrderMapper {
                     String status = resultSet.getString("status");
                     int userId = resultSet.getInt("user_id");
                     order = new Order(orderId, length, width, price, material, status, userId);
+                    allOrders.add(order);
+                }
+            }
+        } catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "Could not connect to database");
+        }
+        return allOrders;
+    }
+
+    static ArrayList<Order> showOrdersForUser(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        Logger.getLogger("web").log(Level.INFO, "");
+        Order order;
+        ArrayList<Order> allOrders = new ArrayList<>();
+        String sql = "SELECT FROM order WHERE user_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int orderId = resultSet.getInt("order_id");
+                    double price = resultSet.getDouble("price");
+                    String status = resultSet.getString("status");
+                    order = new Order(orderId, 0, 0, price, "", status, userId);
                     allOrders.add(order);
                 }
             }

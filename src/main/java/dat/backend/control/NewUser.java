@@ -27,7 +27,6 @@ public class NewUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
 
-
     }
 
     @Override
@@ -40,10 +39,13 @@ public class NewUser extends HttpServlet {
         String phonenumber = request.getParameter("phonenumber");
         String confirmPassword = request.getParameter("confirmpassword");
         HttpSession session;
-        if(!password.equals(confirmPassword) || password.length() < 6) {
+        if (!password.equals(confirmPassword)) {
             request.setAttribute("errormessage", "your passwords do not match");
             request.getRequestDispatcher("error.jsp").forward(request, response);
-
+        }
+        if (password.length() < 6) {
+            request.setAttribute("errormessage", "password is too short");
+            request.getRequestDispatcher("error.jsp").forward(request, response);
         } else {
             try {
                 User user = UserFacade.createUser(fullname, email, password, phonenumber, connectionPool);
@@ -56,7 +58,5 @@ public class NewUser extends HttpServlet {
             }
         }
     }
-
-
-    }
+}
 
