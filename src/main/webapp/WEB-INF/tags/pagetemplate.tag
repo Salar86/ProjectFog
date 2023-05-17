@@ -37,7 +37,7 @@
                     <c:if test="${sessionScope.user.role == 'User'}">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestil carport</a>
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestillingsstatus</a>
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Page 3</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Stykliste</a>
                     </c:if>
                     <c:if test="${sessionScope.user == null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/login.jsp">Login</a>
@@ -62,16 +62,15 @@
     <hr/>
     <div class="row mt-4">
         <div class="col">
-            Nørgaardsvej 30<br/>
-            2800 Lyngby
+           Semesteropgave - Carport
         </div>
         <div class="col">
             <jsp:invoke fragment="footer"/><br/>
-            <p>&copy; 2022 Cphbusiness</p>
+            <p>&copy; 2023 Cphbusiness</p>
         </div>
         <div class="col">
             Datamatikeruddannelsen<br/>
-            2. semester efterår 2022
+            2. semester forår 2023
         </div>
     </div>
 
