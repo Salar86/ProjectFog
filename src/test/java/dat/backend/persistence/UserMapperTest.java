@@ -107,7 +107,7 @@ class UserMapperTest
     {
         User newUser = UserFacade.createUser("jill", "jill@test.dk", "1234", "123", connectionPool);
         User logInUser = UserFacade.login("jill@test.dk", "1234", connectionPool);
-        User expectedUser = new User("jill@test.dk", "1234", "User");
+        User expectedUser = new User("jill@test.dk", "1234", "user");
         assertEquals(expectedUser, newUser);
         assertEquals(expectedUser, logInUser);
 

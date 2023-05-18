@@ -32,24 +32,27 @@ public class NewUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        String role = request.getParameter("role");
         String fullname = request.getParameter("fullname");
         String email = request.getParameter("email");
         String password = request.getParameter("password");
         String phonenumber = request.getParameter("phonenumber");
         String confirmPassword = request.getParameter("confirmpassword");
         HttpSession session;
-        if(!password.equals(confirmPassword) || password.length() < 6) {
-            request.setAttribute("errormessage", "your passwords do not match");
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+        if(!password.equals(confirmPassword)) {
+            request.setAttribute("errormessage", "Kodeord matcher ikke");
+            request.getRequestDispatcher("newUser.jsp").forward(request, response);
 
-        } else {
+        }
+        else if (password.length() < 5) {
+            request.setAttribute("errormessage", "Du skal have et kodeord på mindst 6 karakterer");
+            request.getRequestDispatcher("newUser.jsp").forward(request, response);
+        }
+        else {
             try {
                 User user = UserFacade.createUser(fullname, email, password, phonenumber, connectionPool);
                 session = request.getSession();
                 session.setAttribute("user", user); // adding user object to session scope
-                request.getRequestDispatcher("login.jsp").forward(request, response);
+                request.getRequestDispatcher("WEB-INF/welcome.jsp").forward(request, response);
             } catch (DatabaseException e) {
                 request.setAttribute("errormessage", e.getMessage());
                 request.getRequestDispatcher("error.jsp").forward(request, response);

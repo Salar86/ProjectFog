@@ -14,7 +14,7 @@ class UserMapper {
 
         User user = null;
 
-        String sql = "SELECT * FROM user WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM project_fog_test.user WHERE email = ? AND password = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -37,8 +37,8 @@ class UserMapper {
     static User createUser(String fullname, String email, String password, String phonenumber, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         User user = null;
-        String role = "User";
-        String sql = "INSERT INTO user (role, fullname, email, password, phonenumber)" + "values (?,?,?,?,?)";
+        String role = "user";
+        String sql = "INSERT INTO project_fog_test.user (role, fullname, email, password, phonenumber) values (?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, role);
@@ -64,7 +64,7 @@ class UserMapper {
     static ArrayList<User> showUsers(ConnectionPool connectionPool) throws DatabaseException {
         User user = null;
         ArrayList<User> allUsers = new ArrayList<>();
-        String sql = "SELECT * FROM user";
+        String sql = "SELECT * FROM project_fog_test.user";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();

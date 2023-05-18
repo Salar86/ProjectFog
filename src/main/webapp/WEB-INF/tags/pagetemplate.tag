@@ -34,8 +34,8 @@
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestillingsoversigt</a>
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Beregning?</a>
                     </c:if>
-                    <c:if test="${sessionScope.user.role == 'User'}">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestil carport</a>
+                    <c:if test="${sessionScope.user.role == 'user'}">
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/orderCarport.jsp">Bestil carport</a>
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestillingsstatus</a>
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Stykliste</a>
                     </c:if>
@@ -44,7 +44,7 @@
                     </c:if>
                     <c:if test="${sessionScope.user != null }">
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/logout">Log out</a>
-                        <a class="nav-item nav-link" href="WEB-INF/welcome.jsp">${sessionScope.user.username}</a>
+                        <a class="nav-item nav-link" href="WEB-INF/welcome.jsp">${sessionScope.user.email}</a>
                     </c:if>
                 </div>
             </div>

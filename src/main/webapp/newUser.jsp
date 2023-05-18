@@ -19,29 +19,31 @@
         <br>
         <br>
 
-        <form action="NewUser" method="post">
-            <label for="username">Email: </label>
+        <form action="newuser" method="post">
+            <label for="email">Email: </label>
             <br>
-            <input type="text" id="username" name="username"/>
+            <input type="text" id="email" name="email"/>
             <br>
-            <label for="name">Fulde navn: </label>
+            <label for="fullname">Fulde navn: </label>
             <br>
-            <input type="text" id="name" name="name"/>
+            <input type="text" id="fullname" name="fullname"/>
             <br>
-            <label for="phone">Telefon nr: </label>
+            <label for="phonenumber">Telefon nr: </label>
             <br>
-            <input type="text" id="phone" name="phone"/>
+            <input type="text" id="phonenumber" name="phonenumber"/>
             <br>
             <label for="password">Vælg et kodeord: </label>
             <br>
             <input type="password" id="password" name="password"/>
             <br>
-            <label for="password">Bekræft kodeord: </label>
+            <label for="confirmpassword">Bekræft kodeord: </label>
             <br>
             <input type="password" id="confirmpassword" name="confirmpassword"/>
             <br>
             <br>
             <input type="submit"  value="Opret bruger"/>
+            <br>
+            ${requestScope.errormessage}
         </form>
 
     </jsp:body>

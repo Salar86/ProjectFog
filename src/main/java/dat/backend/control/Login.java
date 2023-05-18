@@ -49,7 +49,7 @@ public class Login extends HttpServlet
         catch (DatabaseException e)
         {
             request.setAttribute("errormessage", e.getMessage());
-            request.getRequestDispatcher("error.jsp").forward(request, response);
+            request.getRequestDispatcher("login.jsp").forward(request, response);
         }
     }
 

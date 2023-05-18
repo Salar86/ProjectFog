@@ -14,11 +14,11 @@
 
     <jsp:body>
 
-        <c:if test="${sessionScope.user.role != 'User'}">
+        <c:if test="${sessionScope.user.role != 'user'}">
             <p>Velkommen til admin siden.</p>
         </c:if>
 
-        <c:if test="${sessionScope.user.role == 'User'}">
+        <c:if test="${sessionScope.user.role == 'user'}">
             <p>Velkommen ${sessionScope.user.email}</p>
 
         </c:if>

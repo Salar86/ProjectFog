@@ -29,6 +29,8 @@
             <br>
             <br>
             <input type="submit"  value="Log ind"/>
+            <br>
+                ${requestScope.errormessage}
         </form>
 
     </jsp:body>
