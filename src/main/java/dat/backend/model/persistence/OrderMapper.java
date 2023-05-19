@@ -13,24 +13,23 @@ import java.util.logging.Logger;
 
 public class OrderMapper {
 
-    static Order createOrder(int orderId, double length, double width, double price, String material, String status, int userId, ConnectionPool connectionPool) throws DatabaseException {
+    static Order createOrder(double length, double width, double price, String material, String status, int userId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         Order order;
-        String sql = "insert into project_fog_test.order (order_id, length, width, price, material, status, user_id) values (?,?,?,?,?,?,?)";
+        String sql = "insert into project_fog_test.order (length, width, price, material, status, user_id) values (?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
-                preparedStatement.setInt(1, orderId);
-                preparedStatement.setDouble(2, length);
-                preparedStatement.setDouble(3, width);
-                preparedStatement.setDouble(4, price);
-                preparedStatement.setString(5, material);
-                preparedStatement.setString(6, status);
-                preparedStatement.setInt(7, userId);
+                preparedStatement.setDouble(1, length);
+                preparedStatement.setDouble(2, width);
+                preparedStatement.setDouble(3, price);
+                preparedStatement.setString(4, material);
+                preparedStatement.setString(5, status);
+                preparedStatement.setInt(6, userId);
                 int rowsAffected = preparedStatement.executeUpdate();
                 if (rowsAffected == 1) {
-                    order = new Order(orderId, length, width, price, material, status, userId);
+                    order = new Order(length, width, price, material, status, userId);
                 } else {
-                    throw new DatabaseException("Order " + orderId + " can not be inserted into the database");
+                    throw new DatabaseException("Order can not be inserted into the database");
                 }
             }
         }

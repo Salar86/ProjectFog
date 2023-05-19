@@ -79,8 +79,8 @@ class OrderMapperTest {
 
     @Test
     void testCreateOrder() throws DatabaseException {
-        Order expectedOrder = new Order(4, 390, 390, 22000, "test", "test",1);
-        Order actualOrder = OrderFacade.createOrder(4,390,390,22000,"test","test", 1, connectionPool);
+        Order expectedOrder = new Order(390, 390, 22000, "test", "test",1);
+        Order actualOrder = OrderFacade.createOrder(390,390,22000,"test","test", 1, connectionPool);
         assertEquals(actualOrder, expectedOrder);
 
     }

@@ -21,10 +21,11 @@ public class User {
         this.phonenumber = phonenumber;
     }
 
-    public User(String email, String password, String role) {
+    public User(String email, String password, String role, int userId) {
         this.email = email;
         this.password = password;
         this.role = role;
+        this.userId = userId;
     }
     public User(int userId, String role, String fullname, String email, String password, String phonenumber, int orderId) {
         this.userId = userId;
@@ -58,6 +59,10 @@ public class User {
 
     public void setRole(String role) {
         this.role = role;
+    }
+
+    public int getUserId() {
+        return userId;
     }
 
     @Override

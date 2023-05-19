@@ -30,8 +30,7 @@
         </c:if>
 
         <c:if test="${requestScope.errormessage  == null}">
-            <p>Der er sket en ukendt fejl
-                !</p>
+            <p>Der er sket en ukendt fejl!</p>
         </c:if>
 
         <p>Tilbage til <a href="index.jsp">forsiden</a>,

@@ -19,52 +19,54 @@
         <br>
         <br>
 
-        <form action="OrderCarport" method="post">
+        <form action="ordercarport" method="post">
+            <input type="hidden" value="${sessionScope.user.userId}" name="userId">
             <label for="width">Carportens bredde: </label>
             <br>
             <select id="width" name="width">
-            <option value="240 cm">240 CM</option>
-            <option value="270 cm">270 CM</option>
-            <option value="300 cm">300 CM</option>
-            <option value="330 cm">330 CM</option>
-            <option value="360 cm">360 CM</option>
-            <option value="390 cm">390 CM</option>
-            <option value="420 cm">420 CM</option>
-            <option value="450 cm">450 CM</option>
-            <option value="480 cm">480 CM</option>
-            <option value="510 cm">510 CM</option>
-            <option value="540 cm">540 CM</option>
-            <option value="570 cm">570 CM</option>
-            <option value="600 cm">600 CM</option>
+            <option value="240">240 CM</option>
+            <option value="270">270 CM</option>
+            <option value="300">300 CM</option>
+            <option value="330">330 CM</option>
+            <option value="360">360 CM</option>
+            <option value="390">390 CM</option>
+            <option value="420">420 CM</option>
+            <option value="450">450 CM</option>
+            <option value="480">480 CM</option>
+            <option value="510">510 CM</option>
+            <option value="540">540 CM</option>
+            <option value="570">570 CM</option>
+            <option value="600">600 CM</option>
             </select>
             <br>
             <label for="length">Carportens længde: </label>
             <br>
             <select id="length" name="length">
-                <option value="240 cm">240 CM</option>
-                <option value="270 cm">270 CM</option>
-                <option value="300 cm">300 CM</option>
-                <option value="330 cm">330 CM</option>
-                <option value="360 cm">360 CM</option>
-                <option value="390 cm">390 CM</option>
-                <option value="420 cm">420 CM</option>
-                <option value="450 cm">450 CM</option>
-                <option value="480 cm">480 CM</option>
-                <option value="510 cm">510 CM</option>
-                <option value="540 cm">540 CM</option>
-                <option value="570 cm">570 CM</option>
-                <option value="600 cm">600 CM</option>
-                <option value="630 cm">630 CM</option>
-                <option value="660 cm">660 CM</option>
-                <option value="690 cm">690 CM</option>
-                <option value="720 cm">720 CM</option>
-                <option value="750 cm">750 CM</option>
-                <option value="780 cm">780 CM</option>
+                <option value="240">240 CM</option>
+                <option value="270">270 CM</option>
+                <option value="300">300 CM</option>
+                <option value="330">330 CM</option>
+                <option value="360">360 CM</option>
+                <option value="390">390 CM</option>
+                <option value="420">420 CM</option>
+                <option value="450">450 CM</option>
+                <option value="480">480 CM</option>
+                <option value="510">510 CM</option>
+                <option value="540">540 CM</option>
+                <option value="570">570 CM</option>
+                <option value="600">600 CM</option>
+                <option value="630">630 CM</option>
+                <option value="660">660 CM</option>
+                <option value="690">690 CM</option>
+                <option value="720">720 CM</option>
+                <option value="750">750 CM</option>
+                <option value="780">780 CM</option>
             </select>
             <br>
             <br>
             <input type="submit"  value="Send bestilling"/>
             <br>
+            ${requestScope.success}
         </form>
 
     </jsp:body>

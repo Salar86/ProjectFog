@@ -7,8 +7,8 @@ import java.util.ArrayList;
 
 public class OrderFacade {
 
-    public static Order createOrder(int orderId, double length, double width, double price, String material, String status, int userId, ConnectionPool connectionPool) throws DatabaseException {
-        return OrderMapper.createOrder(orderId, length, width, price, material, status, userId, connectionPool);
+    public static Order createOrder(double length, double width, double price, String material, String status, int userId, ConnectionPool connectionPool) throws DatabaseException {
+        return OrderMapper.createOrder(length, width, price, material, status, userId, connectionPool);
     }
 
     public static boolean deleteOrder(int orderId, ConnectionPool connectionPool) throws DatabaseException {

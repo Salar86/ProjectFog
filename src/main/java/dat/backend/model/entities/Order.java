@@ -30,6 +30,15 @@ public class Order {
         this.userId = userId;
     }
 
+    public Order(double length, double width, double price, String material, String status, int userId) {
+        this.length = length;
+        this.width = width;
+        this.price = price;
+        this.material = material;
+        this.status = status;
+        this.userId = userId;
+    }
+
     public int getOrderId() {
         return orderId;
     }

@@ -49,10 +49,8 @@ public class NewUser extends HttpServlet {
         }
         else {
             try {
-                User user = UserFacade.createUser(fullname, email, password, phonenumber, connectionPool);
-                session = request.getSession();
-                session.setAttribute("user", user); // adding user object to session scope
-                request.getRequestDispatcher("WEB-INF/welcome.jsp").forward(request, response);
+                UserFacade.createUser(fullname, email, password, phonenumber, connectionPool);
+                request.getRequestDispatcher("login.jsp").forward(request, response);
             } catch (DatabaseException e) {
                 request.setAttribute("errormessage", e.getMessage());
                 request.getRequestDispatcher("error.jsp").forward(request, response);
