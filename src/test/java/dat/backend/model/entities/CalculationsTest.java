@@ -2,10 +2,6 @@ package dat.backend.model.entities;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.w3c.dom.ls.LSOutput;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -15,6 +11,15 @@ class CalculationsTest {
     @BeforeEach
     void setUp() {
 
+    }
+
+    @Test
+    void calRem()
+    {
+        Calculations cal = new Calculations();
+        //cal.calculateRem(240);
+        cal.calculateRafters(600,780);
+        cal.calculatePosts(481);
     }
 
     @Test
@@ -64,7 +69,7 @@ class CalculationsTest {
     @Test
     void calculateFrontAndBackSternBoards(){
         Calculations cal = new Calculations();
-        cal.CalculateSternBoardsMainTest(330, 780);
+        cal.calculateCarport(540, 360);
 
     }
 
