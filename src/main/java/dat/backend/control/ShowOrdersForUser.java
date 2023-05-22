@@ -22,10 +22,10 @@ public class ShowOrdersForUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-       // int userId = Integer.parseInt(request.getParameter("userId"));
+        HttpSession session = request.getSession();
+            int userId = Integer.parseInt(request.getParameter("userId"));
         try {
-            orderHistory = OrderFacade.showOrders(connectionPool);
-            HttpSession session = request.getSession();
+            orderHistory = OrderFacade.showOrdersForUser(userId, connectionPool);
             session.setAttribute("history", orderHistory);
             request.getRequestDispatcher("ordersForCustomer.jsp").forward(request, response);
         } catch (DatabaseException e) {

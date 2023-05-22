@@ -14,7 +14,7 @@
     </jsp:attribute>
 
     <jsp:body>
-
+        <input type="hidden" value="${sessionScope.user.userId}" name="userId">
         <c:forEach var="orders" items="${sessionScope.history}">
             <table class="table table-striped table-hover">
             <thead>
@@ -27,9 +27,9 @@
             </thead>
             <tbody>
             <tr>
+                <td class="align-middle">${orders.orderId}</td>
                 <td class="align-middle">${orders.status}</td>
                 <td class="align-middle">${orders.price}</td>
-                <td class="align-middle">${orders.orderId}</td>
             </tr>
             </tbody>
         </c:forEach>
