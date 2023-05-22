@@ -25,7 +25,7 @@ public class ShowOrdersForUser extends HttpServlet {
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         try {
-            int userId = (int) request.getSession().getAttribute("userId");
+            int userId = (int) request.getSession().getAttribute("userId"); // assigning user of current session to local variable. Needs revision
             this.allOrders = OrderFacade.showOrdersForUser(userId, connectionPool);
             session.setAttribute("orders", allOrders);
             request.getRequestDispatcher("WEB-INF/adminshowusers.jsp").forward(request, response);
