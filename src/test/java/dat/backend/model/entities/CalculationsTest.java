@@ -69,7 +69,7 @@ class CalculationsTest {
     @Test
     void calculateFrontAndBackSternBoards(){
         Calculations cal = new Calculations();
-        cal.calculateCarport(540, 360);
+        cal.calculateCarport(570, 360);
 
     }
 
