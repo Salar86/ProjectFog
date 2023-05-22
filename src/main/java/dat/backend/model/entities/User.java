@@ -65,6 +65,26 @@ public class User {
         return userId;
     }
 
+    public String getFullname() {
+        return fullname;
+    }
+
+    public void setFullname(String fullname) {
+        this.fullname = fullname;
+    }
+
+    public String getPhonenumber() {
+        return phonenumber;
+    }
+
+    public void setPhonenumber(String phonenumber) {
+        this.phonenumber = phonenumber;
+    }
+
+    public int getOrderId() {
+        return orderId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
