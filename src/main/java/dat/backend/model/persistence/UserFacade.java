@@ -22,6 +22,9 @@ public class UserFacade
     public static ArrayList<User> showUserHistory(ConnectionPool connectionPool) throws DatabaseException {
         return UserMapper.showUserHistory(connectionPool);
     }
+    public static boolean deleteUser(int userId, ConnectionPool connectionPool)throws DatabaseException {
+        return UserMapper.deleteUser(userId, connectionPool);
+    }
 
 
 }

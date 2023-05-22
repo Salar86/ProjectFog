@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+
 class UserMapper {
     static User login(String email, String password, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
@@ -74,24 +75,18 @@ class UserMapper {
                     String role = rs.getString("role");
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
+                    String password = rs.getString("password");
                     String phonenumber = rs.getString("phonenumber");
-                    int rowsAffected = ps.executeUpdate();
-                    if (rowsAffected >= 1) {
-                        user = new User(userId, role, fullname, email, "", phonenumber);
-                        allUsers.add(user);
-
-                    } else {
-                        throw new DatabaseException("Could not show users");
-                    }
+                    user = new User(userId, role, fullname, email, "", phonenumber);
+                    allUsers.add(user);
+                    System.out.println(allUsers);
                 }
             }
-        }
-    catch (SQLException ex) {
-        throw new DatabaseException(ex, "Could not show users");
+        } catch (SQLException ex) {
+            throw new DatabaseException(ex, "Could not show users");
         }
         return allUsers;
     }
-
 
     static ArrayList<User> showUserHistory(ConnectionPool connectionPool) throws DatabaseException {
         User user = null;
@@ -105,18 +100,34 @@ class UserMapper {
                     String email = rs.getString("email");
                     String fullname = rs.getString("fullname");
                     int orderId = rs.getInt("order_id");
-                    int rowsAffected = ps.executeUpdate();
-                    if (rowsAffected >= 1) {
-                        user = new User(userId, "", fullname, email, "", "", orderId);
-                        allUsers.add(user);
-                    } else {
-                        throw new DatabaseException("Could not show users");
-                    }
+                    user = new User(userId, "", fullname, email, "", "", orderId);
+                    allUsers.add(user);
+                    System.out.println(allUsers);
                 }
             }
         } catch (SQLException ex) {
             throw new DatabaseException(ex, "Could not show users");
         }
         return allUsers;
+    }
+    static boolean deleteUser(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        boolean isDeleted = false;
+        String sql = ("delete from user where user_id = ?");
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                int rowsAffected = ps.executeUpdate(); //makes sure only one row is affected
+                if (rowsAffected == 1)
+                {
+                    isDeleted = true;
+                } else {
+                    throw new DatabaseException("User could not be deleted from database");
+                }
+            }
+        }
+        catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "User could not be deleted from database");
+        }
+        return isDeleted;
     }
 }

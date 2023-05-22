@@ -60,6 +60,9 @@ public class User {
     public void setRole(String role) {
         this.role = role;
     }
+    public void getOrderId(int orderId){
+        this.orderId = orderId;
+    }
 
     public int getUserId() {
         return userId;
@@ -82,9 +85,13 @@ public class User {
     @Override
     public String toString() {
         return "User{" +
-                "brugerNavn='" + email + '\'' +
-                ", kodeord='" + password + '\'' +
-                ", rolle='" + role + '\'' +
+                "email='" + email + '\'' +
+                ", password='" + password + '\'' +
+                ", role='" + role + '\'' +
+                ", fullname='" + fullname + '\'' +
+                ", phonenumber='" + phonenumber + '\'' +
+                ", userId=" + userId +
+                ", orderId=" + orderId +
                 '}';
     }
 }
