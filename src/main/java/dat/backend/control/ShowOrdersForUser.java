@@ -14,7 +14,7 @@ import javax.servlet.annotation.*;
 import java.io.IOException;
 import java.util.ArrayList;
 
-@WebServlet(name = "ShowOrdersForUser", value = "/ShowOrdersForUser")
+@WebServlet(name = "ShowOrdersForUser", value = "/showordersforuser")
 public class ShowOrdersForUser extends HttpServlet {
     private ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
     private ArrayList<Order> orderHistory;
@@ -22,9 +22,9 @@ public class ShowOrdersForUser extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        int userId = Integer.parseInt(request.getParameter("userId"));
+       // int userId = Integer.parseInt(request.getParameter("userId"));
         try {
-            this.orderHistory = OrderFacade.showOrders(connectionPool);
+            orderHistory = OrderFacade.showOrders(connectionPool);
             HttpSession session = request.getSession();
             session.setAttribute("history", orderHistory);
             request.getRequestDispatcher("ordersForCustomer.jsp").forward(request, response);
