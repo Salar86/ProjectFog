@@ -30,7 +30,7 @@
             <div class="collapse navbar-collapse justify-content-end" id="navbarNavAltMarkup">
                 <div class="navbar-nav">
                     <c:if test="${sessionScope.user.role == 'admin'}">
-                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Brugeroversigt</a>
+                    <a class="nav-item nav-link" href="${pageContext.request.contextPath}/showusers">Brugeroversigt</a>
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Bestillingsoversigt</a>
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/">Beregning?</a>
                     </c:if>

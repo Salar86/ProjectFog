@@ -15,18 +15,18 @@
     <jsp:body>
         <c:forEach  var="users" items="${sessionScope.users}">
             <table class="table table-striped table-hover">
-            <thead>
             <tr>
-                <th scope="col" id="email">Email</th>
-                <th scope="col" id="fullname">Navn</th>
-                <th scope="col" id="phone">Telefon</th>
+                <th style="width: 25%" scope="col" id="email">Email</th>
+                <th style="width: 25%" scope="col" id="fullname">Navn</th>
+                <th style="width: 25%" scope="col" id="phone">Telefon</th>
+                <th style="width: 25%" scope="col" id="delete">Slet bruger</th>
             </tr>
-            </thead>
             <tbody>
             <tr>
-                <th class="align-middle">${users.email}</th>
-                <td class="align-middle">${users.fullname}</td>
-                <td class="align-middle">${users.phone}</td>
+                <td>${users.email}</td>
+                <td>${users.fullname}</td>
+                <td>${users.phonenumber}</td>
+                <td><form action="showusers" method="post"><input type="submit" value="Slet"><input type="hidden" value="${users.userId}" name="userId"></form></td>
             </tr>
             </tbody>
         </c:forEach>

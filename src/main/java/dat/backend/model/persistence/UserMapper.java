@@ -50,7 +50,7 @@ class UserMapper {
                 int rowsAffected = ps.executeUpdate();
                 if (rowsAffected == 1) {
 
-                    user = new User(0, role, fullname, email, password, phonenumber);
+                        user = new User(0, role, fullname, email, password, phonenumber);
 
                 } else {
                     throw new DatabaseException("The user with username = " + email + " could not be inserted into the database");
@@ -75,17 +75,12 @@ class UserMapper {
                     String fullname = rs.getString("fullname");
                     String email = rs.getString("email");
                     String phonenumber = rs.getString("phonenumber");
-                    int rowsAffected = ps.executeUpdate();
-                    if (rowsAffected >= 1) {
-                        user = new User(userId, role, fullname, email, "", phonenumber);
-                        allUsers.add(user);
-
-                    } else {
-                        throw new DatabaseException("Could not show users");
+                    user = new User(userId, role, fullname, email, "", phonenumber);
+                    allUsers.add(user);
                     }
                 }
             }
-        }
+
     catch (SQLException ex) {
         throw new DatabaseException(ex, "Could not show users");
         }
@@ -118,5 +113,26 @@ class UserMapper {
             throw new DatabaseException(ex, "Could not show users");
         }
         return allUsers;
+    }
+
+    static boolean deleteUser(int userId, ConnectionPool connectionPool) throws DatabaseException{
+        boolean result = false;
+        String sql = "DELETE FROM project_fog_test.user WHERE user_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, userId);
+                int rowsAffected = ps.executeUpdate();
+                if (rowsAffected == 1)
+                {
+                    result = true;
+                } else {
+                    throw new DatabaseException("Could not delete user");
+                }
+
+            }
+            }catch (SQLException ex) {
+            throw new DatabaseException(ex, "Could not show users");
+        }
+        return result;
     }
 }
