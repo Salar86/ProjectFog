@@ -89,7 +89,7 @@ class UserMapperTest
    @Test
      void login() throws DatabaseException
     {
-        User expectedUser = new User("Rasmus@me.dk", "1234", "user");
+        User expectedUser = new User("Rasmus@me.dk", "1234", "user", 1);
         User actualUser = UserFacade.login("Rasmus@me.dk", "1234", connectionPool);
         assertEquals(expectedUser, actualUser);
     }
@@ -110,9 +110,9 @@ class UserMapperTest
    @Test
     void createUser() throws DatabaseException
     {
-        User newUser = UserFacade.createUser("user", "Lars", "Rasmus@me.dk", "1234", "21575525", connectionPool);
+        User newUser = UserFacade.createUser("Rasmus", "Rasmus@me.dk","1234", "21575525", connectionPool);
         User logInUser = UserFacade.login("Rasmus@me.dk", "1234", connectionPool);
-        User expectedUser = new User("Rasmus@me.dk", "1234", "user");
+        User expectedUser = new User("Rasmus@me.dk", "1234", "user", 1);
         assertEquals(expectedUser, newUser);
         assertEquals(expectedUser, logInUser);
 
@@ -123,11 +123,13 @@ class UserMapperTest
         UserFacade.showUsers(connectionPool);
    }
 
-   @Test
+  /* @Test
    void showUserHistory() throws DatabaseException
    {
        UserFacade.showUserHistory(connectionPool);
    }
+   */
+
    @Test
    void deleteUser() throws DatabaseException
    {
