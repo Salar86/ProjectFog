@@ -204,9 +204,10 @@ public class OrderMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         Order order;
         ArrayList<Order> allOrders = new ArrayList<>();
-        String sql = "select * from project_fog_test.order where userId = ?";
+        String sql = "select * from project_fog_test.order where user_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, userId);
                 ResultSet resultSet = preparedStatement.executeQuery();
                 while (resultSet.next()) {
                     int orderId = resultSet.getInt("order_id");
@@ -221,7 +222,7 @@ public class OrderMapper {
                 }
             }
         } catch (SQLException sqlException) {
-            throw new DatabaseException(sqlException, "Could not connect to database");
+            throw new DatabaseException(sqlException, "Could not connect to database "+ sqlException.getMessage());
         }
         return allOrders;
     }

@@ -6,16 +6,15 @@
 
 <t:pagetemplate>
         <jsp:attribute name="header">
-             <input type="hidden" value="${sessionScope.user.userId}" name="userId">
-         Bestillingsoversigt for ${sessionScope.user.email}
+         Bestillingsoversigt
     </jsp:attribute>
     <jsp:attribute name="footer">
         Bestillingsstatus
     </jsp:attribute>
 
     <jsp:body>
-        <input type="hidden" value="${sessionScope.user.userId}" name="userId">
         <c:forEach var="orders" items="${sessionScope.history}">
+            <form><input type="hidden" value="${sessionScope.user.userId}" name="userId"></form>
             <table class="table table-striped table-hover">
             <thead>
             <tr>

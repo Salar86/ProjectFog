@@ -23,7 +23,7 @@ public class ShowOrdersForUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-            int userId = Integer.parseInt(request.getParameter("userId"));
+            int userId =  Integer.parseInt(request.getParameter("userId"));
         try {
             orderHistory = OrderFacade.showOrdersForUser(userId, connectionPool);
             session.setAttribute("history", orderHistory);
