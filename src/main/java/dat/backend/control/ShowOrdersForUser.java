@@ -23,11 +23,11 @@ public class ShowOrdersForUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-            int userId =  Integer.parseInt(request.getParameter("userId"));
+        User user = (User) session.getAttribute("user");
         try {
-            orderHistory = OrderFacade.showOrdersForUser(userId, connectionPool);
+            orderHistory = OrderFacade.showOrdersForUser(user.getUserId(), connectionPool);
             session.setAttribute("history", orderHistory);
-            request.getRequestDispatcher("ordersForCustomer.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/ordersForCustomer.jsp").forward(request, response);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
@@ -35,6 +35,7 @@ public class ShowOrdersForUser extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+
 
     }
 }
