@@ -25,7 +25,7 @@ public class OrderCarport extends HttpServlet {
         double length = Double.parseDouble(request.getParameter("length"));
         String material = "";
         double price = 0;
-        String status = "PENDING";
+        String status = "AFVENTER TILBUD";
         int userId = Integer.parseInt(request.getParameter("userId"));
         try {
             OrderFacade.createOrder(length,width,price,material,status,userId,connectionPool);

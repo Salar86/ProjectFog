@@ -3,13 +3,11 @@ package dat.backend.persistence;
 import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
-import dat.backend.model.persistence.OrderFacade;
 import dat.backend.model.persistence.UserFacade;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-import javax.xml.crypto.Data;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -21,8 +19,8 @@ class UserMapperTest
     // TODO: Change mysql login credentials if needed below
 
     private final static String USER = "root";
-    private final static String PASSWORD = "Ostefar";
-    private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test";
+    private final static String PASSWORD = "Salar0108";
+    private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
 
     private static ConnectionPool connectionPool;
 
@@ -38,12 +36,8 @@ class UserMapperTest
                 // Create test database - if not exist
                 stmt.execute("CREATE DATABASE  IF NOT EXISTS project_fog_test;");
 
-                // Creates test databases. Works
-                /* stmt.execute("CREATE TABLE IF NOT EXISTS project_fog_test.user LIKE project_fog.user;");
-                stmt.execute("CREATE TABLE IF NOT EXISTS project_fog_test.itemlist LIKE project_fog.itemlist;");
-                stmt.execute("CREATE TABLE IF NOT EXISTS project_fog_test.order LIKE project_fog.order;");
-                stmt.execute("CREATE TABLE IF NOT EXISTS project_fog_test.product LIKE project_fog.product;");
-                stmt.execute("CREATE TABLE IF NOT EXISTS project_fog_test.product_variant LIKE project_fog.product_variant;"); */
+                // TODO: Create user table. Add your own tables here
+                stmt.execute("CREATE TABLE IF NOT EXISTS project_fog_test.user LIKE project_fog.user;");
             }
         }
         catch (SQLException throwables)
@@ -60,12 +54,14 @@ class UserMapperTest
         {
             try (Statement stmt = testConnection.createStatement())
             {
-                // TODO: Remove all rows from all tables - add your own tables here
-               // stmt.execute("DELETE FROM user where user_id = 3");
+                stmt.execute("DELETE from project_fog_test.order");
+                stmt.execute("delete from user");
+                stmt.execute("ALTER TABLE `user` DISABLE KEYS");
+                stmt.execute("ALTER TABLE `user` AUTO_INCREMENT = 1");
 
-                // TODO: Insert a few users - insert rows into your own tables here
-                //stmt.execute("INSERT INTO user (role, fullname, email, password, phonenumber)" + "values ('user', 'Rasmus','Rasmus@me.dk','1234','21575525')");
-
+                stmt.execute("insert into user (role, fullname, email, password, phonenumber) " +
+                        "values ('user','test','user@user.dk', '1234', '1234'),('admin','test','admin@admin.dk', '12345', '12345'), ('user','test','user@test.dk', '123456', '123456')");
+                stmt.execute("ALTER TABLE `user` ENABLE KEYS");
             }
         }
         catch (SQLException throwables)
@@ -86,53 +82,34 @@ class UserMapperTest
         }
     }
 
-   @Test
-     void login() throws DatabaseException
+    @Test
+    void login() throws DatabaseException
     {
-        User expectedUser = new User("Rasmus@me.dk", "1234", "user", 1);
-        User actualUser = UserFacade.login("Rasmus@me.dk", "1234", connectionPool);
+        User expectedUser = new User(1, "user", "test", "user@user.dk", "1234", "1234");
+        User actualUser = UserFacade.login("user@user.dk", "1234", connectionPool);
         assertEquals(expectedUser, actualUser);
     }
 
     @Test
     void invalidPasswordLogin() throws DatabaseException
     {
-        assertThrows(DatabaseException.class, () -> UserFacade.login("Rasmus@me.dk", "123", connectionPool));
+        assertThrows(DatabaseException.class, () -> UserFacade.login("user", "123", connectionPool));
     }
-
 
     @Test
     void invalidUserNameLogin() throws DatabaseException
     {
-        assertThrows(DatabaseException.class, () -> UserFacade.login("Rasmus@me.d", "1234", connectionPool));
+        assertThrows(DatabaseException.class, () -> UserFacade.login("bob", "1234", connectionPool));
     }
 
-   @Test
+    @Test
     void createUser() throws DatabaseException
     {
-        User newUser = UserFacade.createUser("Rasmus", "Rasmus@me.dk","1234", "21575525", connectionPool);
-        User logInUser = UserFacade.login("Rasmus@me.dk", "1234", connectionPool);
-        User expectedUser = new User("Rasmus@me.dk", "1234", "user", 1);
+        User newUser = UserFacade.createUser("jill", "jill@test.dk", "1234", "123", connectionPool);
+        User logInUser = UserFacade.login("jill@test.dk", "1234", connectionPool);
+        User expectedUser = new User("jill@test.dk", "1234", "user",4);
         assertEquals(expectedUser, newUser);
         assertEquals(expectedUser, logInUser);
 
     }
-   @Test
-   void showUsers() throws DatabaseException
-   {
-        UserFacade.showUsers(connectionPool);
-   }
-
-  /* @Test
-   void showUserHistory() throws DatabaseException
-   {
-       UserFacade.showUserHistory(connectionPool);
-   }
-   */
-
-   @Test
-   void deleteUser() throws DatabaseException
-   {
-     UserFacade.deleteUser(46, connectionPool);
-   }
 }
