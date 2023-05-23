@@ -31,19 +31,24 @@
                 <td>${orders.orderId}</td>
                 <td>${orders.length}</td>
                 <td>${orders.width}</td>
-                <td>${orders.price}</td>
-                <td>${orders.status}</td>
-                <td>${orders.userId}</td>
-                <td><form action="showordersforadmin" method="post"><input type="submit" value="Slet"><input type="hidden" value="${orders.orderId}" name="orderId"></form></td>
-                <td><form>
-                    <label for="orderupdate"></label><select id="orderupdate" name="orderupdate">
-                    <option value="price">Pris</option>
-                    <option value="status">Status</option>
-                </select>
-                    <label for="input"></label><input type="text" id="input" name="input"/>
-                    <input type="submit" value="Opdater"/>
+                <td>${orders.price}<form action="modifyorders" method="get"><input type="hidden" value="${orders.orderId}" name="orderId">
+                    <label for="priceupdate"></label>
+                    <input type="text" id="priceupdate" name="priceupdate"/>
+                        <input type="submit" value="Afsend tilbud"/>
                 </form>
                 </td>
+                <td>${orders.status} <form action="modifyorders" method="post"><input type="hidden" value="${orders.orderId}" name="orderId">
+                    <label for="statusupdate"></label>
+                    <select id="statusupdate" name="statusupdate">
+                    <option value="TILBUD AFGIVET">TILBUD AFGIVET</option>
+                    <option value="SÆLGER KONTAKTER DIG">SÆLGER KONTAKTER DIG</option>
+                    <input type="submit" value="Opdater"/>
+                    </select>
+                </form>
+                </td>
+                <td>${orders.userId}</td>
+                <td><form action="showordersforadmin" method="post"><input type="submit" value="Slet"><input type="hidden" value="${orders.orderId}" name="orderId"></form></td>
+                <td>PLACEHOLDER</td>
             </tr>
             </tbody>
         </c:forEach>
