@@ -16,12 +16,13 @@
 
             <table class="table table-striped table-hover">
             <tr>
-                <th style="width: 16.6%" scope="col" id="orderId">OrdreID</th>
-                <th style="width: 16.6%" scope="col" id="length">Længde</th>
-                <th style="width: 16.6%" scope="col" id="width">Bredde</th>
-                <th style="width: 16.6%" scope="col" id="price">Pris</th>
-                <th style="width: 16.6%" scope="col" id="status">Status</th>
-                <th style="width: 16.6%" scope="col" id="userId">Bruger</th>
+                <th style="width: 14.2%" scope="col" id="orderId">OrdreID</th>
+                <th style="width: 14.2%" scope="col" id="length">Længde</th>
+                <th style="width: 14.2%" scope="col" id="width">Bredde</th>
+                <th style="width: 14.2%" scope="col" id="price">Pris</th>
+                <th style="width: 14.2%" scope="col" id="status">Status</th>
+                <th style="width: 14.2%" scope="col" id="userId">Bruger</th>
+                <th style="width: 14.2%" scope="col" id="delete">Slet Ordre</th>
             </tr>
             <tbody>
             <c:forEach  var="orders" items="${sessionScope.orders}">
@@ -32,6 +33,7 @@
                 <td>${orders.price}</td>
                 <td>${orders.status}</td>
                 <td>${orders.userId}</td>
+                <td><form action="showordersforadmin" method="post"><input type="submit" value="Slet"><input type="hidden" value="${orders.orderId}" name="orderId"></form></td>
             </tr>
             </tbody>
         </c:forEach>

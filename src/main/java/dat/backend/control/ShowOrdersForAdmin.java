@@ -31,6 +31,14 @@ public class ShowOrdersForAdmin extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        int orderId = Integer.parseInt(request.getParameter("orderId"));
+        try {
+            OrderFacade.deleteOrder(orderId,connectionPool);
 
+        } catch (DatabaseException e) {
+            e.printStackTrace();
+        }
+        allOrders.removeIf(o -> orderId == o.getOrderId());
+        request.getRequestDispatcher("WEB-INF/showAllOrdersForAdmin.jsp").forward(request, response);
     }
 }
