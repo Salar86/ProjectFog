@@ -200,5 +200,31 @@ public class OrderMapper {
         }
         return allOrders;
     }
+    static ArrayList<Order> showOrdersForUser(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        Logger.getLogger("web").log(Level.INFO, "");
+        Order order;
+        ArrayList<Order> allOrders = new ArrayList<>();
+        String sql = "select * from project_fog_test.order where user_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setInt(1, userId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    int orderId = resultSet.getInt("order_id");
+                    double length = resultSet.getDouble("length");
+                    double width = resultSet.getDouble("width");
+                    double price = resultSet.getDouble("price");
+                    String material = resultSet.getString("material");
+                    String status = resultSet.getString("status");
+                    userId = resultSet.getInt("user_id");
+                    order = new Order(orderId, length, width, price, material, status, userId);
+                    allOrders.add(order);
+                }
+            }
+        } catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "Could not connect to database "+ sqlException.getMessage());
+        }
+        return allOrders;
+    }
 
 }

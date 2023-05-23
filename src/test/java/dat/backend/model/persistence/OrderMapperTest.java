@@ -15,8 +15,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class OrderMapperTest {
     private final static String USER = "root";
-    private final static String PASSWORD = "Salar0108";
-    private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
+    private final static String PASSWORD = "Ostefar";
+    private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test";
 
     private static ConnectionPool connectionPool;
 
@@ -132,6 +132,7 @@ class OrderMapperTest {
     void testShowOrders() throws DatabaseException {
         ArrayList<Order> allOrders = OrderFacade.showOrders(connectionPool);
         assertEquals(3, allOrders.size());
+        System.out.println(allOrders);
 
 
     }

@@ -18,6 +18,9 @@ public class OrderFacade {
     public static ArrayList<Order> showOrders(ConnectionPool connectionPool) throws DatabaseException {
         return OrderMapper.showOrders(connectionPool);
     }
+    public static ArrayList<Order> showOrdersForUser(int userId, ConnectionPool connectionPool) throws DatabaseException {
+        return OrderMapper.showOrdersForUser(userId, connectionPool);
+    }
 
     public static boolean modifyLength(int orderId, double length, ConnectionPool connectionPool) throws DatabaseException {
         return OrderMapper.modifyLength(orderId, length, connectionPool);
