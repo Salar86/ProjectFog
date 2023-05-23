@@ -19,8 +19,8 @@
         </c:if>
 
         <c:if test="${sessionScope.user.role == 'user'}">
-            <p>Velkommen ${sessionScope.user.email}</p>
-            <p>Velkommen ${sessionScope.user.userId}</p>
+            <p>Velkommen ${sessionScope.user.fullname}</p>
+
 
 
 

@@ -83,6 +83,10 @@ public class Order {
         this.material = material;
     }
 
+    public int getUserId() {
+        return userId;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

@@ -13,7 +13,6 @@
     </jsp:attribute>
 
     <jsp:body>
-        <c:forEach var="orders" items="${sessionScope.history}">
             <table class="table table-striped table-hover">
             <thead>
             <tr>
@@ -24,6 +23,7 @@
             </tr>
             </thead>
             <tbody>
+            <c:forEach var="orders" items="${sessionScope.history}">
             <tr>
                 <td class="align-middle">${orders.orderId}</td>
                 <td class="align-middle">${orders.status}</td>

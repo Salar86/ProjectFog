@@ -15,7 +15,7 @@
     <jsp:body>
 
         <c:if test="${sessionScope.user != null}">
-            <p>Velkommen "${sessionScope.user.email}".</p>
+            <p>Velkommen "${sessionScope.user.fullname}".</p>
 
 
         </c:if>

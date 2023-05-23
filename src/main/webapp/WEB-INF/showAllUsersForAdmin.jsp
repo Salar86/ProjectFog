@@ -13,7 +13,7 @@
     </jsp:attribute>
 
     <jsp:body>
-        <c:forEach  var="users" items="${sessionScope.users}">
+
             <table class="table table-striped table-hover">
             <tr>
                 <th style="width: 25%" scope="col" id="email">Email</th>
@@ -22,6 +22,7 @@
                 <th style="width: 25%" scope="col" id="delete">Slet bruger</th>
             </tr>
             <tbody>
+            <c:forEach  var="users" items="${sessionScope.users}">
             <tr>
                 <td>${users.email}</td>
                 <td>${users.fullname}</td>
