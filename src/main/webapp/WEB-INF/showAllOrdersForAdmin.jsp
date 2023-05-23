@@ -16,13 +16,14 @@
 
             <table class="table table-striped table-hover">
             <tr>
-                <th style="width: 14.2%" scope="col" id="orderId">OrdreID</th>
-                <th style="width: 14.2%" scope="col" id="length">Længde</th>
-                <th style="width: 14.2%" scope="col" id="width">Bredde</th>
-                <th style="width: 14.2%" scope="col" id="price">Pris</th>
-                <th style="width: 14.2%" scope="col" id="status">Status</th>
-                <th style="width: 14.2%" scope="col" id="userId">Bruger</th>
-                <th style="width: 14.2%" scope="col" id="delete">Slet Ordre</th>
+                <th style="width: 12.5%" scope="col" id="orderId">OrdreID</th>
+                <th style="width: 12.5%" scope="col" id="length">Længde</th>
+                <th style="width: 12.5%" scope="col" id="width">Bredde</th>
+                <th style="width: 12.5%" scope="col" id="price">Pris</th>
+                <th style="width: 12.5%" scope="col" id="status">Status</th>
+                <th style="width: 12.5%" scope="col" id="userId">Bruger</th>
+                <th style="width: 12.5%" scope="col" id="delete">Slet Ordre</th>
+                <th style="width: 12.5%" scope="col" id="update">Opdater Ordre</th>
             </tr>
             <tbody>
             <c:forEach  var="orders" items="${sessionScope.orders}">
@@ -34,6 +35,15 @@
                 <td>${orders.status}</td>
                 <td>${orders.userId}</td>
                 <td><form action="showordersforadmin" method="post"><input type="submit" value="Slet"><input type="hidden" value="${orders.orderId}" name="orderId"></form></td>
+                <td><form>
+                    <label for="orderupdate"></label><select id="orderupdate" name="orderupdate">
+                    <option value="price">Pris</option>
+                    <option value="status">Status</option>
+                </select>
+                    <label for="input"></label><input type="text" id="input" name="input"/>
+                    <input type="submit" value="Opdater"/>
+                </form>
+                </td>
             </tr>
             </tbody>
         </c:forEach>
