@@ -10,7 +10,15 @@ public class ItemList {
     private int productVariantId;
     private int quantity;
 
-    public ItemList(int itemListId, String description, int price, int orderId, int productVariantId, int quantity) {
+    public ItemList(String description, int price, int orderId, int productVariantId, int quantity) {
+        this.description = description;
+        this.price = price;
+        this.orderId = orderId;
+        this.productVariantId = productVariantId;
+        this.quantity = quantity;
+    }
+
+    public ItemList(int itemListId, String description, int price, int orderId, int productVariantId, int quantity) { // Might need to be deleted.
         this.itemListId = itemListId;
         this.description = description;
         this.price = price;
