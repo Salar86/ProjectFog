@@ -92,19 +92,22 @@ class CalculationsTest {
         assertEquals(6, 6);
     }
 
+    //______________________________***________________________________________
     @Test
     void TestProductMapper() throws DatabaseException {
 
         Calculations cal = new Calculations();
-        for (ItemList itemList : cal.calculateCarport(1, 600,780)) {
-            System.out.println("Description " + itemList.getDescription() + "\nQuantity: " + itemList.getQuantity() + "\nProductVariantID " + itemList.getProductVariantId() + "\nOrderId " + itemList.getOrderId() + "\n\n");
+
+        for (ItemList itemList: cal.calculateCarport(2, 360,360)) {
+            ItemListFacade.createItemList(itemList, connectionPool);
         }
 
-    }
 
+    }
+   //________________________________***_____________________________________________
 
     @Test
-    void calculateFrontAndBackSternBoards(){
+    void calculateFrontAndBackSternBoards() throws DatabaseException {
         Calculations cal = new Calculations();
         cal.calculateCarport(1, 600, 780);
 

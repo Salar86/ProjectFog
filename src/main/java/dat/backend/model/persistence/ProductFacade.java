@@ -4,6 +4,10 @@ import dat.backend.model.exceptions.DatabaseException;
 
 public class ProductFacade {
 
+    public static double getPrice(int productId, ConnectionPool connectionPool) throws DatabaseException {
+        return ProductMapper.getPrice(productId, connectionPool);
+    }
+
     public static boolean modifyPricePerUnit(int productId, double pricePerUnit, ConnectionPool connectionPool) throws DatabaseException {
         return ProductMapper.modifyPricePerUnit(productId, pricePerUnit, connectionPool);
     }

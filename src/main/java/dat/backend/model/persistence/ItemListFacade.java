@@ -12,8 +12,8 @@ import java.util.logging.Logger;
 
 public class ItemListFacade {
 
-    public static boolean createItemList(String description, int price, int orderId, int productVariantId, int quantity, ConnectionPool connectionPool) throws DatabaseException {
-        return ItemListMapper.createItemList(description, price, orderId, productVariantId, quantity, connectionPool);
+    public static ItemList createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
+        return ItemListMapper.createItemList(itemList, connectionPool);
     }
 
 

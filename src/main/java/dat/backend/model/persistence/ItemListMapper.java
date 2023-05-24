@@ -14,22 +14,22 @@ import java.util.logging.Logger;
 
 public class ItemListMapper {
 
-    static boolean createItemList(String description, int price, int orderId, int productVariantId, int quantity, ConnectionPool connectionPool) throws DatabaseException {
+    static ItemList createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         String sql = "INSERT INTO project_fog_test.itemlist (description, price, order_id, product_variant_id, quantity) values (?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
-                ps.setString(1, description);
-                ps.setInt(2, price);
-                ps.setInt(3, orderId);
-                ps.setInt(4, productVariantId);
-                ps.setInt(5, quantity);
+                ps.setString(1, itemList.getDescription());
+                ps.setInt(2, itemList.getPrice());
+                ps.setInt(3, itemList.getOrderId());
+                ps.setInt(4, itemList.getProductVariantId());
+                ps.setInt(5, itemList.getQuantity());
                 ps.executeUpdate();
             }
         } catch (SQLException ex) {
             throw new DatabaseException(ex, "Could not add to ITEMLIST " + ex.getMessage());
         }
-        return true;
+        return itemList;
     }
 
     static ItemList getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {

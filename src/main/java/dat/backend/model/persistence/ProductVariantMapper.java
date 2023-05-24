@@ -15,23 +15,22 @@ import java.util.logging.Logger;
 
 public class ProductVariantMapper {
 
-    static Map getProductVariant(ConnectionPool connectionPool) throws DatabaseException {
-        Map<Integer, Double> woodList = new HashMap<>();
-        String sql = "SELECT * FROM project_fog_test.product_variant";
+    static double getProductVariantQuantity(int productVariantId, ConnectionPool connectionPool) throws DatabaseException {
+        double quantity = 0;
+        String sql = "SELECT * FROM project_fog_test.product_variant where product_variant_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
+                ps.setInt(1, productVariantId);
                 ResultSet rs = ps.executeQuery();
-                while (rs.next()) {
-                    int productVariantId = rs.getInt("product_variant_id");
-                    double quantity = rs.getDouble("quantity");
-                    woodList.put(productVariantId, quantity);
+                if (rs.next()) {
+                    quantity = rs.getDouble("quantity");
                 }
             }
         }
         catch (SQLException ex) {
             throw new DatabaseException(ex, "Could not get products " + ex.getMessage());
         }
-        return woodList;
+        return quantity;
     }
 
     static boolean modifyQuantity(int productId, double quantity, ConnectionPool connectionPool) throws DatabaseException {
