@@ -1,24 +1,51 @@
 package dat.backend.model.entities;
 
+import dat.backend.model.config.ApplicationStart;
+import dat.backend.model.exceptions.DatabaseException;
+import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.ItemListFacade;
+import dat.backend.model.persistence.ProductVariantFacade;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 
 
 class CalculationsTest {
+    private final static String USER = "root";
+    private final static String PASSWORD = "meyer";
+    private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
 
-    @BeforeEach
-    void setUp() {
+    private static ConnectionPool connectionPool;
 
+    @BeforeAll
+    public static void setUp() {
+        connectionPool = new ConnectionPool(USER, PASSWORD, URL);
+
+    }
+
+    @Test
+    void testConnection() throws SQLException {
+        Connection connection = connectionPool.getConnection();
+        assertNotNull(connection);
+        if (connection != null) {
+            connection.close();
+        }
     }
 
     @Test
     void calRem()
     {
         Calculations cal = new Calculations();
-        //cal.calculateRem(240);
+        cal.calculateRem(240);
+        System.out.println(cal.calculateRem(360));
         cal.calculateRafters(600,780);
+        System.out.println(cal.calculateRafters(360, 360));
         cal.calculatePosts(481);
     }
 
@@ -65,19 +92,29 @@ class CalculationsTest {
         assertEquals(6, 6);
     }
 
+    @Test
+    void TestProductMapper() throws DatabaseException {
+
+        Calculations cal = new Calculations();
+        for (ItemList itemList : cal.calculateCarport(1, 600,780)) {
+            System.out.println("Description " + itemList.getDescription() + "\nQuantity: " + itemList.getQuantity() + "\nProductVariantID " + itemList.getProductVariantId() + "\nOrderId " + itemList.getOrderId() + "\n\n");
+        }
+
+    }
+
 
     @Test
     void calculateFrontAndBackSternBoards(){
         Calculations cal = new Calculations();
-        cal.calculateCarport(570, 360);
+        cal.calculateCarport(1, 600, 780);
 
     }
 
     @Test
     public void calculateRaftersTest() {
         final double RAFTER_SPACING_CM = 55;
-        double lengthInCm = 780;
-        double width = 300;
+        double lengthInCm = 600;
+        double width = 540;
 
         double rafterCount = lengthInCm / RAFTER_SPACING_CM;
         double rafterValue = rafterCount - (int) rafterCount;

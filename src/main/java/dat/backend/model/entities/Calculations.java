@@ -1,5 +1,6 @@
 package dat.backend.model.entities;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -7,17 +8,43 @@ public class Calculations {
     Map<String, Double> woodList = new HashMap<>();
     double closeToZeroWidth = 0;
 
-    public Map<Integer, Integer> calculateCarport(double carportWidthInCm, double carportLengthInCm){
-        Map<Integer, Integer> itemList = new HashMap<>();
+    public ArrayList<ItemList> calculateCarport(int orderId, double carportWidthInCm, double carportLengthInCm){
+        ArrayList<ItemList> itemLists = new ArrayList<>();
 
-        itemList.putAll(calculatePosts(carportLengthInCm));
-        itemList.putAll(calculateRafters(carportWidthInCm, carportLengthInCm));
-        itemList.putAll(calculateRem(carportWidthInCm));
-        itemList.putAll(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm));
+        ItemList posts = new ItemList("Stolper skal graves ned i jorden, spasser!", 0, orderId, 5, calculatePosts(carportLengthInCm).get(5));
+        itemLists.add(posts);
 
-        System.out.println(itemList);
+        if(calculateRem(carportLengthInCm).get(3) > 0){
+        ItemList remShort = new ItemList("Remme skal sadles ned i stolperne", 0, orderId, 3, calculateRem(carportLengthInCm).get(3));
+            itemLists.add(remShort);
+        }
 
-        return itemList;
+        if(calculateRem(carportLengthInCm).get(4) > 0){
+        ItemList remLong = new ItemList("Remme skal sadles ned i stolperne", 0, orderId, 4, calculateRem(carportLengthInCm).get(4));
+            itemLists.add(remLong);
+        }
+
+        if(calculateRafters(carportWidthInCm, carportLengthInCm).get(3) > 0){
+            ItemList raftersShort = new ItemList("Spær skal Korte...", 0, orderId, 3, calculateRafters(carportWidthInCm,carportLengthInCm).get(3));
+            itemLists.add(raftersShort);
+        }
+
+        if(calculateRafters(carportWidthInCm, carportLengthInCm).get(4) > 0){
+            ItemList raftersLong = new ItemList("Spær skal Lange...", 0, orderId, 4, calculateRafters(carportWidthInCm,carportLengthInCm).get(4));
+            itemLists.add(raftersLong);
+        }
+
+        if(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm).get(1) > 0){
+            ItemList sternShort = new ItemList("Stern skal Korte...", 0, orderId, 1, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(1));
+            itemLists.add(sternShort);
+        }
+
+        if(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm).get(2) > 0){
+            ItemList sternLong = new ItemList("Stern skal Lange...", 0, orderId, 2, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(2));
+            itemLists.add(sternLong);
+        }
+
+        return itemLists;
     }
 
     public void loadWoodList()
@@ -32,9 +59,14 @@ public class Calculations {
 
         if (carportLengthInCm <= 240) {
             remList.put(3, 1);
+            remList.put(4, 0);
         } else if (carportLengthInCm > 240 && carportLengthInCm <= 480){
             remList.put(3, 2);
-        } else if (carportLengthInCm > 480) {
+            remList.put(4, 0);
+        } else if (carportLengthInCm > 480 && carportLengthInCm <= 600) {
+            remList.put(4, 2);
+            remList.put(3, 0);
+        } else if (carportLengthInCm > 600) {
             remList.put(4, 2);
             remList.put(3, 1);
         }
@@ -57,14 +89,18 @@ public class Calculations {
 
         if (carportWidthInCm <= 600 && carportWidthInCm >= 481) {
             rafterList.put(4, numberOfRafters);
-        } else if (carportWidthInCm <= 480 && carportWidthInCm >= 300) {
+            rafterList.put(3, 0);
+        } else if (carportWidthInCm <= 480 && carportWidthInCm >= 301) {
             rafterList.put(3, numberOfRafters);
+            rafterList.put(4, 0);
         } else if (carportWidthInCm == 300) {
             numberOfRafters = numberOfRafters/2;
             rafterList.put(4, numberOfRafters);
+            rafterList.put(3, 0);
         } else if (carportWidthInCm == 240) {
             numberOfRafters = numberOfRafters/2;
             rafterList.put(3, numberOfRafters);
+            rafterList.put(4, 0);
         }
 
         return rafterList;
@@ -80,64 +116,39 @@ public class Calculations {
     }
 
     public Map<Integer, Integer> calculateSternBoardsMainMethod(double carportWidthInCm, double carportLengthInCm){
-        loadWoodList();
 
         Map<Integer, Integer> woodToShip = new HashMap<>();
-        double closeToZeroWidth = sternHelperMethod((carportLengthInCm+carportWidthInCm)*2);
         boolean lengthDone = false, widthDone = false;
         int longWood = 0, shortWood = 0;
 
         if (woodList.containsValue(carportWidthInCm)) {
-            //System.out.println("START FRONT AND BACK - WIDTH " + closeToZeroWidth);
-            //System.out.println("SHIP 2x SINGLE WOOD FOR SIDES EQUAL TO get.value " + carportWidthInCm);
             if(carportWidthInCm == 360) {
                 shortWood = shortWood+2;;
             } if(carportWidthInCm == 540){ longWood = longWood+2; }
             widthDone = true;
-            //System.out.println(widthDone);
         }
 
         if (woodList.containsValue(carportLengthInCm)) {
-            //System.out.println("START SIDE - WIDTH " + closeToZeroWidth);
-            //System.out.println("SHIP 2x SINGLE WOOD FOR SIDES EQUAL TO get.value " + carportLengthInCm);
             if(carportLengthInCm == 360) {
                 shortWood = shortWood+2;;
             } if(carportLengthInCm == 540) { longWood = longWood+2; }
             lengthDone = true;
-            //System.out.println(lengthDone);
         }
 
         if(longWood > 0){ woodToShip.put(2, longWood);} else woodToShip.put(2, 0);
         if(shortWood > 0){ woodToShip.put(1, shortWood);} else woodToShip.put(1, 0);
 
 
-        for (Map.Entry<Integer, Integer> set : woodToShip.entrySet()) {
-            //System.out.println(+ set.getValue() + " " + set.getKey() );
-        }
-
         if(lengthDone && !widthDone){
             woodToShip.put(1, CalculateSternBoards(((carportWidthInCm)*2)).get(1)+woodToShip.get(1));
             woodToShip.put(2, CalculateSternBoards(((carportWidthInCm)*2)).get(2)+woodToShip.get(2));
-            //System.out.println("Updated MAP LENGTH" + woodToShip);
         } else if(!lengthDone && widthDone){
-            //Map<Integer, Integer> temp = CalculateSternBoards(((carportLengthInCm)*2));
-            //System.out.println("TEMPTEMP +" + temp);
             woodToShip.put(1, CalculateSternBoards(((carportLengthInCm)*2)).get(1)+woodToShip.get(1));
             woodToShip.put(2, CalculateSternBoards(((carportLengthInCm)*2)).get(2)+woodToShip.get(2));
-            //System.out.println("Updated MAP WIDTH " + woodToShip);
         } else if(!lengthDone && !widthDone){
-            //CalculateSternBoardsTest(((carportWidthInCm+carportLengthInCm)*2));
-            //Map<Integer, Integer> temp = CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2));
-            //System.out.println("TEMPTEMP +" + temp);
-            //System.out.println("Okay Anette " + temp.get(360) + " " + temp.get(540));
-
             woodToShip.put(1, CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2)).get(1));
             woodToShip.put(2, CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2)).get(2));
-            //System.out.println("Updated MAP WIDTH " + woodToShip);
         }
-        /*for (Map.Entry<Integer, Integer> set : woodToShip.entrySet()) {
-            System.out.println(+ set.getValue() + " " + set.getKey() );
-        }*/
         return woodToShip;
     }
 
@@ -145,57 +156,34 @@ public class Calculations {
     {
         Map<Integer, Integer> woodToShip = new HashMap<>();
         int longWood = 0, shortWood = 0;
-        //System.out.println(set.getValue() + " VALUE OF WOOD");
         closeToZeroWidth = sternHelperMethod(totalCarportSize);
         double woodLength = 0;
         // picks the largest wood that will fit
         while ((closeToZeroWidth > 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
             if (totalCarportSize >= (totalCarportSize / closeToZeroWidth)) {
                 woodLength = (totalCarportSize / closeToZeroWidth);
-                //System.out.println("\n" + totalCarportSize + " - " + woodLength + " = "  + (totalCarportSize-woodLength));
                 totalCarportSize -= woodLength;
-                //shortWood += (set.getValue() / set.getValue());
-                //System.out.println("\n" + woodLength + "\n");
                 if(woodLength == 540){
                     longWood++;
                 } else shortWood++;
             }
             closeToZeroWidth = sternHelperMethod(totalCarportSize);
-            //System.out.println("SIZE CAPRPORT OVER 1 " + totalCarportSize);
-            //System.out.println("SHIP shortwood = " + shortWood);
-            //System.out.println("New Size " + cal.sternHelperMethod(totalCarportSize));
         }
 
         if ((closeToZeroWidth <= 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
             while (totalCarportSize > 0) { // RUNS UNTIL CARPORT IS 0
-                //System.out.println("\n SIZE OF CARPORT BEFORE WHILE " + totalCarportSize );
                 woodLength = (totalCarportSize / closeToZeroWidth);
-                //System.out.println("\n" + totalCarportSize + " - " + woodLength + " = "  + (totalCarportSize-woodLength));
                 totalCarportSize -= (woodLength);
-
                 if(woodLength == 540){
                     longWood++;
                 } else shortWood++;
-
-                //shortWood += (set.getValue() / set.getValue());
-                //System.out.println("\n \n INSIDE ONE");
-                //System.out.println("\n" + woodLength + "\n");
             }
-            //System.out.println("SIZE CAPRPORT UNDER 1 " + totalCarportSize);
-            //System.out.println("SHIP shortwood = " + shortWood);
+        }
 
-            //System.out.println("New Size " + sternHelperMethod(totalCarportSize));
-        } else System.out.println("DONE");
-
-        //System.out.println("FINAL SIZE" + totalCarportSize);
         if(longWood > 0){woodToShip.put(2, longWood);} else woodToShip.put(2, 0);
 
         if(shortWood > 0){woodToShip.put(1, shortWood);} else woodToShip.put(1, 0);
 
-        //System.out.println("\nWOOD TO SHIP MAP ");
-        /*for (Map.Entry<Integer, Integer> set : woodToShip.entrySet()) {
-            System.out.println(+ set.getKey() + " " + set.getValue() );
-        }*/
         return woodToShip;
     }
 
@@ -210,37 +198,26 @@ public class Calculations {
             if(big < temp){big = temp;}
             if(big > temp){small = temp;}
 
-            //System.out.println("BIG BIG BIG " + big + "SMALL SMALL SMALL" + small);
-
-            //System.out.println("HELPERMETHOD " + " " + carportSizeInCm + " TEMP: " + temp);
             if (carportSizeInCm / set.getValue() > 2) { // If more then one piece of wood is needed.
                 if (carportSizeInCm / set.getValue() <= temp) { // Picks the largest piece of wood that fits.
-                    //System.out.println("METHOD ONE \n");
                     closeToZeroWidth = temp;
                 }
             }
             if (carportSizeInCm / set.getValue() <= 2 && carportSizeInCm / set.getValue() > 1 && (carportSizeInCm / set.getValue()) % 1 == 0) { // If 2 pieces or under and they are whole pieces.
                 if (carportSizeInCm / set.getValue() <= temp) { // Picks the largest piece of wood that fits.
-                    //System.out.println("METHOD TWO \n");
                     closeToZeroWidth = small;
                 }
             }
             else if (carportSizeInCm / set.getValue() <= 2 && carportSizeInCm / set.getValue() > 1 && carportSizeInCm / set.getValue() % 1 != 0) { // If more then one piece of wood is needed.
                 if (carportSizeInCm / set.getValue() <= temp) { // Picks the largest piece of wood that fits.
-                    //System.out.println("METHOD THREE \n");
                     closeToZeroWidth = big;
                 }
             }
             else if (carportSizeInCm / set.getValue() <= 1) { // If less then one piece of wood is needed.
                 if (carportSizeInCm / set.getValue() >= closeToZeroWidth) { // Picks the piece of wood that is closest in length.
-                    //System.out.println("METHOD FOUR \n");
-                    //System.out.println(closeToZeroWidth + " CLOSE");
-                    //System.out.println("VALUE " + carportSizeInCm / set.getValue());
                     closeToZeroWidth = temp;
                 }
             }
-            //System.out.println("CLOSE TO ZERO VALUE AFTER METHOD: " + closeToZeroWidth);
-            //System.out.println("SIZE OF CARPORT - HELPERMETHOD " + carportSizeInCm + " " + carportSizeInCm/closeToZeroWidth + "\n\n");
         }
         return closeToZeroWidth;
     }
