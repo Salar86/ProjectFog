@@ -41,7 +41,8 @@
                     <label for="statusupdate"></label>
                     <select id="statusupdate" name="statusupdate">
                     <option value="TILBUD AFGIVET">TILBUD AFGIVET</option>
-                    <option value="SÆLGER KONTAKTER DIG">SÆLGER KONTAKTER DIG</option>
+                    <option value="TILBUD AFVIST">TILBUD AFVIST</option>
+                    <option value="AFVENTER TILBUD">AFVENTER TILBUD</option>
                     <input type="submit" value="Opdater"/>
                     </select>
                 </form>
