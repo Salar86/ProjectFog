@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CalculationsTest {
     private final static String USER = "root";
-    private final static String PASSWORD = "meyer";
+    private final static String PASSWORD = "Salar0108";
     private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
 
     private static ConnectionPool connectionPool;

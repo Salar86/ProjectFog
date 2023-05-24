@@ -28,7 +28,7 @@
             <tr>
                 <td>${orders.orderId}</td>
                 <td>${orders.status}</td>
-                <td>${orders.price}</td>
+                <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">${orders.price}</td></c:if>
                 <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">
                     <form action="showordersforadmin" method="post">
                     <input type="submit" value="Køb">

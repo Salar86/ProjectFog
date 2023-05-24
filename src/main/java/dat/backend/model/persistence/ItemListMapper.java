@@ -173,6 +173,26 @@ public class ItemListMapper {
         return isModified;
     }
 
+    static double getPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        Logger.getLogger("web").log(Level.INFO, "");
+        double totalPrice = 0;
+        String sql = "SELECT SUM(price) AS sumprice FROM project_fog_test.itemlist WHERE order_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setDouble(1, orderId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    totalPrice = resultSet.getDouble("sumprice");
+                }
+            }
+
+        }
+        catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "Price could not be modified in the database");
+        }
+        return totalPrice;
+    }
+
 
 
 }

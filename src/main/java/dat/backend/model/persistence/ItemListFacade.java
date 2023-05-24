@@ -40,4 +40,8 @@ public class ItemListFacade {
     public static boolean modifyQuantity(int quantity, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
         return ItemListMapper.modifyQuantity(quantity, itemListId, connectionPool);
     }
+
+    public static double getPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        return ItemListMapper.getPrice(orderId, connectionPool);
+    }
 }
