@@ -1,5 +1,10 @@
 package dat.backend.model.entities;
 
+import dat.backend.model.exceptions.DatabaseException;
+import dat.backend.model.persistence.ConnectionPool;
+import dat.backend.model.persistence.ProductFacade;
+import dat.backend.model.persistence.ProductVariantFacade;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -8,39 +13,41 @@ public class Calculations {
     Map<String, Double> woodList = new HashMap<>();
     double closeToZeroWidth = 0;
 
-    public ArrayList<ItemList> calculateCarport(int orderId, double carportWidthInCm, double carportLengthInCm){
+    public ArrayList<ItemList> calculateCarport(int orderId, double carportWidthInCm, double carportLengthInCm) throws DatabaseException {
+        ConnectionPool connectionPool = new ConnectionPool();
         ArrayList<ItemList> itemLists = new ArrayList<>();
+        double pricePost = ProductFacade.getPrice(3, connectionPool), priceRaftersAndRem = ProductFacade.getPrice(2, connectionPool), priceStern = ProductFacade.getPrice(1, connectionPool);
 
-        ItemList posts = new ItemList("Stolper skal graves ned i jorden, spasser!", 0, orderId, 5, calculatePosts(carportLengthInCm).get(5));
+        ItemList posts = new ItemList("Stolper skal graves ned i jorden.", ((int)(pricePost*ProductVariantFacade.getProductVariantQuantity(5, connectionPool))*calculatePosts(carportLengthInCm).get(5)), orderId, 5, calculatePosts(carportLengthInCm).get(5));
         itemLists.add(posts);
 
         if(calculateRem(carportLengthInCm).get(3) > 0){
-        ItemList remShort = new ItemList("Remme skal sadles ned i stolperne", 0, orderId, 3, calculateRem(carportLengthInCm).get(3));
+        ItemList remShort = new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*calculateRem(carportLengthInCm).get(3)), orderId, 3, calculateRem(carportLengthInCm).get(3));
             itemLists.add(remShort);
         }
 
         if(calculateRem(carportLengthInCm).get(4) > 0){
-        ItemList remLong = new ItemList("Remme skal sadles ned i stolperne", 0, orderId, 4, calculateRem(carportLengthInCm).get(4));
+        ItemList remLong = new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*calculateRem(carportLengthInCm).get(4)), orderId, 4, calculateRem(carportLengthInCm).get(4));
             itemLists.add(remLong);
         }
 
         if(calculateRafters(carportWidthInCm, carportLengthInCm).get(3) > 0){
-            ItemList raftersShort = new ItemList("Spær skal Korte...", 0, orderId, 3, calculateRafters(carportWidthInCm,carportLengthInCm).get(3));
+            ItemList raftersShort = new ItemList("Spær skal Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*calculateRafters(carportWidthInCm,carportLengthInCm).get(3)), orderId, 3, calculateRafters(carportWidthInCm,carportLengthInCm).get(3));
             itemLists.add(raftersShort);
         }
 
         if(calculateRafters(carportWidthInCm, carportLengthInCm).get(4) > 0){
-            ItemList raftersLong = new ItemList("Spær skal Lange...", 0, orderId, 4, calculateRafters(carportWidthInCm,carportLengthInCm).get(4));
+            ItemList raftersLong = new ItemList("Spær skal Lange...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*calculateRafters(carportWidthInCm,carportLengthInCm).get(4)), orderId, 4, calculateRafters(carportWidthInCm,carportLengthInCm).get(4));
             itemLists.add(raftersLong);
         }
 
         if(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm).get(1) > 0){
-            ItemList sternShort = new ItemList("Stern skal Korte...", 0, orderId, 1, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(1));
+            ItemList sternShort = new ItemList("Stern skal Korte...", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(1)), orderId, 1, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(1));
             itemLists.add(sternShort);
         }
 
         if(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm).get(2) > 0){
-            ItemList sternLong = new ItemList("Stern skal Lange...", 0, orderId, 2, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(2));
+            ItemList sternLong = new ItemList("Stern skal Lange...", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(2)), orderId, 2, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(2));
             itemLists.add(sternLong);
         }
 

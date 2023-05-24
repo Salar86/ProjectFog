@@ -10,7 +10,7 @@ public class ProductVariantFacade {
         return ProductVariantMapper.modifyQuantity(productId, quantity, connectionPool);
     }
 
-    public static Map getProductVariant(ConnectionPool connectionPool) throws DatabaseException {
-        return ProductVariantMapper.getProductVariant(connectionPool);
+    public static double getProductVariantQuantity(int productVariantId, ConnectionPool connectionPool) throws DatabaseException {
+        return ProductVariantMapper.getProductVariantQuantity(productVariantId, connectionPool);
     }
 }
