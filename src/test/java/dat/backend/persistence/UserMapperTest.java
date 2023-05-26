@@ -112,4 +112,9 @@ class UserMapperTest
         assertEquals(expectedUser, logInUser);
 
     }
+    void deleteUser() throws DatabaseException
+    {
+
+    }
+
 }
