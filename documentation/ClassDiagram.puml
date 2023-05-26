@@ -9,6 +9,7 @@ Login *--> ConnectionPool
 
 class User
 {
+User()
     -int id
     -String fullName
     -String email
@@ -20,14 +21,15 @@ class UserMapper
 {
     createUser()
     showUsers()
-    modifyUser()
+    deleteUser()
+
     login()
 }
 class UserFacade
 {
     createUser()
     showUsers()
-    modifyUser()
+    deleteUser()
     login()
 }
 
@@ -51,11 +53,13 @@ class OrderMapper
     modifyMaterial()
     modifyStatus()
     deleteOrder()
+    showOrdersForUser()
     showOrders()
 }
 class OrderFacade
 {
   createOrder()
+    showOrdersForUser()
     modifyLength()
     modifyWidth()
     modifyPrice()
@@ -76,15 +80,19 @@ class ItemList
 }
 class ItemListMapper
 {
+    getPrice()
     getItemList()
     modifyDescription()
     modifyPrice()
     modifyQuantity()
     deleteItemList()
     showItemLists()
+    createItemList()
 }
 class ItemListFacade
 {
+    getPrice()
+    createItemList()
     getItemList()
     modifyDescription()
     modifyPrice()
@@ -112,14 +120,26 @@ class Product
 }
 class ProductMapper
 {
+getPrice()
 modifyPricePerUnit()
 modifyDescription()
 }
 
 class ProductFacade
 {
+getPrice()
 modifyPricePerUnit()
 modifyDescription()
+}
+class ProductVariantFacade
+{
+getProductVariantQuantity()
+modifyQuantity()
+}
+class ProductVariantMapper
+{
+getProductVariantQuantity()
+modifyQuantity()
 }
 
 UserFacade --> UserMapper
@@ -137,6 +157,7 @@ CalculationsMapper --> Calculations
 ProductFacade --> ProductMapper
 ProductMapper --> Product
 
+ProductVariantFacade --> ProductVariantMapper
 
 @enduml
 
