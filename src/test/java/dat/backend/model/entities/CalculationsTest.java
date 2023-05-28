@@ -39,14 +39,15 @@ class CalculationsTest {
     }
 
     @Test
-    void calRem()
-    {
+    void calRem() throws DatabaseException {
         Calculations cal = new Calculations();
-        cal.calculateRem(240);
-        System.out.println(cal.calculateRem(360));
-        cal.calculateRafters(600,780);
-        System.out.println(cal.calculateRafters(360, 360));
-        cal.calculatePosts(481);
+        cal.calculateRem(600, 0);
+        //System.out.println(cal.calculateRem(780));
+        cal.calculateRafters(500,600, 0);
+        //System.out.println(cal.calculateRafters(360, 360));
+        cal.calculatePosts(481, 0);
+
+        cal.calculateSternBoardsMainMethod(450,600,0);
     }
 
     @Test
@@ -98,7 +99,7 @@ class CalculationsTest {
 
         Calculations cal = new Calculations();
 
-        for (ItemList itemList: cal.calculateCarport(2, 360,360)) {
+        for (ItemList itemList: cal.calculateCarport(4, 540,540)) {
             ItemListFacade.createItemList(itemList, connectionPool);
         }
 
@@ -109,7 +110,7 @@ class CalculationsTest {
     @Test
     void calculateFrontAndBackSternBoards() throws DatabaseException {
         Calculations cal = new Calculations();
-        cal.calculateCarport(1, 600, 780);
+        cal.calculateCarport(1, 450, 600);
 
     }
 

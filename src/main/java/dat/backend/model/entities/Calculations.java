@@ -9,82 +9,81 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ *The Calculations class calculates the products required to build the carport being processed.
+ * @author Michael Meyer
+ * */
 public class Calculations {
+    ConnectionPool connectionPool = new ConnectionPool();
     Map<String, Double> woodList = new HashMap<>();
     double closeToZeroWidth = 0;
 
+    /**
+     * The method parameters are received from the showAllOrdersForAdmin.jsp through the generateitemlist-servlet where the method is called.
+     * The method makes four additional calls to other methods in-class to calculate the products needed for the carport being processed.
+     * The return values from each method is added to an arraylist of itemlist-objects. Each object contains the specific product information
+     * for the carport being processed. The method returns a complete itemlist as an arraylist.
+     * @param orderId The orderId from the order being processed.
+     * @param carportWidthInCm The width of the carport being processed.
+     * @param carportLengthInCm The length of the carport being processed.
+     * @return                  An ArrayList of itemlist-objects for the order being processed.
+     * */
     public ArrayList<ItemList> calculateCarport(int orderId, double carportWidthInCm, double carportLengthInCm) throws DatabaseException {
-        ConnectionPool connectionPool = new ConnectionPool();
-        ArrayList<ItemList> itemLists = new ArrayList<>();
-        double pricePost = ProductFacade.getPrice(3, connectionPool), priceRaftersAndRem = ProductFacade.getPrice(2, connectionPool), priceStern = ProductFacade.getPrice(1, connectionPool);
 
-        ItemList posts = new ItemList("Stolper skal graves ned i jorden.", ((int)(pricePost*ProductVariantFacade.getProductVariantQuantity(5, connectionPool))*calculatePosts(carportLengthInCm).get(5)), orderId, 5, calculatePosts(carportLengthInCm).get(5));
-        itemLists.add(posts);
+        ArrayList<ItemList> itemListEntries = new ArrayList<>();
 
-        if(calculateRem(carportLengthInCm).get(3) > 0){
-        ItemList remShort = new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*calculateRem(carportLengthInCm).get(3)), orderId, 3, calculateRem(carportLengthInCm).get(3));
-            itemLists.add(remShort);
-        }
+        itemListEntries.addAll(calculateRem(carportLengthInCm, orderId));
+        itemListEntries.addAll(calculatePosts(carportLengthInCm, orderId));
+        itemListEntries.addAll(calculateRafters(carportWidthInCm,carportLengthInCm, orderId));
+        itemListEntries.addAll(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm, orderId));
 
-        if(calculateRem(carportLengthInCm).get(4) > 0){
-        ItemList remLong = new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*calculateRem(carportLengthInCm).get(4)), orderId, 4, calculateRem(carportLengthInCm).get(4));
-            itemLists.add(remLong);
-        }
-
-        if(calculateRafters(carportWidthInCm, carportLengthInCm).get(3) > 0){
-            ItemList raftersShort = new ItemList("Spær skal Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*calculateRafters(carportWidthInCm,carportLengthInCm).get(3)), orderId, 3, calculateRafters(carportWidthInCm,carportLengthInCm).get(3));
-            itemLists.add(raftersShort);
-        }
-
-        if(calculateRafters(carportWidthInCm, carportLengthInCm).get(4) > 0){
-            ItemList raftersLong = new ItemList("Spær skal Lange...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*calculateRafters(carportWidthInCm,carportLengthInCm).get(4)), orderId, 4, calculateRafters(carportWidthInCm,carportLengthInCm).get(4));
-            itemLists.add(raftersLong);
-        }
-
-        if(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm).get(1) > 0){
-            ItemList sternShort = new ItemList("Stern skal Korte...", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(1)), orderId, 1, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(1));
-            itemLists.add(sternShort);
-        }
-
-        if(calculateSternBoardsMainMethod(carportWidthInCm, carportLengthInCm).get(2) > 0){
-            ItemList sternLong = new ItemList("Stern skal Lange...", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(2)), orderId, 2, calculateSternBoardsMainMethod(carportWidthInCm,carportLengthInCm).get(2));
-            itemLists.add(sternLong);
-        }
-
-        return itemLists;
+        return itemListEntries;
     }
 
+    /**
+     * The method loads a HashMap with the types of wood used for the stern, that's in stock at Fog's. Due to the fact we are only
+     * operation with two types of wood, this has been hardcoded.
+     * The Key is meant to be the productId and the value the length of the wood.
+     * The Map is mainly used in the SternHelperMethod to calculate which piece of wood fits the carport being processed.
+     * */
     public void loadWoodList()
     {
         woodList.put("woodShort", 360.00);
         woodList.put("woodLong", 540.00);
     }
 
-    public Map<Integer, Integer> calculateRem(double carportLengthInCm) {
-        int remCount = 0;
-        Map<Integer, Integer> remList= new HashMap<>();
+    /**
+     * The method calculates how many pieces of wood is needed for the rems, for the carport being processed.
+     * @param carportLengthInCm The length of the carport being processed.
+     * @param orderId The orderId for the carport being processed.
+     * @return An arraylist with itemList-objects of rems.
+     * */
+    public ArrayList<ItemList> calculateRem(double carportLengthInCm, int orderId) throws DatabaseException {
+        ArrayList<ItemList> remList = new ArrayList<>();
+        double priceRaftersAndRem = ProductFacade.getPrice(2, connectionPool);
 
         if (carportLengthInCm <= 240) {
-            remList.put(3, 1);
-            remList.put(4, 0);
+            remList.add(new ItemList("Remme skal sadles ned i stolperne KORTE.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))), orderId, 3, 1));
         } else if (carportLengthInCm > 240 && carportLengthInCm <= 480){
-            remList.put(3, 2);
-            remList.put(4, 0);
+            remList.add(new ItemList("Remme skal sadles ned i stolperne KORTE.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*2), orderId, 3, 2));
         } else if (carportLengthInCm > 480 && carportLengthInCm <= 600) {
-            remList.put(4, 2);
-            remList.put(3, 0);
+            remList.add(new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*2), orderId, 4, 2));
         } else if (carportLengthInCm > 600) {
-            remList.put(4, 2);
-            remList.put(3, 1);
+            remList.add(new ItemList("Remme skal sadles ned i stolperne KORTE.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))), orderId, 3, 1));
+            remList.add(new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*2), orderId, 4, 2));
         }
 
+        for (ItemList item: remList) {
+            System.out.println(item.getDescription() + " " + item.getProductVariantId() + " " + item.getQuantity());
+
+        }
         return remList;
     }
 
-    public Map<Integer, Integer> calculateRafters(double carportWidthInCm, double carportLengthInCm) {
+    public ArrayList<ItemList> calculateRafters(double carportWidthInCm, double carportLengthInCm, int orderId) throws DatabaseException {
         final double RAFTER_SPACING_CM = 55;
-
-        Map<Integer, Integer> rafterList= new HashMap<>();
+        double priceRaftersAndRem = ProductFacade.getPrice(2, connectionPool);
+        ArrayList<ItemList> rafterList= new ArrayList<>();
 
         double rafterCount = carportLengthInCm / RAFTER_SPACING_CM; // (Decimal) How many rafters will fit inside the roof.
         double rafterValue = rafterCount - (int) rafterCount; // The decimal-points from rafterCount to calculate the excess distance.
@@ -95,73 +94,82 @@ public class Calculations {
         }
 
         if (carportWidthInCm <= 600 && carportWidthInCm >= 481) {
-            rafterList.put(4, numberOfRafters);
-            rafterList.put(3, 0);
+            rafterList.add(new ItemList("Spær. Monteres på rem. Lange...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*numberOfRafters), orderId, 4, numberOfRafters));
         } else if (carportWidthInCm <= 480 && carportWidthInCm >= 301) {
-            rafterList.put(3, numberOfRafters);
-            rafterList.put(4, 0);
+            rafterList.add(new ItemList("Spær. Monteres på rem. Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*numberOfRafters), orderId, 3, numberOfRafters));
         } else if (carportWidthInCm == 300) {
             numberOfRafters = numberOfRafters/2;
-            rafterList.put(4, numberOfRafters);
-            rafterList.put(3, 0);
+            rafterList.add(new ItemList("Spær. Monteres på rem. Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*numberOfRafters), orderId, 4, numberOfRafters));
         } else if (carportWidthInCm == 240) {
             numberOfRafters = numberOfRafters/2;
-            rafterList.put(3, numberOfRafters);
-            rafterList.put(4, 0);
+            rafterList.add(new ItemList("Spær. Monteres på rem. Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*numberOfRafters), orderId, 3, numberOfRafters));
         }
 
+        for (ItemList item: rafterList) {
+            System.out.println(item.getDescription() + " " + item.getProductVariantId() + " " + item.getQuantity());
+        }
         return rafterList;
     }
 
-    public Map<Integer, Integer> calculatePosts(double lengthInCm) {
-        Map<Integer, Integer> postList= new HashMap<>();
+    public ArrayList<ItemList> calculatePosts(double lengthInCm, int orderId) throws DatabaseException {
+        double pricePost = ProductFacade.getPrice(3, connectionPool);
+        ArrayList<ItemList> postList = new ArrayList<>();
 
         if (lengthInCm >= 481) {
-            postList.put(5, 6);
-        } else postList.put(5, 4);
+            postList.add(new ItemList("Stolper nedgraves 90 cm. i jord.", ((int)(pricePost*ProductVariantFacade.getProductVariantQuantity(5, connectionPool))*6), orderId, 5, 6));
+        } else postList.add(new ItemList("Stolper nedgraves 90 cm. i jord.", ((int)(pricePost*ProductVariantFacade.getProductVariantQuantity(5, connectionPool))*4), orderId, 5, 4));
+
+        for (ItemList item: postList) {
+            System.out.println(item.getDescription() + " " + item.getProductVariantId() + " " + item.getQuantity());
+        }
+
         return postList;
     }
 
-    public Map<Integer, Integer> calculateSternBoardsMainMethod(double carportWidthInCm, double carportLengthInCm){
-
-        Map<Integer, Integer> woodToShip = new HashMap<>();
+    public ArrayList<ItemList> calculateSternBoardsMainMethod(double carportWidthInCm, double carportLengthInCm, int orderId) throws DatabaseException {
+        loadWoodList();
+        ArrayList<ItemList> itemList = new ArrayList<>();
+        double priceStern = ProductFacade.getPrice(1, connectionPool);
         boolean lengthDone = false, widthDone = false;
-        int longWood = 0, shortWood = 0;
 
         if (woodList.containsValue(carportWidthInCm)) {
             if(carportWidthInCm == 360) {
-                shortWood = shortWood+2;;
-            } if(carportWidthInCm == 540){ longWood = longWood+2; }
+                itemList.add(new ItemList("360mm Sternbrædder til for- og bagende.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*2), orderId, 1, 2));
+            } if(carportWidthInCm == 540){
+                itemList.add(new ItemList("540mm Sternbrædder til for- og bagende.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*2), orderId, 2, 2));
+            }
             widthDone = true;
+
         }
 
         if (woodList.containsValue(carportLengthInCm)) {
             if(carportLengthInCm == 360) {
-                shortWood = shortWood+2;;
-            } if(carportLengthInCm == 540) { longWood = longWood+2; }
+                itemList.add(new ItemList("360mm Sternbrædder til siderne.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*2), orderId, 1, 2));
+            } if(carportLengthInCm == 540) {
+                itemList.add(new ItemList("540mm Sternbrædder til siderne.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*2), orderId, 2, 2));
+            }
             lengthDone = true;
         }
 
-        if(longWood > 0){ woodToShip.put(2, longWood);} else woodToShip.put(2, 0);
-        if(shortWood > 0){ woodToShip.put(1, shortWood);} else woodToShip.put(1, 0);
-
 
         if(lengthDone && !widthDone){
-            woodToShip.put(1, CalculateSternBoards(((carportWidthInCm)*2)).get(1)+woodToShip.get(1));
-            woodToShip.put(2, CalculateSternBoards(((carportWidthInCm)*2)).get(2)+woodToShip.get(2));
+            itemList.addAll(CalculateSternBoards(((carportWidthInCm)*2), orderId));
         } else if(!lengthDone && widthDone){
-            woodToShip.put(1, CalculateSternBoards(((carportLengthInCm)*2)).get(1)+woodToShip.get(1));
-            woodToShip.put(2, CalculateSternBoards(((carportLengthInCm)*2)).get(2)+woodToShip.get(2));
+            itemList.addAll(CalculateSternBoards(((carportLengthInCm)*2), orderId));
         } else if(!lengthDone && !widthDone){
-            woodToShip.put(1, CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2)).get(1));
-            woodToShip.put(2, CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2)).get(2));
+            itemList.addAll(CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2), orderId));
         }
-        return woodToShip;
+
+        for (ItemList item: itemList) {
+            System.out.println(item.getDescription() + " " + item.getProductVariantId() + " " + item.getQuantity());
+        }
+
+        return itemList;
     }
 
-    public Map<Integer, Integer> CalculateSternBoards(double totalCarportSize)
-    {
-        Map<Integer, Integer> woodToShip = new HashMap<>();
+    public ArrayList<ItemList> CalculateSternBoards(double totalCarportSize, int orderId) throws DatabaseException {
+        ArrayList<ItemList> itemList = new ArrayList<>();
+        double priceStern = ProductFacade.getPrice(1, connectionPool);
         int longWood = 0, shortWood = 0;
         closeToZeroWidth = sternHelperMethod(totalCarportSize);
         double woodLength = 0;
@@ -187,11 +195,14 @@ public class Calculations {
             }
         }
 
-        if(longWood > 0){woodToShip.put(2, longWood);} else woodToShip.put(2, 0);
+        if(longWood > 0){
+            itemList.add(new ItemList("540mm Sternbrædder. Tilskæring kan forekomme.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*longWood), orderId, 2, longWood));
+        }
+        if(shortWood > 0){
+            itemList.add(new ItemList("360mm Sternbrædder. Tilskæring kan forekomme.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*shortWood), orderId, 1, shortWood));
+        }
 
-        if(shortWood > 0){woodToShip.put(1, shortWood);} else woodToShip.put(1, 0);
-
-        return woodToShip;
+        return itemList;
     }
 
     public double sternHelperMethod(double carportSizeInCm)

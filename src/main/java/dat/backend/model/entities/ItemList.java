@@ -27,7 +27,6 @@ public class ItemList {
         this.quantity = quantity;
     }
 
-
     public int getItemListId() {
         return itemListId;
     }
