@@ -33,7 +33,13 @@
                     <form action="showordersforadmin" method="post">
                     <input type="submit" value="Køb">
                     <input type="hidden" value="${orders.orderId}" name="orderId">
+                    <input type="hidden" value="TILBUD ACCEPTERET" name="offeraccepted">
                 </form>
+                    <form action="modifyordersbyuser" method="post">
+                        <input type="hidden" value="${orders.orderId}" name="orderId">
+                        <input type="hidden" value="TILBUD AFVIST" name="offerdeclined">
+                        <input type="submit" value="Afvis">
+                    </form>
                 </c:if>
                 </td>
             </tr>
