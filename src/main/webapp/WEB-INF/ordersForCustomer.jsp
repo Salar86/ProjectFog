@@ -16,18 +16,38 @@
             <table class="table table-striped table-hover">
             <thead>
             <tr>
-                <th scope="col" id="order_id">Order ID</th>
-                <th scope="col" id="status">Status</th>
-                <th scope="col" id="price">Price</th>
+                <th style="width: 25%" scope="col" id="order_id">Order ID</th>
+                <th style="width: 25%" scope="col" id="status">Status</th>
+                <th style="width: 25%" scope="col" id="price">Pris</th>
+                <th style="width: 25%" scope="col" id="buy">Køb</th>
 
             </tr>
             </thead>
             <tbody>
             <c:forEach var="orders" items="${sessionScope.history}">
             <tr>
-                <td class="align-middle">${orders.orderId}</td>
-                <td class="align-middle">${orders.status}</td>
-                <td class="align-middle">${orders.price}</td>
+                <td>${orders.orderId}</td>
+                <td>${orders.status}</td>
+                <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">${orders.price}</td></c:if>
+                <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">
+                    <form action="generateitemlistforuser" method="post">
+                    <input type="hidden" value="${orders.orderId}" name="orderId">
+                    <input type="hidden" value="TILBUD ACCEPTERET" name="offeraccepted">
+                        <input type="submit" value="Køb">
+                </form>
+                    <form action="modifyordersbyuser" method="post">
+                        <input type="hidden" value="${orders.orderId}" name="orderId">
+                        <input type="hidden" value="TILBUD AFVIST" name="offerdeclined">
+                        <input type="submit" value="Afvis">
+                    </form>
+                </c:if>
+                    <c:if test="${orders.status == 'TILBUD ACCEPTERET'}">
+                        <form action="generateitemlistforuser" method="get">
+                            <input type="hidden" value="${orders.orderId}" name="orderId">
+                            <input type="submit" value="Stykliste">
+                        </form>
+                    </c:if>
+                </td>
             </tr>
             </tbody>
         </c:forEach>

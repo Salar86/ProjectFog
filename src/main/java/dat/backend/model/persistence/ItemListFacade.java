@@ -17,7 +17,7 @@ public class ItemListFacade {
     }
 
 
-    public static ItemList getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
+    public static ArrayList<ItemList> getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
         return ItemListMapper.getItemList(order, connectionPool);
     }
 
@@ -39,5 +39,9 @@ public class ItemListFacade {
 
     public static boolean modifyQuantity(int quantity, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
         return ItemListMapper.modifyQuantity(quantity, itemListId, connectionPool);
+    }
+
+    public static double getPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        return ItemListMapper.getPrice(orderId, connectionPool);
     }
 }

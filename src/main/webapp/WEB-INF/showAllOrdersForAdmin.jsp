@@ -22,8 +22,8 @@
                 <th style="width: 12.5%" scope="col" id="price">Pris</th>
                 <th style="width: 12.5%" scope="col" id="status">Status</th>
                 <th style="width: 12.5%" scope="col" id="userId">Bruger</th>
-                <th style="width: 12.5%" scope="col" id="delete">Slet Ordre</th>
-                <th style="width: 12.5%" scope="col" id="update">Opdater Ordre</th>
+                <th style="width: 12.5%" scope="col" id="delete">Slet ordre</th>
+                <th style="width: 12.5%" scope="col" id="update">Generer stykliste</th>
             </tr>
             <tbody>
             <c:forEach  var="orders" items="${sessionScope.orders}">
@@ -41,14 +41,20 @@
                     <label for="statusupdate"></label>
                     <select id="statusupdate" name="statusupdate">
                     <option value="TILBUD AFGIVET">TILBUD AFGIVET</option>
-                    <option value="SÆLGER KONTAKTER DIG">SÆLGER KONTAKTER DIG</option>
+                    <option value="TILBUD AFVIST">TILBUD AFVIST</option>
+                    <option value="AFVENTER TILBUD">AFVENTER TILBUD</option>
                     <input type="submit" value="Opdater"/>
                     </select>
                 </form>
                 </td>
                 <td>${orders.userId}</td>
                 <td><form action="showordersforadmin" method="post"><input type="submit" value="Slet"><input type="hidden" value="${orders.orderId}" name="orderId"></form></td>
-                <td>PLACEHOLDER</td>
+                <td><form action="generateitemlist" method="get">
+                    <input type="submit" value="Stykliste">
+                    <input type="hidden" value="${orders.orderId}" name="orderId">
+                    <input type="hidden" value="${orders.width}" name="width">
+                    <input type="hidden" value="${orders.length}" name="length">
+                </form> </td>
             </tr>
             </tbody>
         </c:forEach>

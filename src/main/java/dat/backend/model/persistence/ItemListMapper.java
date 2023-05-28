@@ -32,10 +32,11 @@ public class ItemListMapper {
         return itemList;
     }
 
-    static ItemList getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
+    static ArrayList<ItemList> getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
-        ItemList itemList = null;
-        String sql = "select from itemlist where order_id = ?";
+        ItemList itemListEntry = null;
+        ArrayList<ItemList> entireItemList = new ArrayList<>();
+        String sql = "select * from project_fog_test.itemlist where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, order);
@@ -47,13 +48,14 @@ public class ItemListMapper {
                     int orderId = resultSet.getInt("order_id");
                     int productVariantId = resultSet.getInt("product_variant_id");
                     int quantity = resultSet.getInt("quantity");
-                    itemList = new ItemList(itemListId, description, price, orderId, productVariantId, quantity);
+                    itemListEntry = new ItemList(itemListId, description, price, orderId, productVariantId, quantity);
+                    entireItemList.add(itemListEntry);
                 }
             }
         } catch (SQLException sqlException) {
-            throw new DatabaseException("Could not find Itemlist");
+            throw new DatabaseException("Could not find Itemlist "+ sqlException.getMessage());
         }
-        return itemList;
+        return entireItemList;
     }
 
     static boolean deleteItemList(int orderId, ConnectionPool connectionPool) throws DatabaseException {
@@ -171,6 +173,26 @@ public class ItemListMapper {
             throw new DatabaseException(sqlException, "Price could not be modified in the database");
         }
         return isModified;
+    }
+
+    static double getPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
+        Logger.getLogger("web").log(Level.INFO, "");
+        double totalPrice = 0;
+        String sql = "SELECT SUM(price) AS sumprice FROM project_fog_test.itemlist WHERE order_id = ?";
+        try (Connection connection = connectionPool.getConnection()) {
+            try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+                preparedStatement.setDouble(1, orderId);
+                ResultSet resultSet = preparedStatement.executeQuery();
+                while (resultSet.next()) {
+                    totalPrice = resultSet.getDouble("sumprice");
+                }
+            }
+
+        }
+        catch (SQLException sqlException) {
+            throw new DatabaseException(sqlException, "Price could not be modified in the database");
+        }
+        return totalPrice;
     }
 
 
