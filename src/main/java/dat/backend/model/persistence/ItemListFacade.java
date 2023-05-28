@@ -17,7 +17,7 @@ public class ItemListFacade {
     }
 
 
-    public static ItemList getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
+    public static ArrayList<ItemList> getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
         return ItemListMapper.getItemList(order, connectionPool);
     }
 

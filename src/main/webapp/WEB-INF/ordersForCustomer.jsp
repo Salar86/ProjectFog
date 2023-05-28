@@ -30,10 +30,10 @@
                 <td>${orders.status}</td>
                 <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">${orders.price}</td></c:if>
                 <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">
-                    <form action="showordersforadmin" method="post">
-                    <input type="submit" value="Køb">
+                    <form action="generateitemlistforuser" method="post">
                     <input type="hidden" value="${orders.orderId}" name="orderId">
                     <input type="hidden" value="TILBUD ACCEPTERET" name="offeraccepted">
+                        <input type="submit" value="Køb">
                 </form>
                     <form action="modifyordersbyuser" method="post">
                         <input type="hidden" value="${orders.orderId}" name="orderId">
@@ -41,6 +41,12 @@
                         <input type="submit" value="Afvis">
                     </form>
                 </c:if>
+                    <c:if test="${orders.status == 'TILBUD ACCEPTERET'}">
+                        <form action="generateitemlistforuser" method="get">
+                            <input type="hidden" value="${orders.orderId}" name="orderId">
+                            <input type="submit" value="Stykliste">
+                        </form>
+                    </c:if>
                 </td>
             </tr>
             </tbody>

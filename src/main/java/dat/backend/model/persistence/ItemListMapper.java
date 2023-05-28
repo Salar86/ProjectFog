@@ -32,10 +32,11 @@ public class ItemListMapper {
         return itemList;
     }
 
-    static ItemList getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
+    static ArrayList<ItemList> getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
-        ItemList itemList = null;
-        String sql = "select from itemlist where order_id = ?";
+        ItemList itemListEntry = null;
+        ArrayList<ItemList> entireItemList = new ArrayList<>();
+        String sql = "select * from project_fog_test.itemlist where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, order);
@@ -47,13 +48,14 @@ public class ItemListMapper {
                     int orderId = resultSet.getInt("order_id");
                     int productVariantId = resultSet.getInt("product_variant_id");
                     int quantity = resultSet.getInt("quantity");
-                    itemList = new ItemList(itemListId, description, price, orderId, productVariantId, quantity);
+                    itemListEntry = new ItemList(itemListId, description, price, orderId, productVariantId, quantity);
+                    entireItemList.add(itemListEntry);
                 }
             }
         } catch (SQLException sqlException) {
-            throw new DatabaseException("Could not find Itemlist");
+            throw new DatabaseException("Could not find Itemlist "+ sqlException.getMessage());
         }
-        return itemList;
+        return entireItemList;
     }
 
     static boolean deleteItemList(int orderId, ConnectionPool connectionPool) throws DatabaseException {
