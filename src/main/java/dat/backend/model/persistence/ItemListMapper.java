@@ -16,6 +16,7 @@ public class ItemListMapper {
 
     static ItemList createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
+
         String sql = "INSERT INTO project_fog_test.itemlist (description, price, order_id, product_variant_id, quantity) values (?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -36,6 +37,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         ItemList itemListEntry = null;
         ArrayList<ItemList> entireItemList = new ArrayList<>();
+
         String sql = "select * from project_fog_test.itemlist where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -61,6 +63,7 @@ public class ItemListMapper {
     static boolean deleteItemList(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isDeleted = false;
+
         String sql = "delete from itemlist where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -85,6 +88,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         ItemList itemList = null;
         ArrayList<ItemList> itemLists = new ArrayList<>();
+
         String sql = "select * from itemlist";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -109,6 +113,7 @@ public class ItemListMapper {
     static boolean modifyDescription(String description, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
+
         String sql = "update itemlist set description = ? where itemlist_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -132,6 +137,7 @@ public class ItemListMapper {
     static boolean modifyPrice(int price, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
+
         String sql = "update itemlist set price = ? where itemlist_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -155,6 +161,7 @@ public class ItemListMapper {
     static boolean modifyQuantity(int quantity, int itemListId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
+
         String sql = "update itemlist set quantity = ? where itemlist_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
@@ -178,6 +185,7 @@ public class ItemListMapper {
     static double getPrice(int orderId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         double totalPrice = 0;
+
         String sql = "SELECT SUM(price) AS sumprice FROM project_fog_test.itemlist WHERE order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {

@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,23 +19,45 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class CalculationsTest {
     private final static String USER = "root";
-    private final static String PASSWORD = "Salar0108";
+    private final static String PASSWORD = "meyer";
     private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
 
     private static ConnectionPool connectionPool;
 
     @BeforeAll
-    public static void setUp() {
+    public static void beforeAllSetup() {
         connectionPool = new ConnectionPool(USER, PASSWORD, URL);
 
     }
 
+    @BeforeEach
+    void beforeEachSetup(){
+        try(Connection testConnection = connectionPool.getConnection()){
+            try(Statement stmt = testConnection.createStatement() ){
+                stmt.execute("DELETE from project_fog_test.itemlist");
+                stmt.execute("DELETE from project_fog_test.order");
+                stmt.execute("ALTER TABLE `order` DISABLE KEYS");
+                stmt.execute("ALTER TABLE `order` AUTO_INCREMENT = 1");
+                stmt.execute("INSERT INTO project_fog_test.order (length, width, material, price, status, user_id)" +
+                        "VALUES (600.00, 450.00, 'A', 0, 'PENDING', 1), (360.00, 360.00, 'A', 0, 'PENDING', 1), (540.00, 540.00, 'A', 0, 'PENDING', 1), " +
+                        "(780.00, 540.00, 'A', 0, 'PENDING', 1), (630.00, 750.00, 'A', 0, 'PENDING', 1) ");
+                stmt.execute("ALTER TABLE `itemlist` DISABLE KEYS");
+                stmt.execute("ALTER TABLE `itemlist` AUTO_INCREMENT = 1");
+                stmt.execute("ALTER TABLE `order` ENABLE KEYS");
+                stmt.execute("ALTER TABLE `itemlist` ENABLE KEYS");
+            }
+        }catch(SQLException throwables){
+            System.out.println(throwables.getMessage());
+            fail("Database connection failed");
+        }
+    }
+
     @Test
     void testConnection() throws SQLException {
-        Connection connection = connectionPool.getConnection();
-        assertNotNull(connection);
-        if (connection != null) {
-            connection.close();
+        Connection testConnection = connectionPool.getConnection();
+        assertNotNull(testConnection);
+        if (testConnection != null) {
+            testConnection.close();
         }
     }
 
@@ -99,7 +122,7 @@ class CalculationsTest {
 
         Calculations cal = new Calculations();
 
-        for (ItemList itemList: cal.calculateCarport(4, 540,540)) {
+        for (ItemList itemList: cal.calculateCarport(2, 360,360)) {
             ItemListFacade.createItemList(itemList, connectionPool);
         }
 
