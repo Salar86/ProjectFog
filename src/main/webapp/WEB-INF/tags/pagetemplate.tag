@@ -34,7 +34,7 @@
                     <a class="nav-item nav-link" href="${pageContext.request.contextPath}/showordersforadmin">Bestillingsoversigt</a>
                     </c:if>
                     <c:if test="${sessionScope.user.role == 'user'}">
-                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/orderCarport.jsp">Bestil carport</a>
+                        <a class="nav-item nav-link" href="${pageContext.request.contextPath}/ordercarport">Bestil carport</a>
                         <a class="nav-item nav-link" href="${pageContext.request.contextPath}/showordersforuser">Bestillingsstatus</a>
                     </c:if>
                     <c:if test="${sessionScope.user == null }">
