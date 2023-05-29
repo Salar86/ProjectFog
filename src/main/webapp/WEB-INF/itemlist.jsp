@@ -6,10 +6,10 @@
 
 <t:pagetemplate>
         <jsp:attribute name="header">
-         Bestillingsoversigt
+         Stykliste
     </jsp:attribute>
     <jsp:attribute name="footer">
-        Bestillingsstatus
+        Stykliste
     </jsp:attribute>
 
     <jsp:body>

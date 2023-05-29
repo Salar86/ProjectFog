@@ -16,14 +16,16 @@
 
             <table class="table table-striped table-hover">
             <tr>
-                <th style="width: 25%" scope="col" id="email">Email</th>
-                <th style="width: 25%" scope="col" id="fullname">Navn</th>
-                <th style="width: 25%" scope="col" id="phone">Telefon</th>
-                <th style="width: 25%" scope="col" id="delete">Slet bruger</th>
+                <th style="width: 20%" scope="col" id="userId">BrugerID</th>
+                <th style="width: 20%" scope="col" id="email">Email</th>
+                <th style="width: 20%" scope="col" id="fullname">Navn</th>
+                <th style="width: 20%" scope="col" id="phone">Telefon</th>
+                <th style="width: 20%" scope="col" id="delete">Slet bruger</th>
             </tr>
             <tbody>
             <c:forEach  var="users" items="${sessionScope.users}">
             <tr>
+                <td>${users.userId}</td>
                 <td>${users.email}</td>
                 <td>${users.fullname}</td>
                 <td>${users.phonenumber}</td>

@@ -49,7 +49,8 @@
                 </td>
                 <td>${orders.userId}</td>
                 <td><form action="showordersforadmin" method="post"><input type="submit" value="Slet"><input type="hidden" value="${orders.orderId}" name="orderId"></form></td>
-                <td><form action="generateitemlist" method="get">
+                <td>
+                    <form action="generateitemlist" method="get">
                     <input type="submit" value="Stykliste">
                     <input type="hidden" value="${orders.orderId}" name="orderId">
                     <input type="hidden" value="${orders.width}" name="width">
