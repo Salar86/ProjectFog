@@ -63,14 +63,14 @@ public class Calculations {
         double priceRaftersAndRem = ProductFacade.getPrice(2, connectionPool);
 
         if (carportLengthInCm <= 240) {
-            remList.add(new ItemList("Remme skal sadles ned i stolperne KORTE.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))), orderId, 3, 1));
+            remList.add(new ItemList("480mm remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))), orderId, 3, 1));
         } else if (carportLengthInCm > 240 && carportLengthInCm <= 480){
-            remList.add(new ItemList("Remme skal sadles ned i stolperne KORTE.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*2), orderId, 3, 2));
+            remList.add(new ItemList("480mm remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*2), orderId, 3, 2));
         } else if (carportLengthInCm > 480 && carportLengthInCm <= 600) {
-            remList.add(new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*2), orderId, 4, 2));
+            remList.add(new ItemList("600mm remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*2), orderId, 4, 2));
         } else if (carportLengthInCm > 600) {
-            remList.add(new ItemList("Remme skal sadles ned i stolperne KORTE.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))), orderId, 3, 1));
-            remList.add(new ItemList("Remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*2), orderId, 4, 2));
+            remList.add(new ItemList("480mm remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))), orderId, 3, 1));
+            remList.add(new ItemList("600mm remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*2), orderId, 4, 2));
         }
 
         for (ItemList item: remList) {
@@ -94,15 +94,15 @@ public class Calculations {
         }
 
         if (carportWidthInCm <= 600 && carportWidthInCm >= 481) {
-            rafterList.add(new ItemList("Spær. Monteres på rem. Lange...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*numberOfRafters), orderId, 4, numberOfRafters));
+            rafterList.add(new ItemList("600mm spær. Monteres på rem.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*numberOfRafters), orderId, 4, numberOfRafters));
         } else if (carportWidthInCm <= 480 && carportWidthInCm >= 301) {
-            rafterList.add(new ItemList("Spær. Monteres på rem. Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*numberOfRafters), orderId, 3, numberOfRafters));
+            rafterList.add(new ItemList("480mm spær. Monteres på rem.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*numberOfRafters), orderId, 3, numberOfRafters));
         } else if (carportWidthInCm == 300) {
             numberOfRafters = numberOfRafters/2;
-            rafterList.add(new ItemList("Spær. Monteres på rem. Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*numberOfRafters), orderId, 4, numberOfRafters));
+            rafterList.add(new ItemList("600mm Spær. Monteres på rem.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*numberOfRafters), orderId, 4, numberOfRafters));
         } else if (carportWidthInCm == 240) {
             numberOfRafters = numberOfRafters/2;
-            rafterList.add(new ItemList("Spær. Monteres på rem. Korte...", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*numberOfRafters), orderId, 3, numberOfRafters));
+            rafterList.add(new ItemList("480mm spær. Monteres på rem.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(3, connectionPool))*numberOfRafters), orderId, 3, numberOfRafters));
         }
 
         for (ItemList item: rafterList) {
@@ -160,9 +160,9 @@ public class Calculations {
             itemList.addAll(CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2), orderId));
         }
 
-        for (ItemList item: itemList) {
+        /*for (ItemList item: itemList) {
             System.out.println(item.getDescription() + " " + item.getProductVariantId() + " " + item.getQuantity());
-        }
+        }*/
 
         return itemList;
     }

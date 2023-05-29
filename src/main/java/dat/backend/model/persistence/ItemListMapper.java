@@ -14,8 +14,9 @@ import java.util.logging.Logger;
 
 public class ItemListMapper {
 
-    static ItemList createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
+    static boolean createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
+        boolean itemListAdded = false;
 
         String sql = "INSERT INTO project_fog_test.itemlist (description, price, order_id, product_variant_id, quantity) values (?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
@@ -26,11 +27,12 @@ public class ItemListMapper {
                 ps.setInt(4, itemList.getProductVariantId());
                 ps.setInt(5, itemList.getQuantity());
                 ps.executeUpdate();
+                itemListAdded = true;
             }
         } catch (SQLException ex) {
             throw new DatabaseException(ex, "Could not add to ITEMLIST " + ex.getMessage());
         }
-        return itemList;
+        return itemListAdded;
     }
 
     static ArrayList<ItemList> getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {

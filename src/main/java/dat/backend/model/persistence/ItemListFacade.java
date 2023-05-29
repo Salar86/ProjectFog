@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 public class ItemListFacade {
 
-    public static ItemList createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
+    public static boolean createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
         return ItemListMapper.createItemList(itemList, connectionPool);
     }
 
