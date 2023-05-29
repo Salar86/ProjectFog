@@ -49,13 +49,21 @@
                 </td>
                 <td>${orders.userId}</td>
                 <td><form action="showordersforadmin" method="post"><input type="submit" value="Slet"><input type="hidden" value="${orders.orderId}" name="orderId"></form></td>
-                <td>
+                <td><c:if test="${orders.status == 'AFVENTER TILBUD'}">
                     <form action="generateitemlist" method="get">
-                    <input type="submit" value="Stykliste">
+                    <input type="submit" value="Generer stykliste">
                     <input type="hidden" value="${orders.orderId}" name="orderId">
                     <input type="hidden" value="${orders.width}" name="width">
                     <input type="hidden" value="${orders.length}" name="length">
-                </form> </td>
+                </form>
+                </c:if>
+                    <c:if test="${orders.status == 'TILBUD AFGIVET' || orders.status == 'TILBUD ACCEPTERET'}">
+                        <form action="generateitemlistforuser" method="get">
+                            <input type="hidden" value="${orders.orderId}" name="orderId">
+                            <input type="submit" value="Se stykliste">
+                        </form>
+                    </c:if>
+                </td>
             </tr>
             </tbody>
         </c:forEach>

@@ -26,6 +26,7 @@ public class GenerateItemList extends HttpServlet {
         double width = Double.parseDouble(request.getParameter("width"));
         double length = Double.parseDouble(request.getParameter("length"));
         double price = 0;
+        String status = "TILBUD AFGIVET";
         ArrayList<Order> allOrders = (ArrayList<Order>) session.getAttribute("orders");
         try {
             for (ItemList itemList: cal.calculateCarport(orderId, width,length)) {
@@ -33,12 +34,14 @@ public class GenerateItemList extends HttpServlet {
             }
             price = ItemListFacade.getPrice(orderId,connectionPool);
             OrderFacade.modifyPrice(orderId, price, connectionPool);
+            OrderFacade.modifyStatus(orderId, status, connectionPool);
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
         for (Order o: allOrders) {
             if (o.getOrderId() == orderId) {
                 o.setPrice(price);
+                o.setStatus(status);
             }
         }
         request.getRequestDispatcher("WEB-INF/showAllOrdersForAdmin.jsp").forward(request, response);
