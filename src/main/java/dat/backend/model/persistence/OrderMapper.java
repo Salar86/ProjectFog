@@ -16,13 +16,13 @@ public class OrderMapper {
     static Order createOrder(double length, double width, double price, String material, String status, int userId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         Order order;
-        String sql = "insert into project_fog.order (length, width, price, material, status, user_id) values (?,?,?,?,?,?)";
+        String sql = "insert into project_fog.order (length, width, material, price, status, user_id) values (?,?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setDouble(1, length);
                 preparedStatement.setDouble(2, width);
-                preparedStatement.setDouble(3, price);
-                preparedStatement.setString(4, material);
+                preparedStatement.setString(3, material);
+                preparedStatement.setDouble(4, price);
                 preparedStatement.setString(5, status);
                 preparedStatement.setInt(6, userId);
                 int rowsAffected = preparedStatement.executeUpdate();

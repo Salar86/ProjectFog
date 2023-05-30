@@ -46,7 +46,7 @@ class OrderMapperTest {
             try (Statement stmt = testConnection.createStatement()) {
 
                 stmt.execute("DELETE from project_fog_test.order");
-                stmt.execute("DELETE from user");
+                stmt.execute("DELETE from project_fog_test.user");
                 stmt.execute("ALTER TABLE `order` DISABLE KEYS");
                 stmt.execute("ALTER TABLE `order` AUTO_INCREMENT = 1");
                 stmt.execute("ALTER TABLE `user` DISABLE KEYS");
@@ -55,7 +55,7 @@ class OrderMapperTest {
                 stmt.execute("insert into user (role, fullname, email, password, phonenumber) " +
                         "values ('user','test','user@user.dk', '1234', '1234'),('admin','test','admin@admin.dk', '1234', '1234'), ('user','test','user@test.dk', '1234', '1234')");
                 stmt.execute("insert into project_fog_test.order (length, width, material, price, status, user_id) " +
-                        "values (480, 480, 'test', 20000, 'test', 1),(600, 300, 'test', 30000, 'test', 2), (300, 300, 'test', 17500, 'test', 3)");
+                        "values (480, 480,'', 20000 , 'test',1),(600, 300,'', 30000, 'test', 2), (300, 300,'', 17500, 'test', 3)");
                 stmt.execute("ALTER TABLE `order` ENABLE KEYS");
                 stmt.execute("ALTER TABLE `user` ENABLE KEYS");
 

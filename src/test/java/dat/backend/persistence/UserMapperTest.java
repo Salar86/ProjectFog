@@ -46,15 +46,19 @@ class UserMapperTest
         }
     }
 
-  /*  @BeforeEach
+    @BeforeEach
     void setUp()
     {
         try (Connection testConnection = connectionPool.getConnection())
         {
             try (Statement stmt = testConnection.createStatement())
             {
-                stmt.execute("delete from project_fog_test.user");
+
+                stmt.execute("DELETE from project_fog_test.itemlist");
                 stmt.execute("DELETE from project_fog_test.order");
+                stmt.execute("DELETE from project_fog_test.product_variant");
+                stmt.execute("DELETE from project_fog_test.product");
+                stmt.execute("delete from project_fog_test.user");
                 stmt.execute("ALTER TABLE `user` DISABLE KEYS");
                 stmt.execute("ALTER TABLE `user` AUTO_INCREMENT = 1");
 
@@ -68,7 +72,7 @@ class UserMapperTest
             System.out.println(throwables.getMessage());
             fail("Database connection failed");
         }
-    }*/
+    }
 
     @Test
     void testConnection() throws SQLException
