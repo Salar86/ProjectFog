@@ -1,5 +1,6 @@
 @startuml
 'https://plantuml.com/class-diagram
+@startuml
 class ApplicationStart
 class ConnectionPool
 class Login
@@ -7,8 +8,7 @@ class Login
 ApplicationStart *--> ConnectionPool
 Login *--> ConnectionPool
 
-class User
-{
+class User {
     -int id
     -String fullName
     -String email
@@ -95,13 +95,10 @@ class ItemListFacade
 
 class Calculations
 {
+    calculateCarport()
     calculateRafters()
     calculatePosts()
-
-
 }
-class CalculationsMapper
-class CalculationsFacade
 
 class Product
 {
@@ -131,12 +128,10 @@ OrderMapper --> Order
 ItemListFacade --> ItemListMapper
 ItemListMapper --> ItemList
 
-CalculationsFacade --> CalculationsMapper
-CalculationsMapper --> Calculations
-
 ProductFacade --> ProductMapper
 ProductMapper --> Product
 
 
 @enduml
 
+@enduml

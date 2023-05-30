@@ -16,7 +16,7 @@ public class OrderCarport extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
+        request.getRequestDispatcher("WEB-INF/orderCarport.jsp").forward(request, response);
     }
 
     @Override
@@ -30,7 +30,7 @@ public class OrderCarport extends HttpServlet {
         try {
             OrderFacade.createOrder(length,width,price,material,status,userId,connectionPool);
             request.setAttribute("success", "ordren er blevet sendt til en medarbejder");
-            request.getRequestDispatcher("orderCarport.jsp").forward(request, response);
+            request.getRequestDispatcher("WEB-INF/orderCarport.jsp").forward(request, response);
         } catch (DatabaseException e) {
             request.setAttribute("errormessage", e.getMessage());
             request.getRequestDispatcher("error.jsp").forward(request, response);

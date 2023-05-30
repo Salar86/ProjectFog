@@ -1,5 +1,6 @@
 package dat.backend.model.persistence;
 
+import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.entities.Order;
 import dat.backend.model.entities.User;
 import dat.backend.model.exceptions.DatabaseException;
