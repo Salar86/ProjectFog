@@ -17,7 +17,7 @@ public class ProductVariantMapper {
 
     static double getProductVariantQuantity(int productVariantId, ConnectionPool connectionPool) throws DatabaseException {
         double quantity = 0;
-        String sql = "SELECT * FROM project_fog_test.product_variant where product_variant_id = ?";
+        String sql = "SELECT * FROM project_fog.product_variant where product_variant_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setInt(1, productVariantId);

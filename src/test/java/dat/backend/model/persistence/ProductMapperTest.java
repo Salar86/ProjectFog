@@ -12,9 +12,9 @@ import java.sql.Statement;
 import static org.junit.jupiter.api.Assertions.*;
 
 class ProductMapperTest {
-    private final static String USER = "root";
-    private final static String PASSWORD = "meyer";
-    private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
+    private final static String USER = "dev";
+    private final static String PASSWORD = "3r!DE32*/fDe";
+    private final static String URL = "jdbc:mysql://64.226.111.93:3306/project_fog_test?";
 
     private static ConnectionPool connectionPool;
 
