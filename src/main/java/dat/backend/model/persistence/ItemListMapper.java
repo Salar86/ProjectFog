@@ -18,7 +18,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean itemListAdded = false;
 
-        String sql = "INSERT INTO project_fog_test.itemlist (description, price, order_id, product_variant_id, quantity) values (?,?,?,?,?)";
+        String sql = "INSERT INTO project_fog.itemlist (description, price, order_id, product_variant_id, quantity) values (?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, itemList.getDescription());
@@ -40,7 +40,7 @@ public class ItemListMapper {
         ItemList itemListEntry = null;
         ArrayList<ItemList> entireItemList = new ArrayList<>();
 
-        String sql = "select * from project_fog_test.itemlist where order_id = ?";
+        String sql = "select * from project_fog.itemlist where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, order);
@@ -66,7 +66,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isDeleted = false;
 
-        String sql = "delete from itemlist where order_id = ?";
+        String sql = "delete from project_fog.itemlist where order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, orderId);
@@ -91,7 +91,7 @@ public class ItemListMapper {
         ItemList itemList = null;
         ArrayList<ItemList> itemLists = new ArrayList<>();
 
-        String sql = "select * from itemlist";
+        String sql = "select * from project_fog.itemlist";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 ResultSet resultSet = preparedStatement.executeQuery();
@@ -116,7 +116,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
 
-        String sql = "update itemlist set description = ? where itemlist_id = ?";
+        String sql = "update project_fog.itemlist set description = ? where itemlist_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setString(1, description);
@@ -140,7 +140,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
 
-        String sql = "update itemlist set price = ? where itemlist_id = ?";
+        String sql = "update project_fog.itemlist set price = ? where itemlist_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setDouble(1, price);
@@ -164,7 +164,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         boolean isModified;
 
-        String sql = "update itemlist set quantity = ? where itemlist_id = ?";
+        String sql = "update project_fog.itemlist set quantity = ? where itemlist_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setDouble(1, quantity);
@@ -188,7 +188,7 @@ public class ItemListMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         double totalPrice = 0;
 
-        String sql = "SELECT SUM(price) AS sumprice FROM project_fog_test.itemlist WHERE order_id = ?";
+        String sql = "SELECT SUM(price) AS sumprice FROM project_fog.itemlist WHERE order_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setDouble(1, orderId);

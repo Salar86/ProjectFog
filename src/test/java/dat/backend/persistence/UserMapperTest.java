@@ -18,10 +18,9 @@ class UserMapperTest
 {
     // TODO: Change mysql login credentials if needed below
 
-    private final static String USER = "root";
-    private final static String PASSWORD = "Salar0108";
-    private final static String URL = "jdbc:mysql://localhost:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
-
+    private final static String USER = "dev";
+    private final static String PASSWORD = "3r!DE32*/fDe";
+    private final static String URL = "jdbc:mysql://64.226.111.93:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
     private static ConnectionPool connectionPool;
 
     @BeforeAll
@@ -47,15 +46,15 @@ class UserMapperTest
         }
     }
 
-    @BeforeEach
+  /*  @BeforeEach
     void setUp()
     {
         try (Connection testConnection = connectionPool.getConnection())
         {
             try (Statement stmt = testConnection.createStatement())
             {
+                stmt.execute("delete from project_fog_test.user");
                 stmt.execute("DELETE from project_fog_test.order");
-                stmt.execute("delete from user");
                 stmt.execute("ALTER TABLE `user` DISABLE KEYS");
                 stmt.execute("ALTER TABLE `user` AUTO_INCREMENT = 1");
 
@@ -69,7 +68,7 @@ class UserMapperTest
             System.out.println(throwables.getMessage());
             fail("Database connection failed");
         }
-    }
+    }*/
 
     @Test
     void testConnection() throws SQLException

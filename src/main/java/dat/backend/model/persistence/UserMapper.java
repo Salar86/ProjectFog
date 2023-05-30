@@ -14,7 +14,7 @@ class UserMapper {
 
         User user = null;
 
-        String sql = "SELECT * FROM project_fog_test.user WHERE email = ? AND password = ?";
+        String sql = "SELECT * FROM project_fog.user WHERE email = ? AND password = ?";
 
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
@@ -39,7 +39,7 @@ class UserMapper {
         Logger.getLogger("web").log(Level.INFO, "");
         User user = null;
         String role = "user";
-        String sql = "INSERT INTO project_fog_test.user (role, fullname, email, password, phonenumber) values (?,?,?,?,?)";
+        String sql = "INSERT INTO project_fog.user (role, fullname, email, password, phonenumber) values (?,?,?,?,?)";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setString(1, role);
@@ -65,7 +65,7 @@ class UserMapper {
     static ArrayList<User> showUsers(ConnectionPool connectionPool) throws DatabaseException {
         User user = null;
         ArrayList<User> allUsers = new ArrayList<>();
-        String sql = "SELECT * FROM project_fog_test.user";
+        String sql = "SELECT * FROM project_fog.user";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ResultSet rs = ps.executeQuery();
@@ -117,7 +117,7 @@ class UserMapper {
 
     static boolean deleteUser(int userId, ConnectionPool connectionPool) throws DatabaseException{
         boolean result = false;
-        String sql = "DELETE FROM project_fog_test.user WHERE user_id = ?";
+        String sql = "DELETE FROM project_fog.user WHERE user_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement ps = connection.prepareStatement(sql)) {
                 ps.setInt(1, userId);

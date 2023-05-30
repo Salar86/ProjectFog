@@ -14,7 +14,7 @@ public class ProductMapper {
     static double getPrice(int productId, ConnectionPool connectionPool) throws DatabaseException {
         Logger.getLogger("web").log(Level.INFO, "");
         double price = 0;
-        String sql = "SELECT * FROM project_fog_test.product where product_id = ?";
+        String sql = "SELECT * FROM project_fog.product where product_id = ?";
         try (Connection connection = connectionPool.getConnection()) {
             try (PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
                 preparedStatement.setInt(1, productId);
