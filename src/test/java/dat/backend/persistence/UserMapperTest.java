@@ -20,7 +20,7 @@ class UserMapperTest
 
     private final static String USER = "dev";
     private final static String PASSWORD = "3r!DE32*/fDe";
-    private final static String URL = "jdbc:mysql://64.226.111.93:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
+    private final static String URL = "jdbc:mysql://165.227.154.21:3306/project_fog_test?serverTimezone=CET&allowPublicKeyRetrieval=true&useSSL=false";
     private static ConnectionPool connectionPool;
 
     @BeforeAll
@@ -46,7 +46,7 @@ class UserMapperTest
         }
     }
 
-  /*  @BeforeEach
+    @BeforeEach
     void setUp()
     {
         try (Connection testConnection = connectionPool.getConnection())
@@ -68,7 +68,7 @@ class UserMapperTest
             System.out.println(throwables.getMessage());
             fail("Database connection failed");
         }
-    }*/
+    }
 
     @Test
     void testConnection() throws SQLException

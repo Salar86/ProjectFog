@@ -15,7 +15,7 @@ public class ConnectionPool
     private HikariDataSource ds;
     private static String USER = "dev";
     private static String PASSWORD = "3r!DE32*/fDe";
-    private static String URL = "jdbc:mysql://64.226.111.93:3306/project_fog";
+    private static String URL = "jdbc:mysql://165.227.154.21:3306/project_fog";
 
     public ConnectionPool()
     {
