@@ -1,5 +1,6 @@
 package dat.backend.model.entities;
 
+import dat.backend.model.config.ApplicationStart;
 import dat.backend.model.exceptions.DatabaseException;
 import dat.backend.model.persistence.ConnectionPool;
 import dat.backend.model.persistence.ProductFacade;
@@ -14,7 +15,7 @@ import java.util.Map;
  * @author Michael Meyer
  * */
 public class Calculations {
-    ConnectionPool connectionPool = new ConnectionPool();
+    ConnectionPool connectionPool = ApplicationStart.getConnectionPool();
     Map<String, Double> woodList = new HashMap<>();
     double closeToZeroWidth = 0;
 
@@ -73,10 +74,6 @@ public class Calculations {
             remList.add(new ItemList("600mm remme skal sadles ned i stolperne.", (int)((priceRaftersAndRem*ProductVariantFacade.getProductVariantQuantity(4, connectionPool))*2), orderId, 4, 2));
         }
 
-        for (ItemList item: remList) {
-            System.out.println(item.getDescription() + " " + item.getProductVariantId() + " " + item.getQuantity());
-
-        }
         return remList;
     }
 
@@ -134,23 +131,25 @@ public class Calculations {
 
         if (woodList.containsValue(carportWidthInCm)) {
             if(carportWidthInCm == 360) {
-                itemList.add(new ItemList("360mm Sternbrædder til for- og bagende.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*2), orderId, 1, 2));
+                itemList.add(new ItemList("360mm Sternbrædder til for- og bagende.",
+                        (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*2), orderId, 1, 2));
             } if(carportWidthInCm == 540){
-                itemList.add(new ItemList("540mm Sternbrædder til for- og bagende.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*2), orderId, 2, 2));
+                itemList.add(new ItemList("540mm Sternbrædder til for- og bagende.",
+                        (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*2), orderId, 2, 2));
             }
             widthDone = true;
-
         }
 
         if (woodList.containsValue(carportLengthInCm)) {
             if(carportLengthInCm == 360) {
-                itemList.add(new ItemList("360mm Sternbrædder til siderne.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*2), orderId, 1, 2));
+                itemList.add(new ItemList("360mm Sternbrædder til siderne.",
+                        (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*2), orderId, 1, 2));
             } if(carportLengthInCm == 540) {
-                itemList.add(new ItemList("540mm Sternbrædder til siderne.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*2), orderId, 2, 2));
+                itemList.add(new ItemList("540mm Sternbrædder til siderne.",
+                        (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(2, connectionPool))*2), orderId, 2, 2));
             }
             lengthDone = true;
         }
-
 
         if(lengthDone && !widthDone){
             itemList.addAll(CalculateSternBoards(((carportWidthInCm)*2), orderId));
@@ -159,11 +158,6 @@ public class Calculations {
         } else if(!lengthDone && !widthDone){
             itemList.addAll(CalculateSternBoards(((carportLengthInCm+carportWidthInCm)*2), orderId));
         }
-
-        /*for (ItemList item: itemList) {
-            System.out.println(item.getDescription() + " " + item.getProductVariantId() + " " + item.getQuantity());
-        }*/
-
         return itemList;
     }
 
@@ -173,7 +167,6 @@ public class Calculations {
         int longWood = 0, shortWood = 0;
         closeToZeroWidth = sternHelperMethod(totalCarportSize);
         double woodLength = 0;
-        // picks the largest wood that will fit
         while ((closeToZeroWidth > 1)) { // Divide remainder with wood-pieces again to find the next one that fits best.
             if (totalCarportSize >= (totalCarportSize / closeToZeroWidth)) {
                 woodLength = (totalCarportSize / closeToZeroWidth);
@@ -201,7 +194,6 @@ public class Calculations {
         if(shortWood > 0){
             itemList.add(new ItemList("360mm Sternbrædder. Tilskæring kan forekomme.", (int)((priceStern*ProductVariantFacade.getProductVariantQuantity(1, connectionPool))*shortWood), orderId, 1, shortWood));
         }
-
         return itemList;
     }
 

@@ -22,7 +22,7 @@ public class GenerateItemListForUser extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         int orderId = Integer.parseInt(request.getParameter("orderId"));
-        ArrayList<ItemList> entireItemList = new ArrayList<>();
+        ArrayList<ItemList> entireItemList;
         try {
             entireItemList = ItemListFacade.getItemList(orderId,connectionPool);
             session.setAttribute("itemList", entireItemList);
@@ -42,7 +42,6 @@ public class GenerateItemListForUser extends HttpServlet {
         orderHistory = (ArrayList<Order>) session.getAttribute("history");
         try {
             OrderFacade.modifyStatus(orderId,statusUpdate,connectionPool);
-
 
         } catch (DatabaseException e) {
             e.printStackTrace();

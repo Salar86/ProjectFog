@@ -13,8 +13,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ProductMapperTest {
     private final static String USER = "dev";
-    private final static String PASSWORD = "3r!DE32*/fDe";
-    private final static String URL = "jdbc:mysql://64.226.111.93:3306/project_fog_test?";
+    private final static String PASSWORD = "MeYer@5600";
+    private final static String URL = "jdbc:mysql://64.226.118.227:3306/project_fog_test?";
 
     private static ConnectionPool connectionPool;
 

@@ -52,7 +52,7 @@ public class ItemListMapper {
                     int orderId = resultSet.getInt("order_id");
                     int productVariantId = resultSet.getInt("product_variant_id");
                     int quantity = resultSet.getInt("quantity");
-                    itemListEntry = new ItemList(itemListId, description, price, orderId, productVariantId, quantity);
+                    itemListEntry = new ItemList(itemListId, description, price, orderId, productVariantId, quantity); // Single responsibility is not adhered too, being that we create a new object.
                     entireItemList.add(itemListEntry);
                 }
             }

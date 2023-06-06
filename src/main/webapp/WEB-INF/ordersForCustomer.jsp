@@ -28,7 +28,7 @@
             <tr>
                 <td>${orders.orderId}</td>
                 <td>${orders.status}</td>
-                <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">${orders.price}</td></c:if>
+                <td><c:if test="${orders.status == 'TILBUD AFGIVET' || orders.status == 'TILBUD ACCEPTERET'}">${orders.price}</td></c:if>
                 <td><c:if test="${orders.status == 'TILBUD AFGIVET'}">
                     <form action="generateitemlistforuser" method="post">
                     <input type="hidden" value="${orders.orderId}" name="orderId">

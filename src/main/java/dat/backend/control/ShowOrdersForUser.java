@@ -12,7 +12,10 @@ import javax.servlet.*;
 import javax.servlet.http.*;
 import javax.servlet.annotation.*;
 import java.io.IOException;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 @WebServlet(name = "ShowOrdersForUser", value = "/showordersforuser")
 public class ShowOrdersForUser extends HttpServlet {
@@ -23,9 +26,11 @@ public class ShowOrdersForUser extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
-        User user = (User) session.getAttribute("user");
+        //User user = (User) session.getAttribute("user"); KAN LAVES  OM TIL NEDENSTÅENDE SÅ MAN IKKE SKAL BRUGE USER KLASSEN
+        int userId = ((User) session.getAttribute("user")).getUserId();
+        System.out.println("USER ID " +  userId);
         try {
-            orderHistory = OrderFacade.showOrdersForUser(user.getUserId(), connectionPool);
+            orderHistory = OrderFacade.showOrdersForUser(userId, connectionPool);
             session.setAttribute("history", orderHistory);
             request.getRequestDispatcher("WEB-INF/ordersForCustomer.jsp").forward(request, response);
         } catch (DatabaseException e) {

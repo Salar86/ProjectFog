@@ -1,5 +1,7 @@
 package dat.backend.model.persistence;
 
+import dat.backend.model.config.ApplicationStart;
+import dat.backend.model.entities.Calculations;
 import dat.backend.model.entities.ItemList;
 import dat.backend.model.exceptions.DatabaseException;
 
@@ -13,8 +15,7 @@ import java.util.logging.Logger;
 public class ItemListFacade {
 
     public static boolean createItemList(ItemList itemList, ConnectionPool connectionPool) throws DatabaseException {
-        return ItemListMapper.createItemList(itemList, connectionPool);
-    }
+        return ItemListMapper.createItemList(itemList, connectionPool);    }
 
 
     public static ArrayList<ItemList> getItemList(int order, ConnectionPool connectionPool) throws DatabaseException {

@@ -1,12 +1,82 @@
 @startuml
 'https://plantuml.com/class-diagram
-@startuml
 class ApplicationStart
 class ConnectionPool
 class Login
 
-ApplicationStart *--> ConnectionPool
-Login *--> ConnectionPool
+ConnectionPool *--  ApplicationStart
+ApplicationStart *--  Login
+ApplicationStart *--  GenerateItemList
+ApplicationStart *--  GenerateItemListForUser
+ApplicationStart *--  ModifyOrders
+ApplicationStart *--  ModifyOrdersByUser
+ApplicationStart *--  NewUser
+ApplicationStart *--  OrderCarport
+ApplicationStart *--  ShowOrdersForAdmin
+ApplicationStart *--  ShowOrdersForUser
+ApplicationStart *--  ShowUsers
+
+UserFacade o-- UserMapper
+UserMapper o-- User
+Login --* UserFacade
+NewUser --* UserFacade
+ShowUsers --* UserFacade
+
+
+OrderFacade o-- OrderMapper
+OrderMapper o-- Order
+ModifyOrders --* OrderFacade
+ModifyOrdersByUser --* OrderFacade
+GenerateItemListForUser --*  OrderFacade
+OrderCarport --* OrderFacade
+ShowOrdersForAdmin --*  OrderFacade
+ShowOrdersForUser --* OrderFacade
+
+ItemListFacade o-- ItemListMapper
+ItemListMapper o-- ItemList
+GenerateItemListForUser --* ItemListFacade
+GenerateItemList --* ItemListFacade
+
+GenerateItemList --* Calculations
+Calculations --* ProductFacade
+Calculations --* ProductVariantFacade
+ProductFacade o-- ProductMapper
+ProductMapper o-- Product
+
+ProductVariantFacade o-- ProductVariantMapper
+
+
+
+
+class GenerateItemList {
+}
+
+class GenerateItemListForUser {
+}
+
+class Logout {
+}
+
+class ModifyOrders{
+}
+
+class ModifyOrdersByUser{
+}
+
+class NewUser {
+}
+
+class OrderCarport {
+}
+
+class ShowOrdersForAdmin {
+}
+
+class ShowOrdersForUser {
+}
+
+class ShowUsers {
+}
 
 class User {
     -int id
@@ -76,6 +146,7 @@ class ItemList
 }
 class ItemListMapper
 {
+    createItemList()
     getItemList()
     modifyDescription()
     modifyPrice()
@@ -85,6 +156,7 @@ class ItemListMapper
 }
 class ItemListFacade
 {
+    createItemList()
     getItemList()
     modifyDescription()
     modifyPrice()
@@ -96,8 +168,10 @@ class ItemListFacade
 class Calculations
 {
     calculateCarport()
+    calculateRem()
     calculateRafters()
     calculatePosts()
+    calculateSternBoardsMainMethod()
 }
 
 class Product
@@ -107,31 +181,27 @@ class Product
    -double unit;
    -double pricePerUnit;
 }
-class ProductMapper
-{
-modifyPricePerUnit()
-modifyDescription()
+class ProductMapper{
+    getPrice()
+    modifyPricePerUnit()
+    modifyDescription()
 }
 
-class ProductFacade
-{
-modifyPricePerUnit()
-modifyDescription()
+class ProductFacade{
+    getPrice()
+    modifyPricePerUnit()
+    modifyDescription()
 }
 
-UserFacade --> UserMapper
-UserMapper --> User
+class ProductVariantFacade{
+    modifyQuantity()
+    getProductVariantQuantity()
+}
 
-OrderFacade --> OrderMapper
-OrderMapper --> Order
+class ProductVariantMapper{
+    getProductVariantQuantity()
+    modifyQuantity()
+}
 
-ItemListFacade --> ItemListMapper
-ItemListMapper --> ItemList
-
-ProductFacade --> ProductMapper
-ProductMapper --> Product
-
-
-@enduml
 
 @enduml

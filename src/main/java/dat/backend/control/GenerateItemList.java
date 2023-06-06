@@ -22,23 +22,22 @@ public class GenerateItemList extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         HttpSession session = request.getSession();
         Calculations cal = new Calculations();
-        int orderId = Integer.parseInt(request.getParameter("orderId"));
-        double width = Double.parseDouble(request.getParameter("width"));
-        double length = Double.parseDouble(request.getParameter("length"));
-        double price = 0;
+        int orderId = Integer.parseInt(request.getParameter("orderId")); // Gets the orderId from the jsp-site showAllOrdersForAdmin
+        double width = Double.parseDouble(request.getParameter("width")), length = Double.parseDouble(request.getParameter("length")), price = 0; // Gets length and width from jsp-site.
         String status = "TILBUD AFGIVET";
-        ArrayList<Order> allOrders = (ArrayList<Order>) session.getAttribute("orders");
+        ArrayList<Order> allOrders = (ArrayList<Order>) session.getAttribute("orders"); // Gets the full orderlist, which is first set in the showordersforadmin-servlet.
+
         try {
-            for (ItemList itemList: cal.calculateCarport(orderId, width,length)) {
-                ItemListFacade.createItemList(itemList, connectionPool);
+            for (ItemList itemList: cal.calculateCarport(orderId, width,length)) { // Calls the Calculater-class and returns the needed products.
+                ItemListFacade.createItemList(itemList, connectionPool); // Writes the itemlist to the database.
             }
-            price = ItemListFacade.getPrice(orderId,connectionPool);
-            OrderFacade.modifyPrice(orderId, price, connectionPool);
-            OrderFacade.modifyStatus(orderId, status, connectionPool);
+            price = ItemListFacade.getPrice(orderId,connectionPool); // Gets the total price for the itemlist from the database.
+            OrderFacade.modifyPrice(orderId, price, connectionPool); // Updates the price in the database
+            OrderFacade.modifyStatus(orderId, status, connectionPool); // Updates the status in the database.
         } catch (DatabaseException e) {
             e.printStackTrace();
         }
-        for (Order o: allOrders) {
+        for (Order o: allOrders) { // Sets the price and status for the orderId in the arraylist to be displayed on the jsp-site.
             if (o.getOrderId() == orderId) {
                 o.setPrice(price);
                 o.setStatus(status);
@@ -49,7 +48,7 @@ public class GenerateItemList extends HttpServlet {
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        HttpSession session = request.getSession();
+        /*HttpSession session = request.getSession();
         int orderId = Integer.parseInt(request.getParameter("orderId"));
         double price = 0;
         ArrayList<Order> allOrders = (ArrayList<Order>) session.getAttribute("orders");
@@ -64,6 +63,6 @@ public class GenerateItemList extends HttpServlet {
                 o.setPrice(price);
             }
         }
-        request.getRequestDispatcher("WEB-INF/showAllOrdersForAdmin.jsp").forward(request, response);
+        request.getRequestDispatcher("WEB-INF/showAllOrdersForAdmin.jsp").forward(request, response);*/
     }
 }
